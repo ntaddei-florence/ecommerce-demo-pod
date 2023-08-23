@@ -1,0 +1,5 @@
+.husky
+node_modules
+.next
+public
+src/graphql/generated

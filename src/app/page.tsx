@@ -9,6 +9,5 @@ export default async function Page() {
       server side
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </main>
-  )
+  );
 }
-

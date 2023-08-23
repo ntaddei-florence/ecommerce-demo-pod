@@ -5,4 +5,4 @@ export const httpLink = new HttpLink({
   headers: {
     Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
   },
-})
+});

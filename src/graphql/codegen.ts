@@ -1,5 +1,4 @@
-
-import type { CodegenConfig } from '@graphql-codegen/cli';
+import type { CodegenConfig } from "@graphql-codegen/cli";
 
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV ?? "local"}`,
@@ -12,12 +11,12 @@ const config: CodegenConfig = {
       headers: {
         Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
       },
-    }
+    },
   },
   documents: "src/**/*.graphql",
   generates: {
     "src/graphql/generated/": {
-      preset: 'client',
+      preset: "client",
     },
   },
 };
