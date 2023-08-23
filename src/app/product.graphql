@@ -1,0 +1,12 @@
+query AllProducts {
+  productCollection {
+    items {
+      ...ProductData
+    }
+  }
+}
+
+fragment ProductData on Product {
+  title
+  name
+}
