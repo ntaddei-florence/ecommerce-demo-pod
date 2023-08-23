@@ -1,5 +1,5 @@
-import { getClient } from "@/graphql/apollo-client";
-import { AllProductsDocument } from "@/graphql/generated/graphql";
+import { getClient } from "~/graphql/apollo-client";
+import { AllProductsDocument } from "~/graphql/generated/graphql";
 
 export default async function Page() {
   const client = getClient();

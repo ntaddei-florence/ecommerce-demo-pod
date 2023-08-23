@@ -1,8 +1,9 @@
-import {
-  NextSSRInMemoryCache,
-  NextSSRApolloClient,
-} from "@apollo/experimental-nextjs-app-support/ssr";
 import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
+import {
+  NextSSRApolloClient,
+  NextSSRInMemoryCache,
+} from "@apollo/experimental-nextjs-app-support/ssr";
+
 import { httpLink } from "./apollo-link";
 
 export const { getClient } = registerApolloClient(() => {

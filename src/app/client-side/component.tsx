@@ -1,7 +1,8 @@
 "use client";
 
-import { AllProductsDocument } from "@/graphql/generated/graphql";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+
+import { AllProductsDocument } from "~/graphql/generated/graphql";
 
 export default function Component() {
   const { data } = useSuspenseQuery(AllProductsDocument);
