@@ -2,7 +2,8 @@ import { getClient } from "@/graphql/apollo-client";
 import { AllProductsDocument } from "@/graphql/generated/graphql";
 
 export default async function Page() {
-  const { data } = await getClient().query({ query: AllProductsDocument });
+  const client = getClient();
+  const { data } = await client.query({ query: AllProductsDocument });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
