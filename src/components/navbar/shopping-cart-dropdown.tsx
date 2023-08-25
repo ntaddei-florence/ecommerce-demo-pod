@@ -1,8 +1,8 @@
 "use client";
 
+import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { FC } from "react";
 
-import { CartIcon } from "~/components/icons/cart";
 import { formatAmountWithCurrency } from "~/utils/currency";
 
 export interface ShoppingCartDropdownProps {
@@ -21,8 +21,8 @@ export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle">
         <div className="indicator">
-          <CartIcon />
-          <span className="badge badge-sm indicator-item">8</span>
+          <ShoppingCartIcon className="h-6 w-6 text-secondary" />
+          <span className="badge badge-sm bg-neutral-400 text-white indicator-item">8</span>
         </div>
       </label>
       <div
