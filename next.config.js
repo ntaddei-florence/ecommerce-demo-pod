@@ -8,6 +8,9 @@ const nextConfig = {
       {
         hostname: "placekitten.com", // FIXME just for development
       },
+      {
+        hostname: "images.ctfassets.net",
+      },
     ],
   },
 };

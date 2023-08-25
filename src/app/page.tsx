@@ -6,9 +6,8 @@ export default async function Page() {
   const { data } = await client.query({ query: AllProductsDocument });
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      server side
+    <div>
       <pre>{JSON.stringify(data, null, 2)}</pre>
-    </main>
+    </div>
   );
 }

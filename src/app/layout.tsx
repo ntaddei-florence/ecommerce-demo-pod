@@ -17,7 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <ApolloWrapper>
+          <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            {children}
+          </main>
+        </ApolloWrapper>
       </body>
     </html>
   );
