@@ -9,7 +9,7 @@ export default async function Page() {
   } = await client.query({ query: AllCategoriesDocument });
 
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       {categoryCollection?.items.map((category) =>
         category ? <CategoryCard category={category} key={category.sys.id} /> : null
       )}
