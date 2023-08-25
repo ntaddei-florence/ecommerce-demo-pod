@@ -1,0 +1,17 @@
+query CategoryDetail ($id: String!) {
+  category (id: $id) {
+    ...CategoryData
+  }
+  productCollection (where: { category: { sys: { id: $id } } }) {
+    items {
+      ...ProductCollectionData
+    }
+  }
+}
+
+fragment ProductCollectionData on Product {
+  name
+  sys {
+    id
+  }
+}

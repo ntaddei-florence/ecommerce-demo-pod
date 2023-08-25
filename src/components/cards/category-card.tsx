@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FC } from "react";
 
 import { BasicCard } from ".";
@@ -16,7 +17,9 @@ export const CategoryCard: FC<CategoryCardProps> = ({ category }) => {
       body={renderRichText(category.description?.json)}
       actions={
         <>
-          <div className="btn btn-sm btn-outline">Vedi tutto</div>
+          <Link href={`/categories/${category.sys.id}`} className="btn btn-sm btn-outline">
+            Vedi tutto
+          </Link>
         </>
       }
     />

@@ -1,0 +1,26 @@
+query AllCategories {
+  categoryCollection {
+    items {
+      ...CategoryData
+    }
+  }
+}
+
+fragment CategoryData on Category {
+  sys {
+    id
+  }
+  internalName
+  categoryName
+  description {
+    json
+  }
+  image {
+    ...AssetData
+  } 
+  parentCategory {
+    sys {
+      id
+    }
+  }
+}

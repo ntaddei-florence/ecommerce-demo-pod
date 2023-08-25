@@ -1,0 +1,34 @@
+query ProductDetail ($id: String!) {
+  product (id: $id) {
+    ...ProductDetailData
+  }
+}
+
+fragment ProductDetailData on Product {
+  name
+  sys {
+    id
+  }
+  defaultMedia {
+    ...ProductMediaData
+  }
+  variantsCollection {
+    items {
+      sys {
+        id
+      }
+      media {
+        ...ProductMediaData
+      }
+    }
+  }
+}
+
+fragment ProductMediaData on ProductMedia {
+  internalName
+  mediaCollection {
+    items {
+      ...AssetData
+    }
+  }
+}
