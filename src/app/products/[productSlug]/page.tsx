@@ -3,19 +3,22 @@ import { ProductDetailDocument } from "~/graphql/generated/graphql";
 
 export interface ProductDetailProps {
   params: {
-    id: string;
+    productSlug: string;
   };
 }
 
-export default async function ProductDetailPage({ params: { id } }: ProductDetailProps) {
+export default async function ProductDetailPage({ params: { productSlug } }: ProductDetailProps) {
   const client = getClient();
 
   const {
-    data: { product },
+    data: { productCollection },
   } = await client.query({
     query: ProductDetailDocument,
-    variables: { id: (id ?? "") as string },
+    variables: { slug: productSlug },
   });
+
+  const product = productCollection?.items[0];
+  // TODO handle missing product
 
   return (
     <div>
@@ -24,7 +27,7 @@ export default async function ProductDetailPage({ params: { id } }: ProductDetai
       </div>
       <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {product?.variantsCollection?.items.map((variant) =>
-          variant ? <pre key={variant.sys.id}>{JSON.stringify(variant, null, 2)}</pre> : null
+          variant ? <pre key={variant.sku}>{JSON.stringify(variant, null, 2)}</pre> : null
         )}
       </div>
     </div>

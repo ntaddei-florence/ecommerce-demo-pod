@@ -1,0 +1,17 @@
+query CategoryDetail ($slug: String!) {
+  categoryCollection (where: { slug: $slug }, limit: 1) {
+    items {
+      ...CategoryData
+    }
+  }
+  productCollection (where: { category: { slug: $slug } }) {
+    items {
+      ...ProductCollectionData
+    }
+  }
+}
+
+fragment ProductCollectionData on Product {
+  name
+  slug
+}

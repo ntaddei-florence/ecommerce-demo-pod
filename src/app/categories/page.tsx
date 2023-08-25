@@ -15,7 +15,7 @@ export default async function CategoriesPage() {
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {categoryCollection?.items.map((category) =>
-          category ? <CategoryCard category={category} key={category.sys.id} /> : null
+          category ? <CategoryCard category={category} key={category.slug} /> : null
         )}
       </div>
     </div>

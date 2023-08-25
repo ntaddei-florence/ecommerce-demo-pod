@@ -17,7 +17,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({ category }) => {
       body={renderRichText(category.description?.json)}
       actions={
         <>
-          <Link href={`/categories/${category.sys.id}`} className="btn btn-sm btn-outline">
+          <Link href={`/categories/${category.slug}`} className="btn btn-sm btn-outline">
             Vedi tutto
           </Link>
         </>

@@ -4,19 +4,25 @@ import { CategoryDetailDocument } from "~/graphql/generated/graphql";
 
 export interface CategoryDetailProps {
   params: {
-    id: string;
+    categorySlug: string;
   };
 }
 
-export default async function CategoryDetailPage({ params: { id } }: CategoryDetailProps) {
+export default async function CategoryDetailPage({
+  params: { categorySlug },
+}: CategoryDetailProps) {
   const client = getClient();
 
   const {
-    data: { productCollection, category },
+    data: { productCollection, categoryCollection },
   } = await client.query({
     query: CategoryDetailDocument,
-    variables: { id: (id ?? "") as string },
+    variables: { slug: categorySlug },
   });
+
+  const category = categoryCollection?.items[0];
+
+  // TODO handle missing category
 
   return (
     <div>
@@ -25,7 +31,7 @@ export default async function CategoryDetailPage({ params: { id } }: CategoryDet
       </div>
       <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {productCollection?.items.map((product) =>
-          product ? <ProductCard product={product} key={product.sys.id} /> : null
+          product ? <ProductCard product={product} key={product.slug} /> : null
         )}
       </div>
     </div>

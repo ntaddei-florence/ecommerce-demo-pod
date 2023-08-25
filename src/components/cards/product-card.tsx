@@ -16,7 +16,7 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
       // body={renderRichText(product.description?.json)}
       actions={
         <>
-          <Link href={`/products/${product.sys.id}`} className="btn btn-sm btn-outline">
+          <Link href={`/products/${product.slug}`} className="btn btn-sm btn-outline">
             Vedi varianti
           </Link>
         </>

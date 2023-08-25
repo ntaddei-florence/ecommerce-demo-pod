@@ -1,22 +1,20 @@
-query ProductDetail ($id: String!) {
-  product (id: $id) {
-    ...ProductDetailData
+query ProductDetail ($slug: String!) {
+  productCollection (where: { slug: $slug }, limit: 1) {
+    items {
+      ...ProductDetailData
+    }
   }
 }
 
 fragment ProductDetailData on Product {
   name
-  sys {
-    id
-  }
+  slug
   defaultMedia {
     ...ProductMediaData
   }
   variantsCollection {
     items {
-      sys {
-        id
-      }
+      sku
       media {
         ...ProductMediaData
       }

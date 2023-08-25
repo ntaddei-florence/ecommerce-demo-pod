@@ -7,9 +7,7 @@ query AllCategories {
 }
 
 fragment CategoryData on Category {
-  sys {
-    id
-  }
+  slug
   internalName
   categoryName
   description {
@@ -19,8 +17,6 @@ fragment CategoryData on Category {
     ...AssetData
   } 
   parentCategory {
-    sys {
-      id
-    }
+    slug
   }
 }
