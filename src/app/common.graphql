@@ -21,6 +21,10 @@ fragment VariantData on Variant {
   sku
   slug
   name
+  size {
+    label
+  }
+  color
   media {
     ...ProductMediaData
   }

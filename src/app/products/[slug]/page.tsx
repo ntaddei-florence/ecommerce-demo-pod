@@ -23,17 +23,13 @@ export default async function ProductDetailPage({ params: { slug } }: ProductDet
 
   return (
     <div>
-      <div className="prose pb-4">
-        <h2>{product?.name}</h2>
-        <h3>{variant?.name}</h3>
-      </div>
-      <div className="not-prose">
-        {!(variant && product) ? (
-          <h2>Product variant not found</h2>
-        ) : (
-          <ProductDetail product={product} variant={variant} />
-        )}
-      </div>
+      {!variant ? (
+        <h2>Product variant not found</h2>
+      ) : !product ? (
+        <h2>Product not found</h2>
+      ) : (
+        <ProductDetail product={product} variant={variant} />
+      )}
     </div>
   );
 }

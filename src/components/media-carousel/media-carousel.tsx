@@ -20,7 +20,7 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
               <Image
                 src={mediaItem.url}
                 alt={mediaItem.title ?? ""}
-                className="!relative max-h-64"
+                className="!relative max-h-72"
                 objectFit="contain"
                 fill
               />
@@ -37,7 +37,9 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
               key={mediaItem.url}
               width={64}
               height={64}
-              className={`${i === selectedImageIndex ? "border border-2 border-primary" : ""}`}
+              className={`rounded-lg ${
+                i === selectedImageIndex ? "border border-4 border-accent" : ""
+              }`}
               style={{
                 objectFit: "cover",
               }}
