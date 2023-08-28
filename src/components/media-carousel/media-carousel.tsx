@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FC, useState } from "react";
 
 import { ProductMediaDataFragment } from "~/graphql/generated/graphql";
@@ -15,12 +16,14 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
       <div className="w-full">
         {media.mediaCollection?.items.map((mediaItem, i) =>
           mediaItem?.url ? (
-            <div
-              key={mediaItem.url}
-              className={`w-full ${i === selectedImageIndex ? "" : "hidden"}`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={mediaItem.url} alt={mediaItem.title ?? ""} className="w-full" />
+            <div key={mediaItem.url} className={i === selectedImageIndex ? undefined : "hidden"}>
+              <Image
+                src={mediaItem.url}
+                alt={mediaItem.title ?? ""}
+                className="!relative max-h-64"
+                objectFit="contain"
+                fill
+              />
             </div>
           ) : null
         )}
@@ -28,13 +31,18 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
       <div className="flex justify-center w-full py-2 gap-2">
         {media.mediaCollection?.items.map((mediaItem, i) =>
           mediaItem?.url ? (
-            <button
-              key={mediaItem?.url}
-              className="btn btn-xs"
+            <Image
+              alt={mediaItem.title ?? ""}
+              src={mediaItem.url}
+              key={mediaItem.url}
+              width={64}
+              height={64}
+              className={`${i === selectedImageIndex ? "border border-2 border-primary" : ""}`}
+              style={{
+                objectFit: "cover",
+              }}
               onClick={() => setSelectedImageIndex(i)}
-            >
-              {i}
-            </button>
+            />
           ) : null
         )}
       </div>
