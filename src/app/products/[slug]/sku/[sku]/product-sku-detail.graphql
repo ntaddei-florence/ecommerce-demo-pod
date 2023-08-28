@@ -1,16 +1,7 @@
-query ProductSkuDetail ($slug: String!) {
-  productCollection (where: { slug: $slug }, limit: 1) {
+query ProductSkuDetail($slug: String!) {
+  productCollection(where: { slug: $slug }, limit: 1) {
     items {
-      name
-      slug
-      defaultMedia {
-        ...ProductMediaData
-      }
-      variantsCollection {
-        items {
-          ...VariantData
-        }
-      }
+      ...ProductDetailData
     }
   }
 }

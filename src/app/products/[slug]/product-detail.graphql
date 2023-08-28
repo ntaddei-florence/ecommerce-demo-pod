@@ -1,19 +1,23 @@
-query ProductDetail ($slug: String!) {
-  productCollection (where: { variants: { slug: $slug } }, limit: 1) {
+query ProductDetail($slug: String!) {
+  productCollection(where: { variants: { slug: $slug } }, limit: 1) {
     items {
-      name
-      slug
-      defaultMedia {
-        ...ProductMediaData
-      }
-      variantsCollection {
-        items {
-          ...VariantData
-        }
-      }
+      ...ProductDetailData
     }
   }
-  variantCollection (where: { slug: $slug }, limit: 1) {
+  variantCollection(where: { slug: $slug }, limit: 1) {
+    items {
+      ...VariantData
+    }
+  }
+}
+
+fragment ProductDetailData on Product {
+  name
+  slug
+  defaultMedia {
+    ...ProductMediaData
+  }
+  variantsCollection {
     items {
       ...VariantData
     }

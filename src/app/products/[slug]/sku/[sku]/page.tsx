@@ -1,3 +1,4 @@
+import { ProductDetail } from "~/app/products/product-detail";
 import { getClient } from "~/graphql/apollo-client";
 import { ProductSkuDetailDocument } from "~/graphql/generated/graphql";
 
@@ -27,8 +28,12 @@ export default async function ProductDetailPage({ params: { slug, sku } }: Produ
         <h2>{product?.name}</h2>
         <h3>{variant?.name}</h3>
       </div>
-      <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {!variant && <h2>Product variant not found</h2>}
+      <div className="not-prose">
+        {!(variant && product) ? (
+          <h2>Product variant not found</h2>
+        ) : (
+          <ProductDetail product={product} variant={variant} />
+        )}
       </div>
     </div>
   );

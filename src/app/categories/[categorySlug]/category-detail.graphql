@@ -1,10 +1,10 @@
-query CategoryDetail ($slug: String!, $pageSize: Int = 10, $skip: Int) {
-  categoryCollection (where: { slug: $slug }, limit: 1) {
+query CategoryDetail($slug: String!, $pageSize: Int = 10, $skip: Int) {
+  categoryCollection(where: { slug: $slug }, limit: 1) {
     items {
       ...CategoryData
     }
   }
-  productCollection (where: { category: { slug: $slug } }, limit: $pageSize, skip: $skip) {
+  productCollection(where: { category: { slug: $slug } }, limit: $pageSize, skip: $skip) {
     items {
       ...ProductCollectionData
     }
@@ -30,7 +30,7 @@ fragment ProductCollectionData on Product {
 
 fragment ProductMediaPreviewData on ProductMedia {
   internalName
-  mediaCollection (limit: 1) {
+  mediaCollection(limit: 1) {
     items {
       ...AssetData
     }
