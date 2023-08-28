@@ -20,6 +20,7 @@ fragment ProductCollectionData on Product {
   variantsCollection {
     items {
       sku
+      slug
       media {
         ...ProductMediaPreviewData
       }

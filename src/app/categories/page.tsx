@@ -17,6 +17,7 @@ export default async function CategoriesPage() {
         {categoryCollection?.items.map((category) =>
           category ? <CategoryCard category={category} key={category.slug} /> : null
         )}
+        {!categoryCollection?.items?.length && <h2>No categories found</h2>}
       </div>
     </div>
   );
