@@ -9,9 +9,12 @@ export interface ProductCardProps {
 }
 
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const defaultMediaImage = product.defaultMedia?.mediaCollection?.items[0];
+  const firstVariantImage = product.variantsCollection?.items[0]?.media?.mediaCollection?.items[0];
+  const headerImage = firstVariantImage ?? defaultMediaImage ?? undefined;
   return (
     <BasicCard
-      // image={{ ...product.image, width: 256, height: 170 }}
+      image={{ ...headerImage, width: 256, height: 170 }}
       title={product.name}
       // body={renderRichText(product.description?.json)}
       actions={

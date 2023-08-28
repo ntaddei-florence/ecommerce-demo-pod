@@ -22,7 +22,7 @@ export default async function ProductDetailPage({ params: { productSlug } }: Pro
 
   return (
     <div>
-      <div className="prose">
+      <div className="prose pb-4">
         <h2>{product?.name}</h2>
       </div>
       <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
