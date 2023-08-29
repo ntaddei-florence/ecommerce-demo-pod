@@ -1,7 +1,5 @@
-"use client";
-
-import { redirect } from "next/navigation";
-import { FC, useCallback, useMemo } from "react";
+import Link from "next/link";
+import { FC } from "react";
 
 import { CLPrice } from "~/components/commerce-layer/price";
 import { MediaCarousel } from "~/components/media-carousel";
@@ -18,56 +16,42 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
 
   const allVariants = product.variantsCollection?.items;
 
-  const availableColors = useMemo(() => {
-    return Array.from(new Set(allVariants?.map((v) => v?.color)));
-  }, [allVariants]);
+  const availableColors = Array.from(new Set(allVariants?.map((v) => v?.color)));
+  const availableSizes = Array.from(new Set(allVariants?.map((v) => v?.size?.label)));
 
-  const availableSizes = useMemo(() => {
-    return Array.from(new Set(allVariants?.map((v) => v?.size?.label)));
-  }, [allVariants]);
+  const getLinkToVariant = (v: VariantDataFragment) => {
+    return v.slug ? `/products/${v.slug}` : `/products/${product.slug}/sku/${v.sku}`;
+  };
 
-  const redirectToVariant = useCallback(
-    (v: VariantDataFragment) => {
-      redirect(v.slug ? `/products/${v.slug}` : `/products/${product.slug}/sku/${v.sku}`);
-    },
-    [product]
-  );
+  const getLinkToVariantForColor = (color: string) => {
+    const variantsForColor = allVariants?.filter((v) => color === v?.color);
+    const variantSameSize = variantsForColor?.find((v) => {
+      return v?.size?.label === variant?.size?.label;
+    });
+    const variantForColor = variantSameSize ?? variantsForColor?.[0];
+    if (variantForColor) {
+      return getLinkToVariant(variantForColor);
+    }
+  };
 
-  const selectVariantForColor = useCallback(
-    (color: string) => {
-      const variantsForColor = allVariants?.filter((v) => color === v?.color);
-      const variantSameSize = variantsForColor?.find(
-        (v) => v?.size?.label === variant?.size?.label
-      );
-      const variantForColor = variantSameSize ?? variantsForColor?.[0];
-      if (variantForColor) {
-        redirectToVariant(variantForColor);
-      }
-    },
-    [variant, allVariants, redirectToVariant]
-  );
+  const getLinkToVariantForSize = (size: string) => {
+    const variantForSize = allVariants?.find(
+      (v) => v?.color === variant.color && size === v?.size?.label
+    );
+    if (variantForSize) {
+      return getLinkToVariant(variantForSize);
+    }
+  };
 
-  const selectVariantForSize = useCallback(
-    (size: string) => {
-      const variantForSize = allVariants?.find(
-        (v) => v?.color === variant.color && size === v?.size?.label
-      );
-      if (variantForSize) {
-        redirectToVariant(variantForSize);
-      }
-    },
-    [allVariants, redirectToVariant, variant]
-  );
-
-  const isSizeVariantAvailableForColor = useCallback(
-    (size: string) => {
-      return (
-        (allVariants?.filter((v) => v?.color === variant.color && size === v?.size?.label) ?? [])
-          .length > 0
-      );
-    },
-    [allVariants, variant]
-  );
+  const isSizeVariantAvailableForColor = (size: string) => {
+    return (
+      (
+        allVariants?.filter((v) => {
+          return v?.color === variant.color && size === v?.size?.label;
+        }) ?? []
+      ).length > 0
+    );
+  };
 
   return (
     <div className="container mx-auto">
@@ -83,34 +67,35 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
 
           <h3>
             Colors:{" "}
-            {availableColors.map((color) => (
-              <button
-                key={color}
-                title={color ?? undefined}
-                onClick={() => color && selectVariantForColor(color)}
-                style={{ backgroundColor: color ?? undefined }}
-                className={`mx-1 rounded-md border border-4 w-6 h-6 ${
-                  variant?.color === color ? "border-accent" : ""
-                }`}
-              />
+            {availableColors.filter(Boolean).map((color) => (
+              <Link href={getLinkToVariantForColor(color!) ?? "#"} key={color}>
+                <button
+                  style={{ backgroundColor: color ?? undefined }}
+                  className={`mx-1 rounded-md border border-4 w-6 h-6 ${
+                    variant?.color === color ? "border-accent" : ""
+                  }`}
+                />
+              </Link>
             ))}
           </h3>
           <h3>
-            Size:
-            <select
-              className="select select-accent inline ml-4 max-w-xs"
-              onChange={(e) => selectVariantForSize(e.target.value)}
-              value={variant.size?.label ?? undefined}
-            >
-              {availableSizes.filter(Boolean).map((size) => {
-                const isDisabled = !isSizeVariantAvailableForColor(size!);
-                return (
-                  <option key={size} disabled={isDisabled} value={size!}>
-                    {size} {isDisabled && "(n/a)"}
-                  </option>
-                );
-              })}
-            </select>
+            Size:{" "}
+            {availableSizes.filter(Boolean).map((size) => {
+              const isDisabled = !isSizeVariantAvailableForColor(size!);
+              return (
+                <Link key={size} href={getLinkToVariantForSize(size!) ?? "#"}>
+                  <button
+                    disabled={isDisabled}
+                    title={isDisabled ? "not available" : `select ${size}`}
+                    className={`mx-1 rounded-md border w-[4ch] ${
+                      variant?.size?.label === size ? "border-accent border-4" : "border-neutral"
+                    } ${isDisabled ? "opacity-40" : ""}`}
+                  >
+                    {size}
+                  </button>
+                </Link>
+              );
+            })}
           </h3>
           {variant.sku && <CLPrice sku={variant.sku} />}
         </div>
