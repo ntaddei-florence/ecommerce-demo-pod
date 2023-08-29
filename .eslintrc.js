@@ -1,10 +1,11 @@
 module.exports = {
-  extends: ["next/core-web-vitals", "prettier"],
+  extends: ["eslint:recommended", "next", "prettier"],
   plugins: ["prettier"],
   rules: {
     "react/display-name": "off",
     "prettier/prettier": "error",
     "no-empty-pattern": "off",
+    "no-unused-vars": ["error"],
     "react/jsx-key": [
       "warn",
       {
