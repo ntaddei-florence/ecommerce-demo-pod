@@ -22,8 +22,6 @@ export default async function CategoryDetailPage({
 
   const category = categoryCollection?.items[0];
 
-  // TODO handle missing category
-
   return (
     <div>
       <div className="prose pb-4">
@@ -33,6 +31,7 @@ export default async function CategoryDetailPage({
         {productCollection?.items.map((product) =>
           product ? <ProductCard product={product} key={product.slug} /> : null
         )}
+        {!productCollection?.items?.length && <h2>No products found for this category</h2>}
       </div>
     </div>
   );

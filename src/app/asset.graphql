@@ -1,9 +1,0 @@
-fragment AssetData on Asset {
-  url
-  title
-  description
-  width
-  height
-  size
-  contentType
-}

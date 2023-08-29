@@ -1,0 +1,7 @@
+query ProductSkuDetail($slug: String!) {
+  productCollection(where: { slug: $slug }, limit: 1) {
+    items {
+      ...ProductDetailData
+    }
+  }
+}

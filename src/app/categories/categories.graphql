@@ -15,7 +15,7 @@ fragment CategoryData on Category {
   }
   image {
     ...AssetData
-  } 
+  }
   parentCategory {
     slug
   }

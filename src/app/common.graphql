@@ -1,0 +1,31 @@
+fragment AssetData on Asset {
+  url
+  title
+  description
+  width
+  height
+  size
+  contentType
+}
+
+fragment ProductMediaData on ProductMedia {
+  internalName
+  mediaCollection {
+    items {
+      ...AssetData
+    }
+  }
+}
+
+fragment VariantData on Variant {
+  sku
+  slug
+  name
+  size {
+    label
+  }
+  color
+  media {
+    ...ProductMediaData
+  }
+}
