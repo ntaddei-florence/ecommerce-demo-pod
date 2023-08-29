@@ -98,15 +98,14 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
               className="select select-accent inline ml-4 max-w-xs"
               onChange={(e) => selectVariantForSize(e.target.value)}
             >
-              {availableSizes.filter(Boolean).map((size) => (
-                <option
-                  key={size}
-                  disabled={!isSizeVariantAvailableForColor(size!)}
-                  selected={variant.size?.label === size}
-                >
-                  {size}
-                </option>
-              ))}
+              {availableSizes.filter(Boolean).map((size) => {
+                const isDisabled = !isSizeVariantAvailableForColor(size!);
+                return (
+                  <option key={size} disabled={isDisabled} selected={variant.size?.label === size}>
+                    {size} {isDisabled && "(n/a)"}
+                  </option>
+                );
+              })}
             </select>
           </h3>
           <p>
