@@ -1,10 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { FC, useCallback, useMemo } from "react";
 
+import { CLPrice } from "~/components/commerce-layer/price";
 import { MediaCarousel } from "~/components/media-carousel";
 import { ProductDetailDataFragment, VariantDataFragment } from "~/graphql/generated/graphql";
+import { renderRichText } from "~/utils/rich-text";
 
 export interface ProductDetailProps {
   product: ProductDetailDataFragment;
@@ -15,21 +17,20 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
   const media = variant.media ?? product.defaultMedia;
 
   const allVariants = product.variantsCollection?.items;
+
   const availableColors = useMemo(() => {
     return Array.from(new Set(allVariants?.map((v) => v?.color)));
   }, [allVariants]);
+
   const availableSizes = useMemo(() => {
     return Array.from(new Set(allVariants?.map((v) => v?.size?.label)));
   }, [allVariants]);
 
-  const router = useRouter();
-
   const redirectToVariant = useCallback(
     (v: VariantDataFragment) => {
-      if (v.slug) router.push(`/products/${v.slug}`);
-      else router.push(`/products/${product.slug}/sku/${v.sku}`);
+      redirect(v.slug ? `/products/${v.slug}` : `/products/${product.slug}/sku/${v.sku}`);
     },
-    [product, router]
+    [product]
   );
 
   const selectVariantForColor = useCallback(
@@ -78,6 +79,8 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
         )}
         <div className="prose pb-4">
           <h2>{product?.name}</h2>
+          {renderRichText(product?.description?.json)}
+
           <h3>
             Colors:{" "}
             {availableColors.map((color) => (
@@ -97,20 +100,19 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
             <select
               className="select select-accent inline ml-4 max-w-xs"
               onChange={(e) => selectVariantForSize(e.target.value)}
+              value={variant.size?.label ?? undefined}
             >
               {availableSizes.filter(Boolean).map((size) => {
                 const isDisabled = !isSizeVariantAvailableForColor(size!);
                 return (
-                  <option key={size} disabled={isDisabled} selected={variant.size?.label === size}>
+                  <option key={size} disabled={isDisabled} value={size!}>
                     {size} {isDisabled && "(n/a)"}
                   </option>
                 );
               })}
             </select>
           </h3>
-          <p>
-            SKU: <strong>{variant.sku}</strong>
-          </p>
+          {variant.sku && <CLPrice sku={variant.sku} />}
         </div>
       </div>
     </div>
