@@ -13,6 +13,20 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    NEXT_COMMERCELAYER_CLIENT_ID: process.env.NEXT_COMMERCELAYER_CLIENT_ID,
+    NEXT_COMMERCELAYER_ENDPOINT: process.env.NEXT_COMMERCELAYER_ENDPOINT,
+    NEXT_COMMERCELAYER_SLUG: process.env.NEXT_COMMERCELAYER_SLUG,
+    NEXT_COMMERCELAYER_SCOPE: process.env.NEXT_COMMERCELAYER_SCOPE,
+  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: `/commercelayer-api`,
+  //       destination: process.env.NEXT_COMMERCELAYER_ENDPOINT,
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;

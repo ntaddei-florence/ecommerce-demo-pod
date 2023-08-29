@@ -13,6 +13,9 @@ query ProductDetail($slug: String!) {
 
 fragment ProductDetailData on Product {
   name
+  description {
+    json
+  }
   slug
   defaultMedia {
     ...ProductMediaData
