@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { CLPrice } from "~/components/commerce-layer/price";
+import { AddToCart } from "~/components/commerce-layer/add-to-cart";
 import { MediaCarousel } from "~/components/media-carousel";
 import { ProductDetailDataFragment, VariantDataFragment } from "~/graphql/generated/graphql";
 import { renderRichText } from "~/utils/rich-text";
@@ -97,7 +97,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
               );
             })}
           </h3>
-          {variant.sku && <CLPrice sku={variant.sku} />}
+          {variant.sku && <AddToCart sku={variant.sku} />}
         </div>
       </div>
     </div>

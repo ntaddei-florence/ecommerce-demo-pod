@@ -16,7 +16,7 @@ export const Navbar: FC<NavbarProps> = ({}) => {
           Ecommerce
         </Link>
       </div>
-      <div className="flex-none">
+      <div className="flex-none flex gap-3">
         <ShoppingCartDropdown amountInCents={9900} currency="€" itemsCount={8} />
         <UserProfileDropdown />
       </div>
