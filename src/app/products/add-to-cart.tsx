@@ -11,7 +11,7 @@ import {
 } from "@commercelayer/react-components";
 import { FC, useState } from "react";
 
-import { CommerceLayerProvider } from "../../components/commerce-layer/context";
+import { CommerceLayerProvider } from "../../components/commerce-layer";
 
 export interface AddToCartProps {
   sku: string;
