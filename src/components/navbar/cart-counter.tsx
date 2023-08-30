@@ -1,15 +1,9 @@
 "use client";
 
-import {
-  LineItemsContainer,
-  LineItemsCount,
-  OrderContainer,
-  OrderStorage,
-} from "@commercelayer/react-components";
+import { LineItemsContainer, LineItemsCount } from "@commercelayer/react-components";
 import React from "react";
 
-import { CL_PERSIST_KEY } from "./constants";
-import { CommerceLayerProvider } from "./context";
+import { CommerceLayerProvider } from "../commerce-layer/context";
 
 export const CartCounter = () => {
   return (

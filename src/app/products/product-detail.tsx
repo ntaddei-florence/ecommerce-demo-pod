@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { AddToCart } from "~/components/commerce-layer/add-to-cart";
+import { AddToCart } from "~/app/products/add-to-cart";
 import { MediaCarousel } from "~/components/media-carousel";
 import { ProductDetailDataFragment, VariantDataFragment } from "~/graphql/generated/graphql";
 import { renderRichText } from "~/utils/rich-text";

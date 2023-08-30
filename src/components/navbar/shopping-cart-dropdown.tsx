@@ -4,7 +4,7 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { FC } from "react";
 
-import { CartCounter } from "../commerce-layer/cart-counter";
+import { CartCounter } from "./cart-counter";
 import { formatAmountWithCurrency } from "~/utils/currency";
 
 export interface ShoppingCartDropdownProps {

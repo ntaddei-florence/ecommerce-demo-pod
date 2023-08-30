@@ -4,15 +4,14 @@ import {
   AddToCartButton,
   AvailabilityContainer,
   AvailabilityTemplate,
-  OrderContainer,
-  OrderStorage,
+  LineItemsContainer,
+  LineItemsCount,
   Price,
   PricesContainer,
 } from "@commercelayer/react-components";
 import { FC, useState } from "react";
 
-import { CL_PERSIST_KEY } from "./constants";
-import { CommerceLayerProvider } from "./context";
+import { CommerceLayerProvider } from "../../components/commerce-layer/context";
 
 export interface AddToCartProps {
   sku: string;
@@ -39,6 +38,11 @@ export const AddToCart: FC<AddToCartProps> = ({ sku }) => {
           disabled={!quantity}
           label={quantity ? "Add to cart" : "Not available"}
         />
+        <div className="text-red">
+          <LineItemsContainer>
+            <LineItemsCount />
+          </LineItemsContainer>
+        </div>
       </div>
     </CommerceLayerProvider>
   );
