@@ -24,7 +24,10 @@ fragment VariantData on Variant {
   size {
     label
   }
-  color
+  color {
+    colorCode
+    colorName
+  }
   media {
     ...ProductMediaData
   }

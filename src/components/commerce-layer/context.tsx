@@ -32,7 +32,7 @@ export const CommerceLayerProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }, []);
 
-  if (!accessToken) return null;
+  if (!accessToken) return children;
 
   return (
     <CommerceLayer accessToken={accessToken} endpoint={endpoint}>

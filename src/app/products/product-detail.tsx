@@ -68,9 +68,12 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
           <h3>
             Colors:{" "}
             {availableColors.filter(Boolean).map((color) => (
-              <Link href={getLinkToVariantForColor(color!) ?? "#"} key={color}>
+              <Link
+                href={getLinkToVariantForColor(color?.colorCode!) ?? "#"}
+                key={color?.colorCode}
+              >
                 <button
-                  style={{ backgroundColor: color ?? undefined }}
+                  style={{ backgroundColor: color?.colorCode ?? undefined }}
                   className={`mx-1 rounded-md border border-4 w-6 h-6 ${
                     variant?.color === color ? "border-accent" : ""
                   }`}

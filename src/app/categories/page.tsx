@@ -1,12 +1,12 @@
 import { CategoryCard } from "~/components/cards";
-import { getClient } from "~/graphql/apollo-client";
-import { AllCategoriesDocument } from "~/graphql/generated/graphql";
+import { getApolloClient } from "~/graphql/apollo-client";
+import { AllCategoriesDocument, AllCategoriesQuery } from "~/graphql/generated/graphql";
 
 export default async function CategoriesPage() {
-  const client = getClient();
+  const apolloClient = getApolloClient();
   const {
     data: { categoryCollection },
-  } = await client.query({ query: AllCategoriesDocument });
+  } = await apolloClient.query<AllCategoriesQuery>({ query: AllCategoriesDocument });
 
   return (
     <div>

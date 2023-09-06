@@ -11,6 +11,12 @@ const nextConfig = {
       {
         hostname: "images.ctfassets.net",
       },
+      {
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        hostname: "s.gravatar.com",
+      },
     ],
   },
   env: {

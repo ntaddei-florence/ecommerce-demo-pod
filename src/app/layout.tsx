@@ -1,3 +1,4 @@
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import React from "react";
@@ -17,12 +18,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ApolloWrapper>
-          <Navbar />
-          <main className="flex min-h-screen flex-col items-center justify-between py-8">
-            {children}
-          </main>
-        </ApolloWrapper>
+        <UserProvider>
+          <ApolloWrapper>
+            <Navbar />
+            <main className="flex min-h-screen flex-col items-center justify-between py-8">
+              {children}
+            </main>
+          </ApolloWrapper>
+        </UserProvider>
       </body>
     </html>
   );

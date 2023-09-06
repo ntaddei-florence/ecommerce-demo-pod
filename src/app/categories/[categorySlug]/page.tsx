@@ -1,6 +1,6 @@
 import { ProductCard } from "~/components/cards/product-card";
-import { getClient } from "~/graphql/apollo-client";
-import { CategoryDetailDocument } from "~/graphql/generated/graphql";
+import { getApolloClient } from "~/graphql/apollo-client";
+import { CategoryDetailDocument, CategoryDetailQuery } from "~/graphql/generated/graphql";
 
 export interface CategoryDetailProps {
   params: {
@@ -11,11 +11,11 @@ export interface CategoryDetailProps {
 export default async function CategoryDetailPage({
   params: { categorySlug },
 }: CategoryDetailProps) {
-  const client = getClient();
+  const apolloClient = getApolloClient();
 
   const {
     data: { productCollection, categoryCollection },
-  } = await client.query({
+  } = await apolloClient.query<CategoryDetailQuery>({
     query: CategoryDetailDocument,
     variables: { slug: categorySlug },
   });
