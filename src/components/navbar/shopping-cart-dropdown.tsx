@@ -4,7 +4,6 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { FC } from "react";
 
-import { CartCounter } from "./cart-counter";
 import { formatAmountWithCurrency } from "~/utils/currency";
 
 export interface ShoppingCartDropdownProps {
@@ -25,9 +24,11 @@ export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({
       <label tabIndex={0} className="btn btn-ghost btn-circle">
         <div className="indicator">
           <ShoppingCartIcon className="h-6 w-6 text-secondary" />
-          <span className="badge badge-sm bg-neutral-400 text-white indicator-item">
-            <CartCounter />
-          </span>
+          {itemsCount > 0 && (
+            <span className="badge badge-sm bg-neutral-400 text-white indicator-item">
+              {itemsCount}
+            </span>
+          )}
         </div>
       </label>
       <div
@@ -35,7 +36,7 @@ export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({
         className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
       >
         <div className="card-body">
-          <span className="font-bold text-lg">{itemsCount} items</span>
+          {itemsCount > 0 && <span className="font-bold text-lg">{itemsCount} items</span>}
           <span className="text-info">Subtotal: {formattedAmount}</span>
           <div className="card-actions">
             <Link href={"/cart"}>

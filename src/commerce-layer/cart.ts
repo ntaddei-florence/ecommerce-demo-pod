@@ -1,5 +1,3 @@
-"use server";
-
 import { CommerceLayerClient } from "@commercelayer/sdk";
 
 import { getOrCreateCommerceLayerCustomer } from "./customer";

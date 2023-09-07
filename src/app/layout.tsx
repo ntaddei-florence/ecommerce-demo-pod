@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import React from "react";
 
 import "./globals.css";
+// import { getCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
 import { Navbar } from "~/components/navbar/navbar";
 import { ApolloWrapper } from "~/graphql/apollo-provider";
 
@@ -14,13 +15,16 @@ export const metadata: Metadata = {
   description: "ecommerce demo pod",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // const clClient = await getCommerceLayerClient();
+  // const cart = await getCommerceLayerCart(clClient);
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <UserProvider>
           <ApolloWrapper>
-            <Navbar />
+            <Navbar cart={null} />
             <main className="flex min-h-screen flex-col items-center justify-between py-8">
               {children}
             </main>
