@@ -10,17 +10,6 @@ export interface ProductDetailProps {
 
 export default async function ProductDetailPage({ params: { slug } }: ProductDetailProps) {
   const apolloClient = getApolloClient();
-  // const clClient = await getCommerceLayerClient();
-
-  // const customers = await clClient.customers.list();
-  // const customer = customers[0];
-
-  // const cart = (
-  //   await clClient.orders.list({
-  //     filters: { status_eq: "draft" },
-  //     include: ["line_items.item", "line_items.line_item_options.sku_option"],
-  //   })
-  // ).last();
 
   const {
     data: { productCollection, variantCollection },

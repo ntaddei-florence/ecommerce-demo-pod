@@ -8,11 +8,12 @@ async function getIntegrationToken() {
     slug: process.env.NEXT_COMMERCELAYER_SLUG!,
     clientId: process.env.NEXT_CL_INTEGRATION_CLIENT_ID!,
     clientSecret: process.env.NEXT_CL_INTEGRATION_SECRET!,
+    scope: process.env.NEXT_COMMERCELAYER_SCOPE,
   });
   return token.accessToken;
 }
 
-export default async function getCommerceLayerClient() {
+export async function getCommerceLayerClient() {
   const token = await getIntegrationToken();
   const client = CommerceLayer({
     accessToken: token,
