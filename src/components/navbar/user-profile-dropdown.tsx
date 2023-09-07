@@ -31,8 +31,10 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({}) => {
         {user ? (
           <>
             <li>
-              <Link href="/profile" className="justify-between">
-                {user.name}
+              <Link href="/profile">
+                <p title={user.name ?? ""} className="truncate">
+                  {user.name}
+                </p>
               </Link>
             </li>
             <li>
