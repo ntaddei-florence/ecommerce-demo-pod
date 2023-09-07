@@ -2,10 +2,10 @@
 
 import { CommerceLayerClient } from "@commercelayer/sdk";
 
-import { getCommerceLayerCustomer } from "./customer";
+import { getOrCreateCommerceLayerCustomer } from "./customer";
 
 export async function getCommerceLayerCart(client: CommerceLayerClient) {
-  const customer = await getCommerceLayerCustomer(client);
+  const customer = await getOrCreateCommerceLayerCustomer(client);
   const cart = (
     await client.orders.list({
       filters: { status_eq: "draft", customer_email_eq: customer?.email ?? "" },
