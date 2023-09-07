@@ -1,4 +1,3 @@
-import getCommerceLayerClient from "~/actions/sdk";
 import { ProductDetail } from "~/app/products/product-detail";
 import { getApolloClient } from "~/graphql/apollo-client";
 import { ProductDetailDocument, ProductDetailQuery } from "~/graphql/generated/graphql";
@@ -11,17 +10,17 @@ export interface ProductDetailProps {
 
 export default async function ProductDetailPage({ params: { slug } }: ProductDetailProps) {
   const apolloClient = getApolloClient();
-  const clClient = await getCommerceLayerClient();
+  // const clClient = await getCommerceLayerClient();
 
-  const customers = await clClient.customers.list();
-  const customer = customers[0];
+  // const customers = await clClient.customers.list();
+  // const customer = customers[0];
 
-  const cart = (
-    await clClient.orders.list({
-      filters: { status_eq: "draft" },
-      include: ["line_items.item", "line_items.line_item_options.sku_option"],
-    })
-  ).last();
+  // const cart = (
+  //   await clClient.orders.list({
+  //     filters: { status_eq: "draft" },
+  //     include: ["line_items.item", "line_items.line_item_options.sku_option"],
+  //   })
+  // ).last();
 
   const {
     data: { productCollection, variantCollection },
@@ -35,7 +34,6 @@ export default async function ProductDetailPage({ params: { slug } }: ProductDet
 
   return (
     <div>
-      <pre className="container">{JSON.stringify({ customer, cart }, null, 2)}</pre>
       {!variant ? (
         <h2>Product variant not found</h2>
       ) : !product ? (
