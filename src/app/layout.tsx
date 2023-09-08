@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import React from "react";
 
 import "./globals.css";
-// import { getCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
+import { getCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
 import { Navbar } from "~/components/navbar/navbar";
 import { ApolloWrapper } from "~/graphql/apollo-provider";
 
@@ -16,15 +16,15 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // const clClient = await getCommerceLayerClient();
-  // const cart = await getCommerceLayerCart(clClient);
+  const clClient = await getCommerceLayerClient();
+  const cart = await getCommerceLayerCart(clClient);
 
   return (
     <html lang="en">
       <body className={inter.className}>
         <UserProvider>
           <ApolloWrapper>
-            <Navbar cart={null} />
+            <Navbar cart={cart} />
             <main className="flex min-h-screen flex-col items-center justify-between py-8">
               {children}
             </main>

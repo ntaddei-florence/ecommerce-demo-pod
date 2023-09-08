@@ -7,6 +7,7 @@ export async function getOrCreateCommerceLayerCustomer(client: CommerceLayerClie
   if (!email) return null;
 
   const customers = await client.customers.list({ filters: { email_eq: email } });
+  console.log("customers " + JSON.stringify(customers, null, 2));
   if (customers.length) return customers[0];
 
   const newCustomer = await client.customers.create({

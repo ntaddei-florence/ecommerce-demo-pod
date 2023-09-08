@@ -1,24 +1,16 @@
 "use client";
 
+import { Order } from "@commercelayer/sdk";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { FC } from "react";
 
-import { formatAmountWithCurrency } from "~/utils/currency";
-
 export interface ShoppingCartDropdownProps {
-  amountInCents: number;
-  currency: string;
-  itemsCount: number;
+  cart: Order | null;
 }
 
-export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({
-  amountInCents,
-  currency,
-  itemsCount,
-}) => {
-  const formattedAmount = formatAmountWithCurrency(amountInCents, currency);
-
+export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({ cart }) => {
+  const itemsCount = cart?.line_items?.length ?? 0;
   return (
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -37,7 +29,7 @@ export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({
       >
         <div className="card-body">
           {itemsCount > 0 && <span className="font-bold text-lg">{itemsCount} items</span>}
-          <span className="text-info">Subtotal: {formattedAmount}</span>
+          {/* <span className="text-info"></span> */}
           <div className="card-actions">
             <Link href={"/cart"}>
               <button className="btn btn-primary btn-block">View cart</button>

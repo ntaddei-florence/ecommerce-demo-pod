@@ -9,7 +9,7 @@ export interface NavbarProps {
   cart: Order | null;
 }
 
-export const Navbar: FC<NavbarProps> = ({ cart }) => {
+export const Navbar: FC<NavbarProps> = async ({ cart }) => {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -20,11 +20,7 @@ export const Navbar: FC<NavbarProps> = ({ cart }) => {
         </Link>
       </div>
       <div className="flex-none flex gap-3">
-        <ShoppingCartDropdown
-          amountInCents={9900}
-          currency="€"
-          itemsCount={cart?.line_items?.length ?? 0}
-        />
+        <ShoppingCartDropdown cart={cart} />
         <UserProfileDropdown />
       </div>
     </div>

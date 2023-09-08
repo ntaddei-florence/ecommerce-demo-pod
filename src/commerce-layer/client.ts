@@ -8,6 +8,17 @@ export async function getIntegrationToken() {
     clientSecret: process.env.NEXT_CL_INTEGRATION_SECRET!,
     scope: process.env.NEXT_COMMERCELAYER_SCOPE,
   });
+  console.log("integration token " + JSON.stringify(token, null, 2));
+  return token.accessToken;
+}
+
+export async function getSalesChannelToken() {
+  const token = await authentication("client_credentials", {
+    slug: process.env.NEXT_COMMERCELAYER_SLUG!,
+    clientId: process.env.NEXT_COMMERCELAYER_CLIENT_ID!,
+    scope: process.env.NEXT_COMMERCELAYER_SCOPE,
+  });
+  console.log("sales channel token " + JSON.stringify(token, null, 2));
   return token.accessToken;
 }
 

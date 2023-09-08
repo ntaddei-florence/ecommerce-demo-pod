@@ -1,48 +1,29 @@
-"use client";
-
-// import {
-//   AddToCartButton,
-//   AvailabilityContainer,
-//   AvailabilityTemplate,
-//   LineItemsContainer,
-//   LineItemsCount,
-//   Price,
-//   PricesContainer,
-// } from "@commercelayer/react-components";
 import { FC } from "react";
 
-// import { CommerceLayerProvider } from "../../components/commerce-layer";
+import { getCommerceLayerClient } from "~/commerce-layer";
+import { getPrice } from "~/commerce-layer/prices";
+import { getStock } from "~/commerce-layer/stock";
+import { AddToCartButton, Price } from "~/components/commerce-layer";
 
 export interface AddToCartProps {
   sku: string;
 }
 
-export const AddToCart: FC<AddToCartProps> = ({}) => {
-  // const [quantity, setQuantity] = useState(0);
+export const AddToCart: FC<AddToCartProps> = async ({ sku }) => {
+  const clClient = await getCommerceLayerClient();
+  const { totalQuantity } = await getStock(clClient, sku);
+  const price = (await getPrice(clClient, sku))[0];
 
-  return null;
-  // <CommerceLayerProvider>
-  //   <div className="flex flex-col gap-4">
-  //     <AvailabilityContainer skuCode={sku} getQuantity={setQuantity}>
-  //       {quantity > 0 && <AvailabilityTemplate className="badge badge-success" />}
-  //     </AvailabilityContainer>
-  //     <div className="flex gap-2">
-  //       <PricesContainer>
-  //         <Price skuCode={sku} className="text-lg font-bold" compareClassName="line-through" />
-  //       </PricesContainer>
-  //     </div>
-  //     <AddToCartButton
-  //       quantity="1"
-  //       skuCode={sku}
-  //       className="btn btn-primary btn-wide"
-  //       disabled={!quantity}
-  //       label={quantity ? "Add to cart" : "Not available"}
-  //     />
-  //     <div className="text-red">
-  //       <LineItemsContainer>
-  //         <LineItemsCount />
-  //       </LineItemsContainer>
-  //     </div>
-  //   </div>
-  // </CommerceLayerProvider>
+  return (
+    <div>
+      {totalQuantity ? (
+        <div className="badge badge-success">{totalQuantity} available</div>
+      ) : (
+        <div className="badge badge-error">Not available</div>
+      )}
+      <Price price={price} />
+      {/* <pre className="container">{JSON.stringify(price, null, 2)}</pre> */}
+      <AddToCartButton skuCode={sku} disabled={!totalQuantity} />
+    </div>
+  );
 };
