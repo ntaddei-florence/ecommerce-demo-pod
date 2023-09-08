@@ -36,3 +36,7 @@ export async function addToCommerceLayerCart(client: CommerceLayerClient, sku: s
   };
   await client.line_items.create(newLineItem);
 }
+
+export async function removeFromCommerceLayerCart(client: CommerceLayerClient, lineItemId: string) {
+  await client.line_items.delete(lineItemId);
+}

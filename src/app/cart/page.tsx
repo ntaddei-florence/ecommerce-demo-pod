@@ -1,10 +1,23 @@
+import { revalidatePath } from "next/cache";
 import React from "react";
 
-import { getCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
+import {
+  getCommerceLayerCart,
+  getCommerceLayerClient,
+  removeFromCommerceLayerCart,
+} from "~/commerce-layer";
 
 export default async function CartPage() {
   const clClient = await getCommerceLayerClient();
   const cart = await getCommerceLayerCart(clClient);
+
+  async function removeFromCart(data: FormData) {
+    "use server";
+    const lineItemId = data.get("lineItemId") as string;
+    const clClient = await getCommerceLayerClient();
+    await removeFromCommerceLayerCart(clClient, lineItemId);
+    revalidatePath("/");
+  }
 
   return (
     <div>
@@ -62,9 +75,14 @@ export default async function CartPage() {
                       )}
                     </td>
                     <td>{lineItem.quantity}</td>
-                    {/* <th>
-                    <button className="btn btn-ghost btn-xs">remove</button>
-                  </th> */}
+                    <th>
+                      <form action={removeFromCart}>
+                        <input hidden value={lineItem.id} name="lineItemId" />
+                        <button type="submit" className="btn btn-ghost btn-xs">
+                          remove
+                        </button>
+                      </form>
+                    </th>
                   </tr>
                 );
               })}
