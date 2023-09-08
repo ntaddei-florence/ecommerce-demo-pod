@@ -21,7 +21,7 @@ export const AddToCart: FC<AddToCartProps> = async ({ sku }) => {
       ) : (
         <div className="badge badge-error">Not available</div>
       )}
-      <Price price={price} />
+      {price && <Price price={price} />}
       {/* <pre className="container">{JSON.stringify(price, null, 2)}</pre> */}
       <AddToCartButton skuCode={sku} disabled={!totalQuantity} />
     </div>

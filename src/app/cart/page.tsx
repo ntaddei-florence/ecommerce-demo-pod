@@ -13,8 +13,8 @@ export default async function CartPage() {
       </p>
 
       {!!cart?.line_items?.length && (
-        <div className="overflow-x-auto">
-          <table className="table">
+        <div className="overflow-x-auto pt-6">
+          <table className="table bg-neutral-100">
             {/* head */}
             <thead>
               <tr>
@@ -55,7 +55,7 @@ export default async function CartPage() {
                     <td>
                       {lineItem.formatted_total_amount}
                       <br />
-                      {lineItem.formatted_discount && (
+                      {!!lineItem.discount_cents && (
                         <span className="badge badge-ghost badge-sm">
                           {lineItem.formatted_discount}
                         </span>
