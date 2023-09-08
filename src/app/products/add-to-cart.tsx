@@ -1,8 +1,6 @@
 import { FC } from "react";
 
-import { getCommerceLayerClient } from "~/commerce-layer";
-import { getPrice } from "~/commerce-layer/prices";
-import { getStock } from "~/commerce-layer/stock";
+import { getCommerceLayerClient, getPrice, getStock } from "~/commerce-layer";
 import { AddToCartButton, Price } from "~/components/commerce-layer";
 
 export interface AddToCartProps {
@@ -22,7 +20,6 @@ export const AddToCart: FC<AddToCartProps> = async ({ sku }) => {
         <div className="badge badge-error">Not available</div>
       )}
       {price && <Price price={price} />}
-      {/* <pre className="container">{JSON.stringify(price, null, 2)}</pre> */}
       <AddToCartButton skuCode={sku} disabled={!totalQuantity} />
     </div>
   );

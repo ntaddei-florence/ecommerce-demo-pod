@@ -1,7 +1,7 @@
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import React from "react";
+import { PropsWithChildren } from "react";
 
 import "./globals.css";
 import { getCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: "ecommerce demo pod",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: PropsWithChildren) {
   const clClient = await getCommerceLayerClient();
   const cart = await getCommerceLayerCart(clClient);
 
