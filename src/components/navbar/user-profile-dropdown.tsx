@@ -2,53 +2,60 @@
 
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { CookiesProvider } from "next-client-cookies";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 
-export interface UserProfileDropdownProps {}
+import { LogoutButton } from "./logout-button";
 
-export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({}) => {
+export interface UserProfileDropdownProps {
+  cookies: Array<{ name: string; value: string }>;
+}
+
+export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({ cookies }) => {
   const { user, error, isLoading } = useUser();
 
   return (
-    <div className="dropdown dropdown-end">
-      <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
-          {isLoading ? (
-            <span className="loading loading-spinner text-accent loading-lg" />
-          ) : user?.picture ? (
-            <Image src={user.picture} width={60} height={60} alt="profile picture" />
+    <CookiesProvider value={cookies}>
+      <div className="dropdown dropdown-end">
+        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+          <div className="w-10 rounded-full">
+            {isLoading ? (
+              <span className="loading loading-spinner text-accent loading-lg" />
+            ) : user?.picture ? (
+              <Image src={user.picture} width={60} height={60} alt="profile picture" />
+            ) : (
+              <UserCircleIcon className="w-full h-full" />
+            )}
+          </div>
+        </label>
+        <ul
+          tabIndex={0}
+          className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          {user ? (
+            <>
+              <li>
+                <Link href="/profile">
+                  <p title={user.name ?? ""} className="truncate">
+                    {user.name}
+                  </p>
+                </Link>
+              </li>
+              <li>
+                <LogoutButton />
+              </li>
+            </>
+          ) : error ? (
+            <li>Error</li>
           ) : (
-            <UserCircleIcon className="w-full h-full" />
+            <li>
+              <a href="/api/auth/login">Login</a>
+            </li>
           )}
-        </div>
-      </label>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        {user ? (
-          <>
-            <li>
-              <Link href="/profile">
-                <p title={user.name ?? ""} className="truncate">
-                  {user.name}
-                </p>
-              </Link>
-            </li>
-            <li>
-              <a href="/api/auth/logout">Logout</a>
-            </li>
-          </>
-        ) : error ? (
-          <li>Error</li>
-        ) : (
-          <li>
-            <a href="/api/auth/login">Login</a>
-          </li>
-        )}
-      </ul>
-    </div>
+        </ul>
+      </div>
+    </CookiesProvider>
   );
 };

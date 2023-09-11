@@ -1,4 +1,5 @@
 import { Order } from "@commercelayer/sdk";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -21,7 +22,7 @@ export const Navbar: FC<NavbarProps> = async ({ cart }) => {
       </div>
       <div className="flex-none flex gap-3">
         <ShoppingCartDropdown cart={cart} />
-        <UserProfileDropdown />
+        <UserProfileDropdown cookies={cookies().getAll()} />
       </div>
     </div>
   );
