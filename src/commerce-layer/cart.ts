@@ -4,12 +4,7 @@ import { cookies } from "next/headers";
 import { CART_ID_COOKIE_KEY } from "./constants";
 import { getOrCreateCommerceLayerCustomer } from "./customer";
 
-export async function reconcileCarts(
-  client: CommerceLayerClient,
-  oldCart: Order,
-  newCart: Order,
-  deleteOldCart = true
-) {
+export async function reconcileCarts(client: CommerceLayerClient, oldCart: Order, newCart: Order) {
   if (oldCart.id === newCart.id) return;
 
   // merge old cart's items into new one
@@ -20,11 +15,6 @@ export async function reconcileCarts(
     };
     await client.line_items.create(newLineItem);
   });
-
-  if (deleteOldCart) {
-    // delete old cart
-    await client.orders.delete(oldCart.id);
-  }
 }
 
 export async function getCommerceLayerCart(client: CommerceLayerClient, c?: Customer | null) {
