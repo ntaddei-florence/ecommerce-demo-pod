@@ -73,7 +73,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
             Colors:{" "}
             {availableColors.filter(Boolean).map((color) => (
               <Link
-                href={getLinkToVariantForColor(color?.colorCode!) ?? "#"}
+                href={getLinkToVariantForColor(color!.colorCode!) ?? "#"}
                 key={color?.colorCode}
               >
                 <button
