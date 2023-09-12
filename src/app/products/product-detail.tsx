@@ -58,7 +58,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 pt-8">
       <div className="flex flex-col sm:flex-row gap-6">
         {media && (
           <div className="max-w-sm">

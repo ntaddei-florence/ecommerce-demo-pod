@@ -23,7 +23,7 @@ export default async function CategoryDetailPage({
   const category = categoryCollection?.items[0];
 
   return (
-    <div>
+    <div className="pt-8">
       <div className="prose pb-4">
         <h2>{category?.categoryName}</h2>
       </div>

@@ -1,9 +1,18 @@
-import Link from "next/link";
+import { CategoryCard } from "~/components/cards";
+import { getApolloClient } from "~/graphql/apollo-client";
+import { AllCategoriesDocument, AllCategoriesQuery } from "~/graphql/generated/graphql";
 
 export default async function HomePage() {
+  const apolloClient = getApolloClient();
+  const {
+    data: { categoryCollection },
+  } = await apolloClient.query<AllCategoriesQuery>({ query: AllCategoriesDocument });
+
   return (
-    <div className="prose pb-4 flex flex-col gap-2">
-      <Link href="/categories">Explore categories</Link>
+    <div className="grid grid-cols-1 sm:grid-cols-2 w-full">
+      {categoryCollection?.items.map((category) =>
+        category ? <CategoryCard category={category} key={category.slug} /> : null
+      )}
     </div>
   );
 }

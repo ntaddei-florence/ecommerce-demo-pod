@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         <UserProvider>
           <ApolloWrapper>
             <Navbar cart={cart} />
-            <main className="flex min-h-screen flex-col items-center justify-between py-8">
+            <main className="flex min-h-screen flex-col items-center justify-between">
               {children}
             </main>
           </ApolloWrapper>

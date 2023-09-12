@@ -20,7 +20,7 @@ export default async function CartPage() {
   }
 
   return (
-    <div>
+    <div className="pt-8">
       <p className="your-custom-class">
         Your shopping cart contains {cart?.line_items?.length ?? 0} items
       </p>
