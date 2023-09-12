@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { ProductCard } from "~/components/cards/product-card";
 import { getApolloClient } from "~/graphql/apollo-client";
 import { CategoryDetailDocument, CategoryDetailQuery } from "~/graphql/generated/graphql";
@@ -24,8 +26,15 @@ export default async function CategoryDetailPage({
 
   return (
     <div className="pt-8 px-4">
-      <div className="prose pb-4">
-        <h2>{category?.categoryName}</h2>
+      <div className="text-sm breadcrumbs mb-4">
+        <ul>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <strong>{category?.categoryName}</strong>
+          </li>
+        </ul>
       </div>
       <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {productCollection?.items.map((product) =>

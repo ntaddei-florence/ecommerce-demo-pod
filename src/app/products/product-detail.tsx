@@ -59,6 +59,23 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
 
   return (
     <div className="container mx-auto px-4 pt-8">
+      <div className="text-sm breadcrumbs mb-4">
+        <ul>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          {product?.category?.slug && (
+            <li>
+              <Link href={`/categories/${product.category.slug}`}>
+                {product.category.categoryName}
+              </Link>
+            </li>
+          )}
+          <li>
+            <strong>{product?.name}</strong>
+          </li>
+        </ul>
+      </div>
       <div className="flex flex-col sm:flex-row gap-6">
         {media && (
           <div className="max-w-sm">

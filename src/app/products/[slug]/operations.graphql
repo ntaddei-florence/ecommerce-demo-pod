@@ -17,6 +17,10 @@ fragment ProductDetailData on Product {
     json
   }
   slug
+  category {
+    slug
+    categoryName
+  }
   defaultMedia {
     ...ProductMediaData
   }
