@@ -11,6 +11,12 @@ const nextConfig = {
       {
         hostname: "images.ctfassets.net",
       },
+      {
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        hostname: "s.gravatar.com",
+      },
     ],
   },
   env: {
@@ -18,6 +24,8 @@ const nextConfig = {
     NEXT_COMMERCELAYER_ENDPOINT: process.env.NEXT_COMMERCELAYER_ENDPOINT,
     NEXT_COMMERCELAYER_SLUG: process.env.NEXT_COMMERCELAYER_SLUG,
     NEXT_COMMERCELAYER_SCOPE: process.env.NEXT_COMMERCELAYER_SCOPE,
+    NEXT_CL_INTEGRATION_CLIENT_ID: process.env.NEXT_CL_INTEGRATION_CLIENT_ID,
+    NEXT_CL_INTEGRATION_SECRET: process.env.NEXT_CL_INTEGRATION_SECRET,
   },
   // async rewrites() {
   //   return [

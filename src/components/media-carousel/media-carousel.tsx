@@ -21,7 +21,7 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
                 src={mediaItem.url}
                 alt={mediaItem.title ?? ""}
                 className="!relative max-h-72"
-                objectFit="contain"
+                style={{ objectFit: "contain" }}
                 fill
               />
             </div>
@@ -40,9 +40,7 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
               className={`rounded-lg ${
                 i === selectedImageIndex ? "border border-4 border-accent" : ""
               }`}
-              style={{
-                objectFit: "cover",
-              }}
+              style={{ objectFit: "cover" }}
               onClick={() => setSelectedImageIndex(i)}
             />
           ) : null

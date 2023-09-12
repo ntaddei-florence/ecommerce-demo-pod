@@ -1,20 +1,17 @@
-"use client";
-
-import { Price, PricesContainer } from "@commercelayer/react-components";
+import { Price as PriceType } from "@commercelayer/sdk";
 import { FC } from "react";
 
-import { CommerceLayerProvider } from "./context";
-
-export interface CLPriceProps {
-  sku: string;
+export interface PriceProps {
+  price: PriceType;
 }
 
-export const CLPrice: FC<CLPriceProps> = ({ sku }) => {
+export const Price: FC<PriceProps> = async ({ price }) => {
   return (
-    <CommerceLayerProvider>
-      <PricesContainer>
-        <Price skuCode={sku} />
-      </PricesContainer>
-    </CommerceLayerProvider>
+    <div className="flex items-center gap-1">
+      <p className="font-bold">{price.formatted_amount}</p>
+      {price.formatted_compare_at_amount && (
+        <p className="line-through">{price.formatted_compare_at_amount}</p>
+      )}
+    </div>
   );
 };

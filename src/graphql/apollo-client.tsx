@@ -6,7 +6,7 @@ import {
 
 import { httpLink } from "./apollo-link";
 
-export const { getClient } = registerApolloClient(() => {
+export const { getClient: getApolloClient } = registerApolloClient(() => {
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
     link: httpLink,

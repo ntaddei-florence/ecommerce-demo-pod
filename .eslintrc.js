@@ -1,6 +1,8 @@
 module.exports = {
-  extends: ["next/core-web-vitals", "prettier"],
-  plugins: ["prettier"],
+  extends: ["eslint:recommended", "next", "prettier", "plugin:@typescript-eslint/recommended"],
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint", "prettier"],
+  root: true,
   rules: {
     "react/display-name": "off",
     "prettier/prettier": "error",

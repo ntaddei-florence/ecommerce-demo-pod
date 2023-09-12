@@ -1,6 +1,6 @@
 import { ProductDetail } from "~/app/products/product-detail";
-import { getClient } from "~/graphql/apollo-client";
-import { ProductDetailDocument } from "~/graphql/generated/graphql";
+import { getApolloClient } from "~/graphql/apollo-client";
+import { ProductDetailDocument, ProductDetailQuery } from "~/graphql/generated/graphql";
 
 export interface ProductDetailProps {
   params: {
@@ -9,11 +9,11 @@ export interface ProductDetailProps {
 }
 
 export default async function ProductDetailPage({ params: { slug } }: ProductDetailProps) {
-  const client = getClient();
+  const apolloClient = getApolloClient();
 
   const {
     data: { productCollection, variantCollection },
-  } = await client.query({
+  } = await apolloClient.query<ProductDetailQuery>({
     query: ProductDetailDocument,
     variables: { slug },
   });

@@ -1,7 +1,10 @@
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { PropsWithChildren } from "react";
 
 import "./globals.css";
+import { getCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
 import { Navbar } from "~/components/navbar/navbar";
 import { ApolloWrapper } from "~/graphql/apollo-provider";
 
@@ -12,16 +15,21 @@ export const metadata: Metadata = {
   description: "ecommerce demo pod",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: PropsWithChildren) {
+  const clClient = await getCommerceLayerClient();
+  const cart = await getCommerceLayerCart(clClient);
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ApolloWrapper>
-          <Navbar />
-          <main className="flex min-h-screen flex-col items-center justify-between py-8">
-            {children}
-          </main>
-        </ApolloWrapper>
+        <UserProvider>
+          <ApolloWrapper>
+            <Navbar cart={cart} />
+            <main className="flex min-h-screen flex-col items-center justify-between py-8">
+              {children}
+            </main>
+          </ApolloWrapper>
+        </UserProvider>
       </body>
     </html>
   );
