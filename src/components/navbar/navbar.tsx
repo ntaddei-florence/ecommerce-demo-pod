@@ -1,18 +1,31 @@
+"use client";
+
 import { Order } from "@commercelayer/sdk";
-import { cookies } from "next/headers";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FC } from "react";
 
 import { ShoppingCartDropdown } from "./shopping-cart-dropdown";
 import { UserProfileDropdown } from "./user-profile-dropdown";
+import { useScrollY } from "~/hooks/use-scroll-y";
 
 export interface NavbarProps {
   cart: Order | null;
+  cookies: Array<{ name: string; value: string }>;
 }
 
-export const Navbar: FC<NavbarProps> = async ({ cart }) => {
+export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
+  const scrollY = useScrollY();
+  const pathname = usePathname();
+
+  const shouldBeOpaque = scrollY > 0 || pathname === "/";
+
   return (
-    <div className="navbar bg-base-100">
+    <div
+      className={`navbar sticky top-0 z-30 hover:bg-base-100 transition ease-in-out duration-500 ${
+        shouldBeOpaque ? "bg-base-100" : ""
+      }`}
+    >
       <div className="flex-1">
         {/* Logo */}
         <Link href="/" className="btn btn-ghost normal-case text-xl">
@@ -22,7 +35,7 @@ export const Navbar: FC<NavbarProps> = async ({ cart }) => {
       </div>
       <div className="flex-none flex gap-3">
         <ShoppingCartDropdown cart={cart} />
-        <UserProfileDropdown cookies={cookies().getAll()} />
+        <UserProfileDropdown cookies={cookies} />
       </div>
     </div>
   );

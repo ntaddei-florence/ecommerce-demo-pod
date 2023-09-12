@@ -11,7 +11,7 @@ export interface FlatCardProps {
 export const FlatCard: FC<FlatCardProps> = ({ image, title, body }) => {
   return (
     <div
-      className="relative h-64 w-full flex items-end justify-start text-left bg-cover bg-center"
+      className="relative h-72 w-full flex items-end justify-start text-left bg-cover bg-center"
       style={{ backgroundImage: `url(${image?.url})` }}
     >
       <div className="absolute bottom-6 z-10 right-0 right-0 mx-5 flex justify-between items-center">

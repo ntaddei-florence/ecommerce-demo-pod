@@ -4,7 +4,7 @@ export default withPageAuthRequired(
   async function Profile() {
     const session = await getSession();
     return (
-      <div className="pt-8">
+      <div className="px-4 py-8">
         Hello <strong>{session?.user.name}</strong>
       </div>
     );

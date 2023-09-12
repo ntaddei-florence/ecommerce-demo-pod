@@ -1,6 +1,7 @@
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import { PropsWithChildren } from "react";
 
 import "./globals.css";
@@ -24,7 +25,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className={inter.className}>
         <UserProvider>
           <ApolloWrapper>
-            <Navbar cart={cart} />
+            <Navbar cart={cart} cookies={cookies().getAll()} />
             <main className="flex min-h-screen flex-col items-center justify-between">
               {children}
             </main>

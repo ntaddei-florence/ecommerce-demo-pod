@@ -5,18 +5,25 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { FC } from "react";
 
+import { useScrollY } from "~/hooks/use-scroll-y";
+
 export interface ShoppingCartDropdownProps {
   cart: Order | null;
 }
 
 export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({ cart }) => {
   const itemsCount = cart?.line_items?.length ?? 0;
+  const scrollY = useScrollY();
 
   return (
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle">
         <div className="indicator">
-          <ShoppingCartIcon className="h-6 w-6 text-secondary" />
+          <ShoppingCartIcon
+            className={`h-6 w-6 ${
+              scrollY > 0 ? "text-secondary" : "text-neutral"
+            } transition ease-in-out duration-500`}
+          />
           {itemsCount > 0 && (
             <span className="badge badge-sm bg-neutral-400 text-white indicator-item">
               {itemsCount}
