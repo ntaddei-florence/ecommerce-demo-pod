@@ -9,7 +9,7 @@ export default async function HomePage() {
   } = await apolloClient.query<AllCategoriesQuery>({ query: AllCategoriesDocument });
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full">
       {categoryCollection?.items.map((category) =>
         category ? <CategoryCard category={category} key={category.slug} /> : null
       )}

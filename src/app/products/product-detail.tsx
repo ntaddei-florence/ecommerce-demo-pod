@@ -76,6 +76,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
           </li>
         </ul>
       </div>
+
       <div className="flex flex-col sm:flex-row gap-6">
         {media && (
           <div className="max-w-sm">
@@ -86,44 +87,57 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
           <h2>{product?.name}</h2>
           {renderRichText(product?.description?.json)}
 
-          <h3>
-            Colors:{" "}
-            {availableColors.filter(Boolean).map((color) => (
-              <Link
-                href={getLinkToVariantForColor(color!.colorCode!) ?? "#"}
-                key={color?.colorCode}
-              >
-                <button
-                  style={{ backgroundColor: color?.colorCode ?? undefined }}
-                  className={`mx-1 rounded-md border border-4 w-6 h-6 ${
-                    variant?.color?.colorCode === color?.colorCode ? "border-accent" : ""
-                  }`}
-                />
-              </Link>
-            ))}
-          </h3>
-          <h3>
-            Size:{" "}
-            {availableSizes.filter(Boolean).map((size) => {
-              const isDisabled = !isSizeVariantAvailableForColor(size!.label!);
-              return (
-                <Link key={size?.label} href={getLinkToVariantForSize(size!.label!) ?? "#"}>
+          <div className="flex items-center justify-between w-[50%]">
+            <strong>Colors:</strong>
+            <div>
+              {availableColors.filter(Boolean).map((color) => (
+                <Link
+                  href={getLinkToVariantForColor(color!.colorCode!) ?? "#"}
+                  key={color?.colorCode}
+                >
                   <button
-                    disabled={isDisabled}
-                    title={isDisabled ? "not available" : `select ${size?.label}`}
-                    className={`mx-1 rounded-md border w-[4ch] ${
-                      variant?.size?.label === size?.label
-                        ? "border-accent border-4"
-                        : "border-neutral"
-                    } ${isDisabled ? "opacity-40" : ""}`}
-                  >
-                    {size?.label}
-                  </button>
+                    title={`select color ${color?.colorName}`}
+                    style={{ backgroundColor: color?.colorCode ?? undefined }}
+                    className={`mx-1 border border-4 w-[4ch] h-6 ${
+                      variant?.color?.colorCode === color?.colorCode
+                        ? "border-accent"
+                        : "border-transparent"
+                    }`}
+                  />
                 </Link>
-              );
-            })}
-          </h3>
-          {variant.sku && <AddToCart sku={variant.sku} />}
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between w-[50%]">
+            <strong>Size:</strong>
+            <div>
+              {availableSizes.filter(Boolean).map((size) => {
+                const isDisabled = !isSizeVariantAvailableForColor(size!.label!);
+                return (
+                  <Link key={size?.label} href={getLinkToVariantForSize(size!.label!) ?? "#"}>
+                    <button
+                      disabled={isDisabled}
+                      title={isDisabled ? "not available" : `select size ${size?.label}`}
+                      className={`mx-1 border w-[4ch] ${
+                        variant?.size?.label === size?.label
+                          ? "border-accent border-4"
+                          : "border-neutral"
+                      } ${isDisabled ? "opacity-40" : ""}`}
+                    >
+                      {size?.label}
+                    </button>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {variant.sku && (
+            <div className="mt-6">
+              <AddToCart sku={variant.sku} />
+            </div>
+          )}
         </div>
       </div>
     </div>
