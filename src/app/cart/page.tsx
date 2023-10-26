@@ -1,9 +1,11 @@
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import React from "react";
 
 import {
   getCommerceLayerCart,
   getCommerceLayerClient,
+  getSalesChannelToken,
   removeFromCommerceLayerCart,
 } from "~/commerce-layer";
 
@@ -19,23 +21,34 @@ export default async function CartPage() {
     revalidatePath("/");
   }
 
+  const cartLength = cart?.line_items?.length ?? 0;
+
+  async function handleCheckout() {
+    "use server";
+    const endpoint = process.env.NEXT_CL_CHECKOUT_ENDPOINT;
+    const token = await getSalesChannelToken(process.env.NEXT_CL_CHECKOUT_CLIENT_ID);
+
+    if (!cart || !endpoint || !token) return;
+
+    const checkoutUrl = `${endpoint}/${cart.id}?accessToken=${token}`;
+    redirect(checkoutUrl);
+  }
+
   return (
     <div className="pt-8">
-      <p className="your-custom-class">
-        Your shopping cart contains {cart?.line_items?.length ?? 0} items
-      </p>
+      <p>Your shopping cart {cartLength ? `contains ${cartLength ?? 0} items` : "is empty"}</p>
 
-      {!!cart?.line_items?.length && (
+      {!!cartLength && (
         <div className="overflow-x-auto pt-6">
           <table className="table bg-neutral-100">
             {/* head */}
             <thead>
               <tr>
-                <th>
+                {/* <th>
                   <label>
-                    <input type="checkbox" className="checkbox" />
+                    <input type="checkbox" className="checkbox" checked={false} />
                   </label>
-                </th>
+                </th> */}
                 <th>Product</th>
                 <th>Price</th>
                 <th>Quantity</th>
@@ -46,17 +59,17 @@ export default async function CartPage() {
               {cart?.line_items?.map((lineItem) => {
                 return (
                   <tr key={lineItem.id}>
-                    <th>
+                    {/* <th>
                       <label>
                         <input type="checkbox" className="checkbox" />
                       </label>
-                    </th>
+                    </th> */}
                     <td>
                       <div className="flex items-center space-x-3">
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={lineItem.image_url ?? undefined} alt={lineItem.name ?? ""} />
+                            <img src={lineItem.image_url ?? ""} alt={lineItem.name ?? ""} />
                           </div>
                         </div>
                         <div>
@@ -77,7 +90,7 @@ export default async function CartPage() {
                     <td>{lineItem.quantity}</td>
                     <th>
                       <form action={removeFromCart}>
-                        <input hidden value={lineItem.id} name="lineItemId" />
+                        <input hidden value={lineItem.id} name="lineItemId" readOnly />
                         <button type="submit" className="btn btn-ghost btn-xs">
                           remove
                         </button>
@@ -89,6 +102,13 @@ export default async function CartPage() {
             </tbody>
           </table>
         </div>
+      )}
+      {cartLength && (
+        <form action={handleCheckout} className="w-full flex justify-end mt-4">
+          <button type="submit" className="btn btn-primary">
+            Checkout
+          </button>
+        </form>
       )}
     </div>
   );

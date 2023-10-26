@@ -11,10 +11,10 @@ export async function getIntegrationToken() {
   return token.accessToken;
 }
 
-export async function getSalesChannelToken() {
+export async function getSalesChannelToken(clientId?: string) {
   const token = await authentication("client_credentials", {
     slug: process.env.NEXT_COMMERCELAYER_SLUG!,
-    clientId: process.env.NEXT_COMMERCELAYER_CLIENT_ID!,
+    clientId: clientId ?? process.env.NEXT_COMMERCELAYER_CLIENT_ID!,
     scope: process.env.NEXT_COMMERCELAYER_SCOPE,
   });
   return token.accessToken;

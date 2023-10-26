@@ -1,6 +1,7 @@
 "use client";
 
 import { Order } from "@commercelayer/sdk";
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
@@ -22,15 +23,16 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
 
   return (
     <div
-      className={`navbar sticky top-0 z-30 hover:bg-base-100 transition ease-in-out duration-500 ${
-        shouldBeOpaque ? "bg-base-100" : ""
-      }`}
+      className={clsx(
+        "navbar sticky top-0 z-30 hover:bg-base-100 transition ease-in-out duration-500",
+        { "bg-base-100": shouldBeOpaque }
+      )}
     >
       <div className="flex-1">
         {/* Logo */}
         <Link href="/" className="btn btn-ghost normal-case text-xl">
           {/* Site name */}
-          Ecommerce
+          My E-Commerce
         </Link>
       </div>
       <div className="flex-none flex gap-3">

@@ -2,6 +2,7 @@
 
 import { Order } from "@commercelayer/sdk";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -20,9 +21,10 @@ export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({ cart }) =>
       <label tabIndex={0} className="btn btn-ghost btn-circle">
         <div className="indicator">
           <ShoppingCartIcon
-            className={`h-6 w-6 ${
+            className={clsx(
+              "h-6 w-6 transition ease-in-out duration-500",
               scrollY > 0 ? "text-secondary" : "text-neutral"
-            } transition ease-in-out duration-500`}
+            )}
           />
           {itemsCount > 0 && (
             <span className="badge badge-sm bg-neutral-400 text-white indicator-item">

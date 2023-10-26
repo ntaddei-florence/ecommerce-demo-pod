@@ -16,8 +16,8 @@ const config: Config = {
   },
   plugins: [require("daisyui"), require("@tailwindcss/typography")],
   daisyui: {
-    themes: ["bumblebee", "night"],
-    darkTheme: "night", // name of one of the included themes for dark mode
+    themes: ["wireframe"],
+    darkTheme: "wireframe", // name of one of the included themes for dark mode
   },
 };
 export default config;
