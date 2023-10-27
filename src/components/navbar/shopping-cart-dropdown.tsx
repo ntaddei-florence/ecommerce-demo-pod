@@ -28,9 +28,7 @@ export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({ cart }) =>
             )}
           />
           {itemsCount > 0 && (
-            <span className="badge badge-sm bg-neutral-400 text-white indicator-item">
-              {itemsCount}
-            </span>
+            <span className="indicator-item badge badge-sm badge-primary">{itemsCount}</span>
           )}
         </div>
       </label>

@@ -120,11 +120,11 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
                   <Link key={size?.label} href={getLinkToVariantForSize(size!.label!) ?? "#"}>
                     <button
                       disabled={isDisabled}
-                      title={isDisabled ? "not available" : `select size ${size?.label}`}
+                      title={isDisabled ? "Not available" : `Select size ${size?.label}`}
                       className={clsx(
-                        "mx-1 border w-[4ch]",
+                        "mx-1 border w-[4ch] rounded-md",
                         variant?.size?.label === size?.label
-                          ? "border-accent border-4"
+                          ? "border-accent border-2"
                           : "border-neutral",
                         { "opacity-40": isDisabled }
                       )}

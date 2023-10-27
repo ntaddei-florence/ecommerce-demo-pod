@@ -12,7 +12,7 @@ export interface BasicCardProps {
 
 export const BasicCard: FC<BasicCardProps> = ({ image, title, body, actions }) => {
   return (
-    <div className="card card-compact min-w-32 bg-base-100 shadow-md">
+    <div className="card min-w-32 border border-gray-200 rounded-xl">
       {image?.url && (
         <figure>
           <Image

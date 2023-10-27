@@ -16,7 +16,7 @@ export const AddToCart: FC<AddToCartProps> = async ({ sku, className }) => {
   return (
     <div className={className}>
       {totalQuantity ? (
-        <div className="badge badge-success">{totalQuantity} available</div>
+        <div className="badge badge-success">Available</div>
       ) : (
         <div className="badge badge-error">Not available</div>
       )}

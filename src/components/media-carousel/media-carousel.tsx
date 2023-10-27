@@ -17,15 +17,16 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
       <div className="w-full">
         {media.mediaCollection?.items.map((mediaItem, i) =>
           mediaItem?.url ? (
-            <div key={mediaItem.url} className={i === selectedImageIndex ? undefined : "hidden"}>
-              <Image
-                src={mediaItem.url}
-                alt={mediaItem.title ?? ""}
-                className="!relative max-h-72"
-                style={{ objectFit: "contain" }}
-                fill
-              />
-            </div>
+            <Image
+              key={mediaItem.url}
+              src={mediaItem.url}
+              alt={mediaItem.title ?? ""}
+              className={clsx("!relative w-24 h-24", {
+                hidden: i !== selectedImageIndex,
+              })}
+              style={{ objectFit: "contain" }}
+              fill
+            />
           ) : null
         )}
       </div>
@@ -38,7 +39,9 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
               key={mediaItem.url}
               width={64}
               height={64}
-              className={clsx("rounded-lg", i === selectedImageIndex && "border-4 border-accent")}
+              className={clsx("rounded-lg", {
+                "border-2 border-accent": i === selectedImageIndex,
+              })}
               style={{ objectFit: "cover" }}
               onClick={() => setSelectedImageIndex(i)}
             />
