@@ -98,7 +98,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
                   <button
                     title={`select color ${color?.colorName}`}
                     style={{ backgroundColor: color?.colorCode ?? undefined }}
-                    className={`mx-1 border border-4 w-[4ch] h-6 ${
+                    className={`mx-1 border-4 w-[4ch] h-6 ${
                       variant?.color?.colorCode === color?.colorCode
                         ? "border-accent"
                         : "border-transparent"

@@ -16,17 +16,8 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const headerImage = firstVariantImage ?? defaultMediaImage ?? undefined;
   const firstVariantLink = firstVariant ? getLinkToVariant(firstVariant, product) : "#";
   return (
-    <BasicCard
-      image={{ ...headerImage, width: 256, height: 170 }}
-      title={product.name}
-      // body={renderRichText(product.description?.json)}
-      actions={
-        <>
-          <Link href={firstVariantLink} className="btn btn-sm btn-outline">
-            Buy now
-          </Link>
-        </>
-      }
-    />
+    <Link href={firstVariantLink}>
+      <BasicCard image={{ ...headerImage, width: 256, height: 170 }} title={product.name} />
+    </Link>
   );
 };

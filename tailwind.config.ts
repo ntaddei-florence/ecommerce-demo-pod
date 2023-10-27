@@ -16,8 +16,8 @@ const config: Config = {
   },
   plugins: [require("daisyui"), require("@tailwindcss/typography")],
   daisyui: {
-    themes: ["wireframe"],
-    darkTheme: "wireframe", // name of one of the included themes for dark mode
+    themes: ["lofi"],
+    darkTheme: "lofi", // name of one of the included themes for dark mode
   },
 };
 export default config;

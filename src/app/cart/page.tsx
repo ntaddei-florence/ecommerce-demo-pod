@@ -35,7 +35,7 @@ export default async function CartPage() {
   }
 
   return (
-    <div className="pt-8">
+    <div className="container mx-auto pt-8 px-4">
       <p>Your shopping cart {cartLength ? `contains ${cartLength ?? 0} items` : "is empty"}</p>
 
       {!!cartLength && (
@@ -103,7 +103,7 @@ export default async function CartPage() {
           </table>
         </div>
       )}
-      {cartLength && (
+      {!!cartLength && (
         <form action={handleCheckout} className="w-full flex justify-end mt-4">
           <button type="submit" className="btn btn-primary">
             Checkout

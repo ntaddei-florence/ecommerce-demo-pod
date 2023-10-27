@@ -21,8 +21,9 @@ export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({ cart }) =>
       <label tabIndex={0} className="btn btn-ghost btn-circle">
         <div className="indicator">
           <ShoppingCartIcon
+            width={28}
             className={clsx(
-              "h-6 w-6 transition ease-in-out duration-500",
+              "transition ease-in-out duration-500",
               scrollY > 0 ? "text-secondary" : "text-neutral"
             )}
           />

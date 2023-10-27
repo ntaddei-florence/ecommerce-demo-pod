@@ -25,7 +25,7 @@ export default async function CategoryDetailPage({
   const category = categoryCollection?.items[0];
 
   return (
-    <div className="pt-8 px-4">
+    <div className="container mx-auto pt-8 px-4">
       <div className="text-sm breadcrumbs mb-4">
         <ul>
           <li>

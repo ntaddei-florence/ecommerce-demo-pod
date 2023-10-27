@@ -12,8 +12,8 @@ import { ApolloWrapper } from "~/graphql/apollo-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ecommerce demo pod",
-  description: "ecommerce demo pod",
+  title: "E-commerce demo POD",
+  description: "E-commerce demo POD",
 };
 
 export default async function RootLayout({ children }: PropsWithChildren) {
@@ -26,9 +26,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         <UserProvider>
           <ApolloWrapper>
             <Navbar cart={cart} cookies={cookies().getAll()} />
-            <main className="flex min-h-screen flex-col items-center justify-between">
-              {children}
-            </main>
+            <main className="min-h-screen flex-col items-center justify-center">{children}</main>
           </ApolloWrapper>
         </UserProvider>
       </body>

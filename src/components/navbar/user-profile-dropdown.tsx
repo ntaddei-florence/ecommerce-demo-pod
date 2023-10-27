@@ -20,13 +20,13 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({ cookies }) =
     <CookiesProvider value={cookies}>
       <div className="dropdown dropdown-end">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-          <div className="w-10 mask mask-squircle">
+          <div className="w-10 mask mask-squircle !inline-flex justify-center items-center">
             {isLoading ? (
               <span className="loading loading-spinner text-accent loading-lg" />
             ) : user?.picture ? (
               <Image src={user.picture} width={60} height={60} alt="profile picture" />
             ) : (
-              <UserCircleIcon className="w-full h-full" />
+              <UserCircleIcon width={28} />
             )}
           </div>
         </label>
