@@ -3,10 +3,6 @@ import { NestedPath } from "./types";
 
 type SubDictionary = string | { [key: string]: SubDictionary };
 
-export function getDictionary(locale: SupportedLanguages) {
-  return dictionaries[locale];
-}
-
 function getDictionaryKey(key: NestedPath<Dictionary>, dictionary: Dictionary) {
   const keyParts = key.split(".");
   let node: SubDictionary = dictionary;
@@ -26,6 +22,6 @@ function getDictionaryKey(key: NestedPath<Dictionary>, dictionary: Dictionary) {
 }
 
 export function getTranslations(lng: string) {
-  const dict = getDictionary(lng as SupportedLanguages);
+  const dict = dictionaries[lng as SupportedLanguages];
   return (key: NestedPath<Dictionary>) => getDictionaryKey(key, dict);
 }
