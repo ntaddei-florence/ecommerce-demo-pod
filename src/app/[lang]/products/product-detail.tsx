@@ -6,7 +6,7 @@ import { FC } from "react";
 import { AddToCart } from "./add-to-cart";
 import { MediaCarousel } from "~/components/media-carousel";
 import { ProductDetailDataFragment, VariantDataFragment } from "~/graphql/generated/graphql";
-import { localizedRoute } from "~/i18n";
+import { getTranslations, localizedRoute } from "~/i18n";
 import { getLinkToVariant } from "~/utils/paths";
 import { renderRichText } from "~/utils/rich-text";
 
@@ -18,6 +18,7 @@ export interface ProductDetailProps {
 
 export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }) => {
   const media = variant.media ?? product.defaultMedia;
+  const t = getTranslations(lang);
 
   const allVariants = product.variantsCollection?.items;
 
@@ -91,7 +92,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
           {renderRichText(product?.description?.json)}
 
           <div className="flex items-center justify-between w-[50%]">
-            <strong>Colors:</strong>
+            <strong>{t("products.color")}</strong>
             <div>
               {availableColors.filter(Boolean).map((color) => (
                 <Link
@@ -114,7 +115,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
           </div>
 
           <div className="flex items-center justify-between w-[50%]">
-            <strong>Size:</strong>
+            <strong>{t("products.size")}</strong>
             <div>
               {availableSizes.filter(Boolean).map((size) => {
                 const isDisabled = !isSizeVariantAvailableForColor(size!.label!);

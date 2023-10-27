@@ -2,5 +2,7 @@
   "productVariantNotFound": "Variante prodotto non trovata",
   "productNotFound": "Prodotto non trovato",
   "available": "Disponibile",
-  "notAvailable": "Non disponibile"
+  "notAvailable": "Non disponibile",
+  "color": "Colore",
+  "size": "Taglia"
 }
