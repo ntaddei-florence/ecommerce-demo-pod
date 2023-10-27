@@ -37,7 +37,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
     });
     const variantForColor = variantSameSize ?? variantsForColor?.[0];
     if (variantForColor) {
-      return getLinkToVariant(variantForColor, product);
+      return localizedRoute(getLinkToVariant(variantForColor, product), lang);
     }
   };
 
@@ -46,7 +46,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
       (v) => v?.color?.colorCode === variant.color?.colorCode && size === v?.size?.label
     );
     if (variantForSize) {
-      return getLinkToVariant(variantForSize, product);
+      return localizedRoute(getLinkToVariant(variantForSize, product), lang);
     }
   };
 
