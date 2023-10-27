@@ -3,12 +3,13 @@
 import { Order } from "@commercelayer/sdk";
 import clsx from "clsx";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 
 import { ShoppingCartDropdown } from "./shopping-cart-dropdown";
 import { UserProfileDropdown } from "./user-profile-dropdown";
 import { useScrollY } from "~/hooks/use-scroll-y";
+import { localizedRoute } from "~/i18n";
 
 export interface NavbarProps {
   cart: Order | null;
@@ -16,6 +17,9 @@ export interface NavbarProps {
 }
 
 export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
+  const params = useParams();
+  const lang = params.lang as string;
+
   const scrollY = useScrollY();
   const pathname = usePathname();
 
@@ -31,7 +35,7 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
     >
       <div className="flex-1">
         {/* Logo */}
-        <Link href="/" className="btn btn-ghost normal-case text-xl">
+        <Link href={localizedRoute("/", lang)} className="btn btn-ghost normal-case text-xl">
           {/* Site name */}
           My E-Commerce
         </Link>

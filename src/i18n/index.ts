@@ -25,3 +25,11 @@ export function getTranslations(lng: string) {
   const dict = dictionaries[lng as SupportedLanguages];
   return (key: NestedPath<Dictionary>) => getDictionaryKey(key, dict);
 }
+
+export function localizedRoute(route: string, lang: string) {
+  if (route.startsWith(`/${lang}`)) {
+    return route;
+  } else {
+    return `/${lang}${route === "/" ? "" : route}`;
+  }
+}

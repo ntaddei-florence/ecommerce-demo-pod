@@ -6,9 +6,10 @@ import { AddToCartButton, Price } from "~/components/commerce-layer";
 export interface AddToCartProps {
   sku: string;
   className?: string;
+  lang: string;
 }
 
-export const AddToCart: FC<AddToCartProps> = async ({ sku, className }) => {
+export const AddToCart: FC<AddToCartProps> = async ({ sku, className, lang }) => {
   const clClient = await getCommerceLayerClient();
   const { totalQuantity } = await getStock(clClient, sku);
   const price = (await getPrice(clClient, sku))[0];
@@ -21,7 +22,7 @@ export const AddToCart: FC<AddToCartProps> = async ({ sku, className }) => {
         <div className="badge badge-error">Not available</div>
       )}
       {price && <Price price={price} />}
-      <AddToCartButton skuCode={sku} disabled={!totalQuantity} />
+      <AddToCartButton lang={lang} skuCode={sku} disabled={!totalQuantity} />
     </div>
   );
 };

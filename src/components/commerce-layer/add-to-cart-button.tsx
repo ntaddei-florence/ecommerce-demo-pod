@@ -2,19 +2,26 @@ import { revalidatePath } from "next/cache";
 import { FC, ReactNode } from "react";
 
 import { addToCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
+import { localizedRoute } from "~/i18n";
 
 export interface AddToCartButtonProps {
   skuCode: string;
   label?: ReactNode;
   disabled?: boolean;
+  lang: string;
 }
 
-export const AddToCartButton: FC<AddToCartButtonProps> = async ({ skuCode, label, disabled }) => {
+export const AddToCartButton: FC<AddToCartButtonProps> = async ({
+  skuCode,
+  label,
+  disabled,
+  lang,
+}) => {
   async function addToCart() {
     "use server";
     const clClient = await getCommerceLayerClient();
     await addToCommerceLayerCart(clClient, skuCode);
-    revalidatePath("/");
+    revalidatePath(localizedRoute("/", lang));
   }
 
   return (
