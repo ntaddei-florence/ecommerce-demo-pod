@@ -3,5 +3,6 @@
   "price": "Prezzo",
   "quantity": "Quantità",
   "remove": "Rimuovi",
-  "checkout": "Checkout"
+  "checkout": "Checkout",
+  "viewCart": "Vai al carrello"
 }

@@ -41,7 +41,7 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
         </Link>
       </div>
       <div className="flex-none flex gap-3">
-        <ShoppingCartDropdown cart={cart} />
+        <ShoppingCartDropdown cart={cart} lang={lang} />
         <UserProfileDropdown cookies={cookies} />
       </div>
     </div>

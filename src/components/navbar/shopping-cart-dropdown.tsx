@@ -7,14 +7,17 @@ import Link from "next/link";
 import { FC } from "react";
 
 import { useScrollY } from "~/hooks/use-scroll-y";
+import { getTranslations, localizedRoute } from "~/i18n";
 
 export interface ShoppingCartDropdownProps {
   cart: Order | null;
+  lang: string;
 }
 
-export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({ cart }) => {
+export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({ cart, lang }) => {
   const itemsCount = cart?.line_items?.length ?? 0;
   const scrollY = useScrollY();
+  const t = getTranslations(lang);
 
   return (
     <div className="dropdown dropdown-end">
@@ -44,8 +47,8 @@ export const ShoppingCartDropdown: FC<ShoppingCartDropdownProps> = ({ cart }) =>
           )}
           {/* <span className="text-info"></span> */}
           <div className="card-actions">
-            <Link href={"/cart"}>
-              <button className="btn btn-primary btn-block">View cart</button>
+            <Link href={localizedRoute("/cart", lang)}>
+              <button className="btn btn-primary btn-block">{t("cart.viewCart")}</button>
             </Link>
           </div>
         </div>
