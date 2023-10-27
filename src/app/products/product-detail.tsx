@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { uniqBy } from "lodash";
 import Link from "next/link";
 import { FC } from "react";
@@ -58,7 +59,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
   };
 
   return (
-    <div className="container mx-auto px-4 pt-8">
+    <>
       <div className="text-sm breadcrumbs mb-4">
         <ul>
           <li>
@@ -98,11 +99,12 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
                   <button
                     title={`select color ${color?.colorName}`}
                     style={{ backgroundColor: color?.colorCode ?? undefined }}
-                    className={`mx-1 border-4 w-[4ch] h-6 ${
+                    className={clsx(
+                      "mx-1 border-4 w-[4ch] h-6",
                       variant?.color?.colorCode === color?.colorCode
                         ? "border-accent"
                         : "border-transparent"
-                    }`}
+                    )}
                   />
                 </Link>
               ))}
@@ -119,11 +121,13 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
                     <button
                       disabled={isDisabled}
                       title={isDisabled ? "not available" : `select size ${size?.label}`}
-                      className={`mx-1 border w-[4ch] ${
+                      className={clsx(
+                        "mx-1 border w-[4ch]",
                         variant?.size?.label === size?.label
                           ? "border-accent border-4"
-                          : "border-neutral"
-                      } ${isDisabled ? "opacity-40" : ""}`}
+                          : "border-neutral",
+                        { "opacity-40": isDisabled }
+                      )}
                     >
                       {size?.label}
                     </button>
@@ -133,13 +137,9 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
             </div>
           </div>
 
-          {variant.sku && (
-            <div className="mt-6">
-              <AddToCart sku={variant.sku} />
-            </div>
-          )}
+          {variant.sku && <AddToCart sku={variant.sku} className="mt-6" />}
         </div>
       </div>
-    </div>
+    </>
   );
 };

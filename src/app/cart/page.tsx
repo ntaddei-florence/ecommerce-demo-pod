@@ -36,7 +36,7 @@ export default async function CartPage() {
 
   return (
     <div className="container mx-auto pt-8 px-4">
-      <p>Your shopping cart {cartLength ? `contains ${cartLength ?? 0} items` : "is empty"}</p>
+      <p>Your shopping cart {cartLength ? `contains ${cartLength ?? 0} item(s)` : "is empty"}</p>
 
       {!!cartLength && (
         <div className="overflow-x-auto pt-6">
@@ -50,8 +50,8 @@ export default async function CartPage() {
                   </label>
                 </th> */}
                 <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <th className="text-right">Price</th>
+                <th className="text-center">Quantity</th>
                 <th></th>
               </tr>
             </thead>
@@ -78,7 +78,7 @@ export default async function CartPage() {
                         </div>
                       </div>
                     </td>
-                    <td>
+                    <td className="text-right">
                       {lineItem.formatted_total_amount}
                       <br />
                       {!!lineItem.discount_cents && (
@@ -87,12 +87,12 @@ export default async function CartPage() {
                         </span>
                       )}
                     </td>
-                    <td>{lineItem.quantity}</td>
-                    <th>
+                    <td className="text-center">{lineItem.quantity}</td>
+                    <th className="text-right">
                       <form action={removeFromCart}>
                         <input hidden value={lineItem.id} name="lineItemId" readOnly />
                         <button type="submit" className="btn btn-ghost btn-xs">
-                          remove
+                          Remove
                         </button>
                       </form>
                     </th>

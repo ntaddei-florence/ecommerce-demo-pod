@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 
 import "./globals.css";
 import { getCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
-import { Navbar } from "~/components/navbar/navbar";
+import { Navbar } from "~/components/navbar";
 import { ApolloWrapper } from "~/graphql/apollo-provider";
 
 const inter = Inter({ subsets: ["latin"] });

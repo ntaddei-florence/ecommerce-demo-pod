@@ -1,11 +1,13 @@
 import { getSession, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import Link from "next/link";
 
+import { PageLayout } from "~/components/layouts/page-layout";
+
 export default withPageAuthRequired(
   async function Profile() {
     const session = await getSession();
     return (
-      <div className="px-4 py-8 container">
+      <PageLayout>
         <div className="text-sm breadcrumbs mb-4">
           <ul>
             <li>
@@ -37,7 +39,7 @@ export default withPageAuthRequired(
             </span>
           </div>
         </div>
-      </div>
+      </PageLayout>
     );
   },
   // returnTo must be included in the allowed callback URLs defined on Auth0

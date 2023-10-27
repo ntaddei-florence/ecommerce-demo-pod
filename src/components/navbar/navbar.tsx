@@ -19,13 +19,14 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
   const scrollY = useScrollY();
   const pathname = usePathname();
 
-  const shouldBeOpaque = scrollY > 0 || pathname === "/";
+  const isScrolled = scrollY > 0 || pathname === "/";
 
   return (
     <div
       className={clsx(
-        "navbar sticky top-0 z-30 hover:bg-base-100 transition ease-in-out duration-500",
-        { "bg-base-100": shouldBeOpaque }
+        "navbar sticky top-0 z-30 hover:bg-base-100",
+        "transition ease-in-out duration-300",
+        { "bg-base-100 shadow-lg": isScrolled }
       )}
     >
       <div className="flex-1">

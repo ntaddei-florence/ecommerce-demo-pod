@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { BasicCard } from ".";
+import { BasicCard } from "./basic-card";
 import { ProductCollectionDataFragment } from "~/graphql/generated/graphql";
 import { getLinkToVariant } from "~/utils/paths";
 

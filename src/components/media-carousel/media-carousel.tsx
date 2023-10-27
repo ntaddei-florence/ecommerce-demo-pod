@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import Image from "next/image";
 import { FC, useState } from "react";
 
@@ -37,9 +38,7 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
               key={mediaItem.url}
               width={64}
               height={64}
-              className={`rounded-lg ${
-                i === selectedImageIndex ? "border border-4 border-accent" : ""
-              }`}
+              className={clsx("rounded-lg", i === selectedImageIndex && "border-4 border-accent")}
               style={{ objectFit: "cover" }}
               onClick={() => setSelectedImageIndex(i)}
             />

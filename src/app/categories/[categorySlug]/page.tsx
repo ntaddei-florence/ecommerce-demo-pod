@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { ProductCard } from "~/components/cards/product-card";
+import { PageLayout } from "~/components/layouts/page-layout";
 import { getApolloClient } from "~/graphql/apollo-client";
 import { CategoryDetailDocument, CategoryDetailQuery } from "~/graphql/generated/graphql";
 
@@ -25,7 +26,7 @@ export default async function CategoryDetailPage({
   const category = categoryCollection?.items[0];
 
   return (
-    <div className="container mx-auto pt-8 px-4">
+    <PageLayout>
       <div className="text-sm breadcrumbs mb-4">
         <ul>
           <li>
@@ -42,6 +43,6 @@ export default async function CategoryDetailPage({
         )}
         {!productCollection?.items?.length && <h2>No products found for this category</h2>}
       </div>
-    </div>
+    </PageLayout>
   );
 }

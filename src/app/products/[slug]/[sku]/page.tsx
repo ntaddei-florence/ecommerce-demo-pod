@@ -1,4 +1,5 @@
 import { ProductDetail } from "~/app/products/product-detail";
+import { PageLayout } from "~/components/layouts/page-layout";
 import { getApolloClient } from "~/graphql/apollo-client";
 import { ProductSkuDetailDocument, ProductSkuDetailQuery } from "~/graphql/generated/graphql";
 
@@ -23,7 +24,7 @@ export default async function ProductDetailPage({ params: { slug, sku } }: Produ
   const variant = product?.variantsCollection?.items.find((v) => v?.sku === sku);
 
   return (
-    <div>
+    <PageLayout>
       {!variant ? (
         <h2>Product variant not found</h2>
       ) : !product ? (
@@ -31,6 +32,6 @@ export default async function ProductDetailPage({ params: { slug, sku } }: Produ
       ) : (
         <ProductDetail product={product} variant={variant} />
       )}
-    </div>
+    </PageLayout>
   );
 }

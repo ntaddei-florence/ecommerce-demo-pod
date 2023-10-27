@@ -1,4 +1,5 @@
-import { ProductDetail } from "~/app/products/product-detail";
+import { redirect } from "next/navigation";
+
 import { getApolloClient } from "~/graphql/apollo-client";
 import { ProductDetailDocument, ProductDetailQuery } from "~/graphql/generated/graphql";
 
@@ -21,15 +22,5 @@ export default async function ProductDetailPage({ params: { slug } }: ProductDet
   const variant = variantCollection?.items[0];
   const product = productCollection?.items[0];
 
-  return (
-    <div>
-      {!variant ? (
-        <h2>Product variant not found</h2>
-      ) : !product ? (
-        <h2>Product not found</h2>
-      ) : (
-        <ProductDetail product={product} variant={variant} />
-      )}
-    </div>
-  );
+  redirect(`/products/${product?.slug}/${variant?.sku}`);
 }

@@ -1,4 +1,4 @@
-import { CategoryCard } from "~/components/cards";
+import { CategoryCard } from "~/components/cards/category-card";
 import { getApolloClient } from "~/graphql/apollo-client";
 import { AllCategoriesDocument, AllCategoriesQuery } from "~/graphql/generated/graphql";
 
