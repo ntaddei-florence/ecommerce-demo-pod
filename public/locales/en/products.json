@@ -1,4 +1,6 @@
 {
-  "productVariantNotFound": "Variante prodotto non trovata",
-  "productNotFound": "Prodotto non trovato"
+  "productVariantNotFound": "Product variant not found",
+  "productNotFound": "Product not found",
+  "available": "Available",
+  "notAvailable": "Not available"
 }

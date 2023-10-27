@@ -4,5 +4,6 @@
   "quantity": "Quantity",
   "remove": "Rimuovi",
   "checkout": "Checkout",
-  "viewCart": "View cart"
+  "viewCart": "View cart",
+  "addToCart": "Add to cart"
 }
