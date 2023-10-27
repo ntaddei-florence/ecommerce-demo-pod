@@ -5,9 +5,11 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { CookiesProvider } from "next-client-cookies";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { FC } from "react";
 
 import { LogoutButton } from "./logout-button";
+import { getTranslations } from "~/i18n";
 
 export interface UserProfileDropdownProps {
   cookies: Array<{ name: string; value: string }>;
@@ -15,6 +17,9 @@ export interface UserProfileDropdownProps {
 
 export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({ cookies }) => {
   const { user, error, isLoading } = useUser();
+  const params = useParams();
+  const lang = params.lang as string;
+  const t = getTranslations(lang);
 
   return (
     <CookiesProvider value={cookies}>
@@ -51,7 +56,7 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({ cookies }) =
             <li>Error</li>
           ) : (
             <li>
-              <a href="/api/auth/login">Login</a>
+              <a href="/api/auth/login">{t("common.login")}</a>
             </li>
           )}
         </ul>
