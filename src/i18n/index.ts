@@ -14,10 +14,12 @@ function getDictionaryKey(key: NestedPath<Dictionary>, dictionary: Dictionary) {
   do {
     keyPart = keyParts.shift();
     if (typeof node === "string") {
+      // reached a leaf node
       return node;
     } else if (keyPart !== undefined) {
+      // we can keep navigating the subdictionary tree
       node = node[keyPart];
-    } else break;
+    } else break; // node is not a string, but we reached the end of key
   } while (node);
 
   return "";
