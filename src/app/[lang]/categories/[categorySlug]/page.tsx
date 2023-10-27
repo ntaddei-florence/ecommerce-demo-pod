@@ -4,7 +4,7 @@ import { ProductCard } from "~/components/cards/product-card";
 import { PageLayout } from "~/components/layouts/page-layout";
 import { getApolloClient } from "~/graphql/apollo-client";
 import { CategoryDetailDocument, CategoryDetailQuery } from "~/graphql/generated/graphql";
-import { localizedRoute } from "~/i18n";
+import { getTranslations, localizedRoute } from "~/i18n";
 
 export interface CategoryDetailProps {
   params: {
@@ -17,6 +17,7 @@ export default async function CategoryDetailPage({
   params: { categorySlug, lang },
 }: CategoryDetailProps) {
   const apolloClient = getApolloClient();
+  const t = getTranslations(lang);
 
   const {
     data: { productCollection, categoryCollection },
@@ -32,7 +33,7 @@ export default async function CategoryDetailPage({
       <div className="text-sm breadcrumbs mb-4">
         <ul>
           <li>
-            <Link href={localizedRoute("/", lang)}>Home</Link>
+            <Link href={localizedRoute("/", lang)}>{t("common.home")}</Link>
           </li>
           <li>
             <strong>{category?.categoryName}</strong>
@@ -43,7 +44,7 @@ export default async function CategoryDetailPage({
         {productCollection?.items.map((product) =>
           product ? <ProductCard lang={lang} product={product} key={product.slug} /> : null
         )}
-        {!productCollection?.items?.length && <h2>No products found for this category</h2>}
+        {!productCollection?.items?.length && <h2>{t("categories.noProductsFound")}</h2>}
       </div>
     </PageLayout>
   );
