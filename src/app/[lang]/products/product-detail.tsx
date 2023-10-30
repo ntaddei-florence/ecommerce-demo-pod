@@ -103,7 +103,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
                     title={`select color ${color?.colorName}`}
                     style={{ backgroundColor: color?.colorCode ?? undefined }}
                     className={clsx(
-                      "mx-1 border-4 w-[4ch] h-6",
+                      "mx-1 border-2 w-[4ch] h-8 rounded-md",
                       variant?.color?.colorCode === color?.colorCode
                         ? "border-accent"
                         : "border-transparent"
