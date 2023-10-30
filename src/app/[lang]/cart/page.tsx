@@ -8,10 +8,18 @@ import {
   getSalesChannelToken,
   removeFromCommerceLayerCart,
 } from "~/commerce-layer";
+import { getTranslations } from "~/i18n";
 
-export default async function CartPage() {
+export interface CartPageProps {
+  params: {
+    lang: string;
+  };
+}
+
+export default async function CartPage({ params: { lang } }: CartPageProps) {
   const clClient = await getCommerceLayerClient();
   const cart = await getCommerceLayerCart(clClient);
+  const t = getTranslations(lang);
 
   async function removeFromCart(data: FormData) {
     "use server";
@@ -36,6 +44,7 @@ export default async function CartPage() {
 
   return (
     <div className="container mx-auto pt-8 px-4">
+      {/* TODO i18n */}
       <p>Your shopping cart {cartLength ? `contains ${cartLength ?? 0} item(s)` : "is empty"}</p>
 
       {!!cartLength && (
@@ -49,9 +58,9 @@ export default async function CartPage() {
                     <input type="checkbox" className="checkbox" checked={false} />
                   </label>
                 </th> */}
-                <th>Product</th>
-                <th className="text-right">Price</th>
-                <th className="text-center">Quantity</th>
+                <th>{t("cart.product")}</th>
+                <th className="text-right">{t("cart.price")}</th>
+                <th className="text-center">{t("cart.quantity")}</th>
                 <th></th>
               </tr>
             </thead>
@@ -92,7 +101,7 @@ export default async function CartPage() {
                       <form action={removeFromCart}>
                         <input hidden value={lineItem.id} name="lineItemId" readOnly />
                         <button type="submit" className="btn btn-ghost btn-xs">
-                          Remove
+                          {t("cart.remove")}
                         </button>
                       </form>
                     </th>
@@ -106,7 +115,7 @@ export default async function CartPage() {
       {!!cartLength && (
         <form action={handleCheckout} className="w-full flex justify-end mt-4">
           <button type="submit" className="btn btn-primary">
-            Checkout
+            {t("cart.checkout")}
           </button>
         </form>
       )}

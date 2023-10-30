@@ -3,19 +3,22 @@ import { uniqBy } from "lodash";
 import Link from "next/link";
 import { FC } from "react";
 
-import { AddToCart } from "~/app/products/add-to-cart";
+import { AddToCart } from "./add-to-cart";
 import { MediaCarousel } from "~/components/media-carousel";
 import { ProductDetailDataFragment, VariantDataFragment } from "~/graphql/generated/graphql";
+import { getTranslations, localizedRoute } from "~/i18n";
 import { getLinkToVariant } from "~/utils/paths";
 import { renderRichText } from "~/utils/rich-text";
 
 export interface ProductDetailProps {
   product: ProductDetailDataFragment;
   variant: VariantDataFragment;
+  lang: string;
 }
 
-export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
+export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }) => {
   const media = variant.media ?? product.defaultMedia;
+  const t = getTranslations(lang);
 
   const allVariants = product.variantsCollection?.items;
 
@@ -35,7 +38,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
     });
     const variantForColor = variantSameSize ?? variantsForColor?.[0];
     if (variantForColor) {
-      return getLinkToVariant(variantForColor, product);
+      return localizedRoute(getLinkToVariant(variantForColor, product), lang);
     }
   };
 
@@ -44,7 +47,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
       (v) => v?.color?.colorCode === variant.color?.colorCode && size === v?.size?.label
     );
     if (variantForSize) {
-      return getLinkToVariant(variantForSize, product);
+      return localizedRoute(getLinkToVariant(variantForSize, product), lang);
     }
   };
 
@@ -63,11 +66,11 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
       <div className="text-sm breadcrumbs mb-4">
         <ul>
           <li>
-            <Link href="/">Home</Link>
+            <Link href={localizedRoute("/", lang)}>Home</Link>
           </li>
           {product?.category?.slug && (
             <li>
-              <Link href={`/categories/${product.category.slug}`}>
+              <Link href={localizedRoute(`/categories/${product.category.slug}`, lang)}>
                 {product.category.categoryName}
               </Link>
             </li>
@@ -89,7 +92,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
           {renderRichText(product?.description?.json)}
 
           <div className="flex items-center justify-between w-[50%]">
-            <strong>Colors:</strong>
+            <strong>{t("products.color")}</strong>
             <div>
               {availableColors.filter(Boolean).map((color) => (
                 <Link
@@ -112,7 +115,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
           </div>
 
           <div className="flex items-center justify-between w-[50%]">
-            <strong>Size:</strong>
+            <strong>{t("products.size")}</strong>
             <div>
               {availableSizes.filter(Boolean).map((size) => {
                 const isDisabled = !isSizeVariantAvailableForColor(size!.label!);
@@ -137,7 +140,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant }) => {
             </div>
           </div>
 
-          {variant.sku && <AddToCart sku={variant.sku} className="mt-6" />}
+          {variant.sku && <AddToCart lang={lang} sku={variant.sku} className="mt-6" />}
         </div>
       </div>
     </>

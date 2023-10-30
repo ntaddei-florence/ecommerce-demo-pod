@@ -1,0 +1,9 @@
+{
+  "product": "Product",
+  "price": "Price",
+  "quantity": "Quantity",
+  "remove": "Rimuovi",
+  "checkout": "Checkout",
+  "viewCart": "View cart",
+  "addToCart": "Add to cart"
+}

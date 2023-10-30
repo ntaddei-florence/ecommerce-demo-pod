@@ -2,14 +2,16 @@ import { redirect } from "next/navigation";
 
 import { getApolloClient } from "~/graphql/apollo-client";
 import { ProductDetailDocument, ProductDetailQuery } from "~/graphql/generated/graphql";
+import { localizedRoute } from "~/i18n";
 
 export interface ProductDetailProps {
   params: {
     slug: string;
+    lang: string;
   };
 }
 
-export default async function ProductDetailPage({ params: { slug } }: ProductDetailProps) {
+export default async function ProductDetailPage({ params: { slug, lang } }: ProductDetailProps) {
   const apolloClient = getApolloClient();
 
   const {
@@ -22,5 +24,5 @@ export default async function ProductDetailPage({ params: { slug } }: ProductDet
   const variant = variantCollection?.items[0];
   const product = productCollection?.items[0];
 
-  redirect(`/products/${product?.slug}/${variant?.sku}`);
+  redirect(localizedRoute(`/products/${product?.slug}/${variant?.sku}`, lang));
 }

@@ -1,3 +1,5 @@
 {
-  "test": "Test"
+  "home": "Home",
+  "logout": "Logout",
+  "login": "Login"
 }

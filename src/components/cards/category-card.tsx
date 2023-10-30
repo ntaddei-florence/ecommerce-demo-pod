@@ -3,15 +3,17 @@ import { FC } from "react";
 
 import { FlatCard } from "./flat-card";
 import { CategoryDataFragment } from "~/graphql/generated/graphql";
+import { localizedRoute } from "~/i18n";
 import { renderRichText } from "~/utils/rich-text";
 
 export interface CategoryCardProps {
   category: CategoryDataFragment;
+  lang: string;
 }
 
-export const CategoryCard: FC<CategoryCardProps> = ({ category }) => {
+export const CategoryCard: FC<CategoryCardProps> = ({ category, lang }) => {
   return (
-    <Link href={`/categories/${category.slug}`} key={category.slug}>
+    <Link href={localizedRoute(`/categories/${category.slug}`, lang)} key={category.slug}>
       <FlatCard
         image={category.image}
         title={category.categoryName}

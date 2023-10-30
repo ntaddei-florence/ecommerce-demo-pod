@@ -1,3 +1,5 @@
 {
-  "test": "Prova"
+  "home": "Home",
+  "logout": "Esci",
+  "login": "Accedi"
 }

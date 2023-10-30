@@ -8,6 +8,7 @@ import Link from "next/link";
 import { FC } from "react";
 
 import { LogoutButton } from "./logout-button";
+import { useClientI18n } from "~/i18n/hooks";
 
 export interface UserProfileDropdownProps {
   cookies: Array<{ name: string; value: string }>;
@@ -15,6 +16,7 @@ export interface UserProfileDropdownProps {
 
 export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({ cookies }) => {
   const { user, error, isLoading } = useUser();
+  const { t, localizedRoute } = useClientI18n();
 
   return (
     <CookiesProvider value={cookies}>
@@ -37,7 +39,7 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({ cookies }) =
           {user ? (
             <>
               <li>
-                <Link href="/profile">
+                <Link href={localizedRoute("/profile")}>
                   <p title={user.name ?? ""} className="truncate">
                     {user.name}
                   </p>
@@ -51,7 +53,7 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({ cookies }) =
             <li>Error</li>
           ) : (
             <li>
-              <a href="/api/auth/login">Login</a>
+              <a href="/api/auth/login">{t("common.login")}</a>
             </li>
           )}
         </ul>

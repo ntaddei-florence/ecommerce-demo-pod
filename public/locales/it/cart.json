@@ -1,0 +1,9 @@
+{
+  "product": "Prodott",
+  "price": "Prezzo",
+  "quantity": "Quantità",
+  "remove": "Rimuovi",
+  "checkout": "Checkout",
+  "viewCart": "Vai al carrello",
+  "addToCart": "Aggiungi al carrello"
+}

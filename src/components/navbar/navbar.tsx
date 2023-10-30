@@ -9,6 +9,7 @@ import { FC } from "react";
 import { ShoppingCartDropdown } from "./shopping-cart-dropdown";
 import { UserProfileDropdown } from "./user-profile-dropdown";
 import { useScrollY } from "~/hooks/use-scroll-y";
+import { useClientI18n } from "~/i18n/hooks";
 
 export interface NavbarProps {
   cart: Order | null;
@@ -16,6 +17,8 @@ export interface NavbarProps {
 }
 
 export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
+  const { localizedRoute } = useClientI18n();
+
   const scrollY = useScrollY();
   const pathname = usePathname();
 
@@ -31,7 +34,7 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
     >
       <div className="flex-1">
         {/* Logo */}
-        <Link href="/" className="btn btn-ghost normal-case text-xl">
+        <Link href={localizedRoute("/")} className="btn btn-ghost normal-case text-xl">
           {/* Site name */}
           My E-Commerce
         </Link>
