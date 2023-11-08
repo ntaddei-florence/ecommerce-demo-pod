@@ -1,10 +1,11 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
+import { config as dotenvConfig } from "dotenv";
 
-require("dotenv").config({
+dotenvConfig({
   path: `.env.${process.env.NODE_ENV ?? "local"}`,
 });
 
-const config: CodegenConfig = {
+const codegenConfig: CodegenConfig = {
   overwrite: true,
   schema: {
     [process.env.GRAPHQL_URL!]: {
@@ -24,4 +25,4 @@ const config: CodegenConfig = {
   },
 };
 
-export default config;
+export default codegenConfig;
