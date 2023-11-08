@@ -4,6 +4,9 @@ import type { Config, Context } from "@netlify/functions";
 export default async (req: Request, context: Context) => {
   console.log(req);
   console.log(context);
+  // if (req.method !== "PATCH") {
+  //   return new Response(null, { status: 405 });
+  // }
   return Response.json({ data: "Hello World!" });
 };
 
@@ -11,5 +14,6 @@ export default async (req: Request, context: Context) => {
 
 export const config: Config = {
   method: "PATCH",
+  // path: "/akeneo/pluto",
   // path: "/algolia/push/contentful",
 };
