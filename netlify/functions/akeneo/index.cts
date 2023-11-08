@@ -7,7 +7,7 @@ export default async (req: Request, context: Context) => {
   // if (req.method !== "PATCH") {
   //   return new Response(null, { status: 405 });
   // }
-  return Response.json({ data: "Hello World!" });
+  return Response.json({ requestBody: await req.json() });
 };
 
 // export default syncAlgolia;
