@@ -40,5 +40,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // Matcher ignoring `/_next/` and `/api/`
-  matcher: ["/((?!api|_next|favicon.ico|.netlify).*)"],
+  matcher: ["/((?!api|_next|_ipx|favicon.ico|.netlify).*)"],
 };
