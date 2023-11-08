@@ -39,4 +39,3 @@ src/graphql/generated
 
 # Local Netlify folder
 .netlify
-!.netlify/functions

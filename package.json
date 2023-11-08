@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "codegen": "graphql-codegen --config src/graphql/codegen.ts",
+    "prebuild": "npm run codegen",
     "prestart": "npm run codegen",
     "predev": "npm run codegen",
     "format": "prettier --check --ignore-path .gitignore .",
