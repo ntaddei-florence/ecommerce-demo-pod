@@ -21,9 +21,21 @@ function getDictionaryKey(key: NestedPath<Dictionary>, dictionary: Dictionary) {
   return "";
 }
 
+export function formatTemplate(template: string, params?: Record<string, string | number>) {
+  if (!params) return template;
+  return Object.keys(params).reduce((acc, cur) => {
+    const value = params[cur];
+    const valueAsString = typeof value === "string" ? value : value.toString();
+    return acc.replace(new RegExp(`{{${cur}}}`), valueAsString);
+  }, template);
+}
+
 export function getTranslations(lng: string) {
   const dict = dictionaries[lng as SupportedLanguages];
-  return (key: NestedPath<Dictionary>) => getDictionaryKey(key, dict);
+  return (key: NestedPath<Dictionary>, params?: Record<string, string | number>) => {
+    const template = getDictionaryKey(key, dict);
+    return formatTemplate(template, params);
+  };
 }
 
 export function localizedRoute(route: string, lang: string) {

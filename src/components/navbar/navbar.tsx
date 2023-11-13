@@ -1,6 +1,7 @@
 "use client";
 
 import { Order } from "@commercelayer/sdk";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -40,6 +41,9 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
         </Link>
       </div>
       <div className="flex-none flex gap-3">
+        <Link href={localizedRoute("/search")}>
+          <MagnifyingGlassIcon className="w-8" />
+        </Link>
         <ShoppingCartDropdown cart={cart} />
         <UserProfileDropdown cookies={cookies} />
       </div>

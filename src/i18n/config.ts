@@ -2,10 +2,12 @@ import enCart from "../../public/locales/en/cart.json";
 import enCategories from "../../public/locales/en/categories.json";
 import enCommon from "../../public/locales/en/common.json";
 import enProducts from "../../public/locales/en/products.json";
+import enSearch from "../../public/locales/en/search.json";
 import itCart from "../../public/locales/it/cart.json";
 import itCategories from "../../public/locales/it/categories.json";
 import itCommon from "../../public/locales/it/common.json";
 import itProducts from "../../public/locales/it/products.json";
+import itSearch from "../../public/locales/it/search.json";
 
 export enum SupportedLanguages {
   En = "en",
@@ -17,6 +19,7 @@ export type Dictionary = {
   cart: typeof enCart;
   categories: typeof enCategories;
   products: typeof enProducts;
+  search: typeof enSearch;
 };
 
 export const dictionaries: Record<SupportedLanguages, Dictionary> = {
@@ -25,12 +28,14 @@ export const dictionaries: Record<SupportedLanguages, Dictionary> = {
     cart: enCart,
     categories: enCategories,
     products: enProducts,
+    search: enSearch,
   },
   it: {
     common: itCommon,
     cart: itCart,
     categories: itCategories,
     products: itProducts,
+    search: itSearch,
   },
 };
 
