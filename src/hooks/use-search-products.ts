@@ -28,7 +28,6 @@ export function useSearchProducts(params?: UseSearchProductsProps) {
       getProductIndex(searchClient)
         .search<ProductIndexData>(query)
         .then(({ hits }) => {
-          console.log("hits", hits); // TODO remove me
           setSearchHits(hits);
         })
         .catch((e) => {

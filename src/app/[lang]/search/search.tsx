@@ -33,17 +33,25 @@ export function Search() {
           <div className="text-center text-xl">{t("search.noResults", { searchString })}</div>
         )}
 
-        {searchHits?.map(({ objectID, values }) => (
-          <div className="p-4" key={objectID}>
-            <Link
-              href={localizedRoute(`/products/${objectID}`)}
-              className="text-xl font-semibold pb-1 link link-primary"
-            >
-              {getLocalizedFieldValue(values.name, lang)?.data}
-            </Link>
-            <h4>{getLocalizedFieldValue(values.description, lang)?.data}</h4>
+        {searchHits?.length && (
+          <p className="mb-4 text-lg">{t("search.resultsCount", { count: searchHits.length })}</p>
+        )}
+
+        {searchHits && (
+          <div className="flex flex-col gap-3">
+            {searchHits.map(({ objectID, values }) => (
+              <div className="p-4 border border-light rounded-lg shadow" key={objectID}>
+                <Link
+                  href={localizedRoute(`/products/${objectID}`)}
+                  className="text-xl font-semibold pb-1 link link-primary"
+                >
+                  {getLocalizedFieldValue(values.name, lang)?.data}
+                </Link>
+                <h4 className="mt-4">{getLocalizedFieldValue(values.description, lang)?.data}</h4>
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
 {
-  "noResults": "Nessun risultato per \"{{searchString}}\""
+  "noResults": "Nessun risultato per \"{{searchString}}\"",
+  "resultsCount": "{{count}} risultati"
 }
