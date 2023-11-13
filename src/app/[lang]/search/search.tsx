@@ -1,42 +1,13 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { debounce } from "lodash";
-import { useEffect, useRef, useState } from "react";
 
-import { getProductIndex, searchClient } from "~/algolia";
-import { ProductIndexData } from "~/algolia/types";
+import { useSearchProducts } from "~/hooks/useSearchProducts";
 import { useClientI18n } from "~/i18n/hooks";
 
 export function Search() {
-  const [searchString, setSearchString] = useState("");
-  const [searchHits, setSearchHits] = useState<ProductIndexData[]>([]);
-  const [isLoading, setLoading] = useState(false);
-
+  const { searchString, setSearchString, searchHits, isLoading } = useSearchProducts();
   const { t } = useClientI18n();
-
-  const debouncedSearch = useRef(
-    debounce((query: string) => {
-      setLoading(true);
-      getProductIndex(searchClient)
-        .search<ProductIndexData>(query)
-        .then(({ hits }) => {
-          console.log("hits", hits);
-          setSearchHits(hits);
-        })
-        .catch((e) => {
-          console.error(e);
-          setSearchHits([]);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }, 500)
-  );
-
-  useEffect(() => {
-    debouncedSearch.current(searchString);
-  }, [searchString]);
 
   return (
     <div className="p-8 flex flex-col gap-8">
