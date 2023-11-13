@@ -13,7 +13,7 @@ const QUERYSTRING_KEY = "q";
 
 export function useSearchProducts(params?: UseSearchProductsProps) {
   const [searchString, setSearchString] = useState(params?.searchString ?? "");
-  const [searchHits, setSearchHits] = useState<ProductIndexData[]>([]);
+  const [searchHits, setSearchHits] = useState<ProductIndexData[] | null>(null);
   const [isLoading, setLoading] = useState(false);
 
   const queryParams = useSearchParams();
@@ -23,7 +23,7 @@ export function useSearchProducts(params?: UseSearchProductsProps) {
 
     setLoading(true);
     if (!query) {
-      setSearchHits([]);
+      setSearchHits(null);
     } else {
       getProductIndex(searchClient)
         .search<ProductIndexData>(query)

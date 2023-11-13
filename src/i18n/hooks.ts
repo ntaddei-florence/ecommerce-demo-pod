@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
-import { getTranslations, localizedRoute } from ".";
+import { getTranslations, localizedRoute } from "./core";
 
 export function useClientI18n() {
   const params = useParams();

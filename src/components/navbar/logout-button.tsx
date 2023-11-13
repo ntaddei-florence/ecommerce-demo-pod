@@ -3,7 +3,7 @@
 import { FC } from "react";
 
 import { useOnClientLogout } from "~/hooks/use-on-client-logout";
-import { useClientI18n } from "~/i18n/hooks";
+import { useClientI18n } from "~/i18n";
 
 export const LogoutButton: FC = () => {
   const { t } = useClientI18n();

@@ -1,13 +1,12 @@
-export interface LocalizedField<T = string> {
-  "en-US": T;
-}
+import { LocalizedAkeneoField } from "~/akeneo";
 
 export interface ProductIndexData {
-  price?: number;
   objectID: string;
-  fields?: {
-    categoryName?: LocalizedField;
-    internalName?: LocalizedField;
-    slug: LocalizedField;
-  };
+  uuid: string;
+  identifier: string;
+  family: string;
+  categories: string[];
+  values: Record<"name" | "description", LocalizedAkeneoField[]>;
+  created: string;
+  updated: string;
 }

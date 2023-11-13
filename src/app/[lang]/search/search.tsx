@@ -1,13 +1,15 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
+import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { useSearchProducts } from "~/hooks/use-search-products";
-import { useClientI18n } from "~/i18n/hooks";
+import { useClientI18n } from "~/i18n";
 
 export function Search() {
   const { searchString, setSearchString, searchHits, isLoading } = useSearchProducts();
-  const { t } = useClientI18n();
+  const { t, lang, localizedRoute } = useClientI18n();
 
   return (
     <div className="p-8 flex flex-col gap-8">
@@ -27,15 +29,19 @@ export function Search() {
       </div>
 
       <div>
-        {!searchHits.length && searchString && !isLoading && (
+        {!searchHits?.length && searchString && !isLoading && (
           <div className="text-center text-xl">{t("search.noResults", { searchString })}</div>
         )}
 
-        {searchHits.map(({ objectID, fields, price }) => (
+        {searchHits?.map(({ objectID, values }) => (
           <div className="p-4" key={objectID}>
-            {/* TODO: i18n */}
-            <h3>{fields?.internalName?.["en-US"]}</h3>
-            <p>{price}</p>
+            <Link
+              href={localizedRoute(`/products/${objectID}`)}
+              className="text-xl font-semibold pb-1 link link-primary"
+            >
+              {getLocalizedFieldValue(values.name, lang)?.data}
+            </Link>
+            <h4>{getLocalizedFieldValue(values.description, lang)?.data}</h4>
           </div>
         ))}
       </div>
