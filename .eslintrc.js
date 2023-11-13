@@ -7,6 +7,7 @@ module.exports = {
     "react/display-name": "off",
     "prettier/prettier": "error",
     "no-empty-pattern": "off",
+    "import/no-anonymous-default-export": "off",
     "react/jsx-key": [
       "warn",
       {
