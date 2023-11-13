@@ -6,9 +6,6 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "placekitten.com", // FIXME just for development
-      },
-      {
         hostname: "images.ctfassets.net",
       },
       {
@@ -16,6 +13,9 @@ const nextConfig = {
       },
       {
         hostname: "s.gravatar.com",
+      },
+      {
+        hostname: "placehold.co",
       },
     ],
   },

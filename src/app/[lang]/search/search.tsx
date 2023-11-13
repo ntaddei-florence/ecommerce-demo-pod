@@ -1,6 +1,7 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import Link from "next/link";
 
 import { getLocalizedFieldValue } from "~/akeneo/utils";
@@ -40,14 +41,38 @@ export function Search() {
         {searchHits && (
           <div className="flex flex-col gap-3">
             {searchHits.map(({ objectID, values }) => (
-              <div className="p-4 border border-light rounded-lg shadow" key={objectID}>
-                <Link
-                  href={localizedRoute(`/products/${objectID}`)}
-                  className="text-xl font-semibold pb-1 link link-primary"
-                >
-                  {getLocalizedFieldValue(values.name, lang)?.data}
-                </Link>
-                <h4 className="mt-4">{getLocalizedFieldValue(values.description, lang)?.data}</h4>
+              <div
+                className="p-4 border border-light rounded-lg shadow flex flex-col sm:flex-row gap-4 items-center"
+                key={objectID}
+              >
+                <div>
+                  <Image
+                    src="https://placehold.co/400x300"
+                    loader={({ src }) => src} // TODO: remove me
+                    width={400}
+                    height={300}
+                    alt=""
+                  />
+                </div>
+                <div className="flex flex-col gap-4 justify-between">
+                  <div>
+                    <Link
+                      href={localizedRoute(`/products/${objectID}`)}
+                      className="text-xl font-semibold pb-1 link link-primary"
+                    >
+                      {getLocalizedFieldValue(values.name, lang)?.data}
+                    </Link>
+                    <h4 className="mt-4">
+                      {getLocalizedFieldValue(values.description, lang)?.data}
+                    </h4>
+                  </div>
+                  <div className="w-full flex justify-between items-center gap-2">
+                    <div className="flex gap-2 items-center text-lg">
+                      <p className="line-through">399$</p>
+                      <p className="font-bold">300$</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
