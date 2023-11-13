@@ -2,7 +2,7 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-import { useSearchProducts } from "~/hooks/useSearchProducts";
+import { useSearchProducts } from "~/hooks/use-search-products";
 import { useClientI18n } from "~/i18n/hooks";
 
 export function Search() {
@@ -26,15 +26,16 @@ export function Search() {
         </label>
       </div>
 
-      <div className="">
+      <div>
         {!searchHits.length && searchString && !isLoading && (
           <div className="text-center text-xl">{t("search.noResults", { searchString })}</div>
         )}
 
-        {searchHits.map((hit) => (
-          <div className="p-4" key={hit.objectID}>
-            <h3>{hit.fields?.internalName?.["en-US"]}</h3>
-            <p>{hit?.price}</p>
+        {searchHits.map(({ objectID, fields, price }) => (
+          <div className="p-4" key={objectID}>
+            {/* TODO: i18n */}
+            <h3>{fields?.internalName?.["en-US"]}</h3>
+            <p>{price}</p>
           </div>
         ))}
       </div>
