@@ -4,6 +4,7 @@ import { LocalizedAkeneoField } from "./types";
 import { i18nConfig } from "~/i18n";
 
 const { i18n } = i18nConfig;
+
 export function getLocalizedFieldValue(fields: LocalizedAkeneoField[], lang: string) {
   const localizedItem = fields.find((f) => f.locale === lang);
   if (localizedItem) return localizedItem;

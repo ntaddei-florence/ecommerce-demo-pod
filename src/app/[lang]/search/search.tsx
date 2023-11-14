@@ -40,21 +40,25 @@ export function Search() {
 
         {searchHits && (
           <div className="flex flex-col gap-3">
-            {searchHits.map(({ objectID, values }) => (
+            {searchHits.map(({ objectID, values, image, price }) => (
               <div
                 className="p-4 border border-light rounded-lg shadow flex flex-col sm:flex-row gap-4 items-center"
                 key={objectID}
               >
                 <div>
-                  <Image
-                    src="https://placehold.co/400x300"
-                    loader={({ src }) => src} // TODO: remove me
-                    width={400}
-                    height={300}
-                    alt=""
-                  />
+                  {/* TODO missing image placeholder */}
+                  {image?.url && (
+                    <Image
+                      src={image.url}
+                      loader={({ src }) => src} // TODO: remove me
+                      width={400}
+                      height={300}
+                      objectFit="cover"
+                      alt=""
+                    />
+                  )}
                 </div>
-                <div className="flex flex-col gap-4 justify-between">
+                <div className="flex flex-col gap-4 justify-between h-full">
                   <div>
                     <Link
                       href={localizedRoute(`/products/${objectID}`)}
@@ -68,8 +72,10 @@ export function Search() {
                   </div>
                   <div className="w-full flex justify-between items-center gap-2">
                     <div className="flex gap-2 items-center text-lg">
-                      <p className="line-through">399$</p>
-                      <p className="font-bold">300$</p>
+                      {price?.compareAmount && (
+                        <p className="line-through">{price.compareAmount}</p>
+                      )}
+                      {price?.amount && <p className="font-bold">{price.amount}</p>}
                     </div>
                   </div>
                 </div>

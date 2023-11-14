@@ -1,3 +1,5 @@
+import { Dictionary } from "./config";
+
 type Primitive = string | number | bigint | boolean | undefined | symbol;
 
 export type NestedPath<T, Prefix = ""> = {
@@ -5,3 +7,8 @@ export type NestedPath<T, Prefix = ""> = {
     ? `${string & Prefix}${string & K}`
     : `${string & Prefix}${string & K}` | NestedPath<T[K], `${string & Prefix}${string & K}.`>;
 }[keyof T];
+
+export type TFunction = (
+  key: NestedPath<Dictionary>,
+  params?: Record<string, string | number>
+) => string;

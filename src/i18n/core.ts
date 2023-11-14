@@ -1,5 +1,5 @@
 import { dictionaries, Dictionary, SupportedLanguages } from "./config";
-import { NestedPath } from "./types";
+import { NestedPath, TFunction } from "./types";
 
 type SubDictionary = string | { [key: string]: SubDictionary };
 
@@ -30,7 +30,7 @@ export function formatTemplate(template: string, params?: Record<string, string 
   }, template);
 }
 
-export function getTranslations(lng: string) {
+export function getTranslations(lng: string): TFunction {
   const dict = dictionaries[lng as SupportedLanguages];
   return (key: NestedPath<Dictionary>, params?: Record<string, string | number>) => {
     const template = getDictionaryKey(key, dict);
