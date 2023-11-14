@@ -1,4 +1,4 @@
-import { Dictionary } from "./config";
+import { Dictionary, SupportedLanguages } from "./config";
 
 type Primitive = string | number | bigint | boolean | undefined | symbol;
 
@@ -9,6 +9,22 @@ export type NestedPath<T, Prefix = ""> = {
 }[keyof T];
 
 export type TFunction = (
+  lang: SupportedLanguages,
   key: NestedPath<Dictionary>,
-  params?: Record<string, string | number>
+  params?: ContextParams,
+  removeEmpty?: boolean
 ) => string;
+
+export enum SupportedCurrency {
+  Eur = "EUR",
+  Usd = "USD",
+}
+
+export type ContextParams = Partial<{
+  count: number;
+  currency: SupportedCurrency;
+}> &
+  // other params, not used in plugins
+  Record<string, string | number | undefined>;
+
+export type ContextPlugin = (params: ContextParams) => string | null | Array<string | null>;

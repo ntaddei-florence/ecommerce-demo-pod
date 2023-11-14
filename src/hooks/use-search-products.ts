@@ -1,30 +1,45 @@
 import { debounce } from "lodash";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { getProductIndex, searchClient } from "~/algolia";
 import { ProductIndexData } from "~/algolia/types";
 
-export interface UseSearchProductsProps {
-  searchString?: string;
-}
-
 const QUERYSTRING_KEY = "q";
 
-export function useSearchProducts(params?: UseSearchProductsProps) {
-  const [searchString, setSearchString] = useState(params?.searchString ?? "");
-  const [searchHits, setSearchHits] = useState<ProductIndexData[] | null>(null);
-  const [isLoading, setLoading] = useState(false);
-
+export function useSearchProducts() {
   const queryParams = useSearchParams();
 
-  const search = useCallback(() => {
-    const query = queryParams.get(QUERYSTRING_KEY);
+  const query = queryParams.get(QUERYSTRING_KEY);
+  const [searchInput, setSearchInput] = useState(query ?? "");
+  const [searchHits, setSearchHits] = useState<ProductIndexData[] | null>(null);
+  const [isLoading, setLoading] = useState(!!query);
 
-    setLoading(true);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const debouncedSetQueryString = useRef(
+    debounce((query: string) => {
+      const current = new URLSearchParams(Array.from(queryParams.entries()));
+      if (query) {
+        current.set(QUERYSTRING_KEY, query);
+      } else {
+        current.delete(QUERYSTRING_KEY);
+      }
+      const search = current.toString();
+      router.push(`${pathname}${search ? `?${search}` : ""}`);
+    }, 500)
+  );
+
+  useEffect(() => {
+    debouncedSetQueryString.current(searchInput);
+  }, [searchInput]);
+
+  useEffect(() => {
     if (!query) {
       setSearchHits(null);
     } else {
+      setLoading(true);
       getProductIndex(searchClient)
         .search<ProductIndexData>(query)
         .then(({ hits }) => {
@@ -38,37 +53,16 @@ export function useSearchProducts(params?: UseSearchProductsProps) {
           setLoading(false);
         });
     }
-  }, [queryParams]);
-
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const debouncedSetQueryString = useRef(
-    debounce((query: string) => {
-      const current = new URLSearchParams(Array.from(queryParams.entries()));
-      if (query) {
-        current.set(QUERYSTRING_KEY, query);
-      }
-      const search = current.toString();
-      router.push(`${pathname}${search ? `?${search}` : ""}`);
-    }, 500)
-  );
-
-  useEffect(() => {
-    debouncedSetQueryString.current(searchString);
-  }, [searchString]);
-
-  useEffect(() => {
-    search();
-  }, [search]);
+  }, [query]);
 
   return useMemo(
     () => ({
+      query,
       isLoading,
       searchHits,
-      searchString,
-      setSearchString: (query: string) => setSearchString(query.trimStart()),
+      searchInput,
+      setSearchInput: (query: string) => setSearchInput(query.trimStart()),
     }),
-    [isLoading, searchHits, searchString]
+    [isLoading, searchHits, query, searchInput]
   );
 }

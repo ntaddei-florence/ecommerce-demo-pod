@@ -3,14 +3,28 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo } from "react";
 
 import { getLocalizedFieldValue } from "~/akeneo/utils";
+import { Loader } from "~/app/loading";
 import { useSearchProducts } from "~/hooks/use-search-products";
-import { useClientI18n } from "~/i18n";
+import { Dictionary, NestedPath, SupportedCurrency, useClientI18n } from "~/i18n";
 
 export function Search() {
-  const { searchString, setSearchString, searchHits, isLoading } = useSearchProducts();
-  const { t, lang, localizedRoute } = useClientI18n();
+  const { searchInput, setSearchInput, query, searchHits, isLoading } = useSearchProducts();
+  const { t, lang, localizedRoute, formatPrice } = useClientI18n();
+
+  const hitsCount = searchHits?.length;
+  const resultsCountKey = useMemo<NestedPath<Dictionary>>(() => {
+    switch (hitsCount) {
+      case 0:
+        return "search.noResults";
+      case 1:
+        return "search.resultsCount";
+      default:
+        return "search.resultsCount_many";
+    }
+  }, [hitsCount]);
 
   return (
     <div className="p-8 flex flex-col gap-8">
@@ -20,8 +34,8 @@ export function Search() {
 
           <input
             type="text"
-            value={searchString}
-            onChange={(e) => setSearchString(e.target.value)}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             placeholder={`i.e. "smartphone"`}
             id="search-input"
             className="form-input w-full input input-bordered rounded-lg"
@@ -30,12 +44,15 @@ export function Search() {
       </div>
 
       <div>
-        {!searchHits?.length && searchString && !isLoading && (
-          <div className="text-center text-xl">{t("search.noResults", { searchString })}</div>
+        {isLoading && (
+          <div className="w-full h-full flex items-center justify-center">
+            <Loader />
+          </div>
         )}
-
-        {searchHits?.length && (
-          <p className="mb-4 text-lg">{t("search.resultsCount", { count: searchHits.length })}</p>
+        {query && !isLoading && (
+          <div className="text-center text-xl mb-2">
+            {t(resultsCountKey, { count: hitsCount ?? 0, query: query ?? "" })}
+          </div>
         )}
 
         {searchHits && (
@@ -73,9 +90,15 @@ export function Search() {
                   <div className="w-full flex justify-between items-center gap-2">
                     <div className="flex gap-2 items-center text-lg">
                       {price?.compareAmount && (
-                        <p className="line-through">{price.compareAmount}</p>
+                        <p className="line-through">
+                          {formatPrice(price.compareAmount, price.currency as SupportedCurrency)}
+                        </p>
                       )}
-                      {price?.amount && <p className="font-bold">{price.amount}</p>}
+                      {price?.amount && (
+                        <p className="font-bold">
+                          {formatPrice(price.amount, price.currency as SupportedCurrency)}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>

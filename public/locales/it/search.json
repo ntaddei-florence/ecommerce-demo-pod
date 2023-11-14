@@ -1,4 +1,5 @@
 {
-  "noResults": "Nessun risultato per \"{{searchString}}\"",
-  "resultsCount": "{{count}} risultati"
+  "noResults": "Nessun risultato per \"{{query}}\"",
+  "resultsCount": "{{count}} risultato per \"{{query}}\"",
+  "resultsCount_many": "{{count}} risultati per \"{{query}}\""
 }
