@@ -1,5 +1,7 @@
 {
   "noResults": "Nessun risultato per \"{{query}}\"",
   "resultsCount": "{{count}} risultato per \"{{query}}\"",
-  "resultsCount_many": "{{count}} risultati per \"{{query}}\""
+  "resultsCount_many": "{{count}} risultati per \"{{query}}\"",
+  "productsSectionTitle": "Prodotti",
+  "categoriesSectionTitle": "Categorie"
 }

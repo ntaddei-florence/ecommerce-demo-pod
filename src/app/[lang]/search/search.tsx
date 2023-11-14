@@ -1,20 +1,19 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
-import Link from "next/link";
 import { useMemo } from "react";
 
-import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { Loader } from "~/app/loading";
-import { useSearchProducts } from "~/hooks/use-search-products";
-import { Dictionary, NestedPath, SupportedCurrency, useClientI18n } from "~/i18n";
+import { CategorySearchItem } from "~/components/search/category-search-item";
+import { ProductSearchItem } from "~/components/search/product-search-item";
+import { useSearch } from "~/hooks/use-search";
+import { Dictionary, NestedPath, useClientI18n } from "~/i18n";
 
 export function Search() {
-  const { searchInput, setSearchInput, query, searchHits, isLoading } = useSearchProducts();
-  const { t, lang, localizedRoute, formatPrice } = useClientI18n();
+  const { searchInput, setSearchInput, query, productHits, categoryHits, isLoading } = useSearch();
+  const { t } = useClientI18n();
 
-  const hitsCount = searchHits?.length;
+  const hitsCount = (productHits?.length ?? 0) + (categoryHits?.length ?? 0);
   const resultsCountKey = useMemo<NestedPath<Dictionary>>(() => {
     switch (hitsCount) {
       case 0:
@@ -55,54 +54,20 @@ export function Search() {
           </div>
         )}
 
-        {searchHits && (
+        {productHits && (
           <div className="flex flex-col gap-3">
-            {searchHits.map(({ objectID, values, image, price }) => (
-              <div
-                className="p-4 border border-light rounded-lg shadow flex flex-col sm:flex-row gap-4 items-center"
-                key={objectID}
-              >
-                <div>
-                  {/* TODO missing image placeholder */}
-                  {image?.url && (
-                    <Image
-                      src={image.url}
-                      loader={({ src }) => src} // TODO: remove me
-                      width={400}
-                      height={300}
-                      objectFit="cover"
-                      alt=""
-                    />
-                  )}
-                </div>
-                <div className="flex flex-col gap-4 justify-between h-full">
-                  <div>
-                    <Link
-                      href={localizedRoute(`/products/${objectID}`)}
-                      className="text-xl font-semibold pb-1 link link-primary"
-                    >
-                      {getLocalizedFieldValue(values.name, lang)?.data}
-                    </Link>
-                    <h4 className="mt-4">
-                      {getLocalizedFieldValue(values.description, lang)?.data}
-                    </h4>
-                  </div>
-                  <div className="w-full flex justify-between items-center gap-2">
-                    <div className="flex gap-2 items-center text-lg">
-                      {price?.compareAmount && (
-                        <p className="line-through">
-                          {formatPrice(price.compareAmount, price.currency as SupportedCurrency)}
-                        </p>
-                      )}
-                      {price?.amount && (
-                        <p className="font-bold">
-                          {formatPrice(price.amount, price.currency as SupportedCurrency)}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <h2 className="text-2xl font-semibold">{t("search.productsSectionTitle")}</h2>
+            {productHits.map((productItem) => (
+              <ProductSearchItem {...productItem} key={productItem.objectID} />
+            ))}
+          </div>
+        )}
+
+        {categoryHits && (
+          <div className="flex flex-col gap-3 mt-8">
+            <h2 className="text-2xl font-semibold">{t("search.categoriesSectionTitle")}</h2>
+            {categoryHits.map((categoryItem) => (
+              <CategorySearchItem {...categoryItem} key={categoryItem.objectID} />
             ))}
           </div>
         )}

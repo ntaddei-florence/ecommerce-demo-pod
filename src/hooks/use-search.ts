@@ -2,17 +2,18 @@ import { debounce } from "lodash";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { getProductIndex, searchClient } from "~/algolia";
-import { ProductIndexData } from "~/algolia/types";
+import { getCategoryIndex, getProductIndex, searchClient } from "~/algolia";
+import { CategoryIndexData, ProductIndexData } from "~/algolia/types";
 
 const QUERYSTRING_KEY = "q";
 
-export function useSearchProducts() {
+export function useSearch() {
   const queryParams = useSearchParams();
 
   const query = queryParams.get(QUERYSTRING_KEY);
   const [searchInput, setSearchInput] = useState(query ?? "");
-  const [searchHits, setSearchHits] = useState<ProductIndexData[] | null>(null);
+  const [productHits, setProductHits] = useState<ProductIndexData[] | null>(null);
+  const [categoryHits, setCategoryHits] = useState<CategoryIndexData[] | null>(null);
   const [isLoading, setLoading] = useState(!!query);
 
   const router = useRouter();
@@ -37,17 +38,18 @@ export function useSearchProducts() {
 
   useEffect(() => {
     if (!query) {
-      setSearchHits(null);
+      setProductHits(null);
+      setCategoryHits(null);
     } else {
       setLoading(true);
-      getProductIndex(searchClient)
-        .search<ProductIndexData>(query)
-        .then(({ hits }) => {
-          setSearchHits(hits);
-        })
-        .catch((e) => {
-          console.error(e);
-          setSearchHits([]);
+
+      Promise.all([
+        getProductIndex(searchClient).search<ProductIndexData>(query),
+        getCategoryIndex(searchClient).search<CategoryIndexData>(query),
+      ])
+        .then(([productIndexResult, categoryIndexResult]) => {
+          setProductHits(productIndexResult?.hits ?? []);
+          setCategoryHits(categoryIndexResult?.hits ?? []);
         })
         .finally(() => {
           setLoading(false);
@@ -59,10 +61,11 @@ export function useSearchProducts() {
     () => ({
       query,
       isLoading,
-      searchHits,
+      productHits,
+      categoryHits,
       searchInput,
       setSearchInput: (query: string) => setSearchInput(query.trimStart()),
     }),
-    [isLoading, searchHits, query, searchInput]
+    [isLoading, productHits, categoryHits, query, searchInput]
   );
 }
