@@ -6,7 +6,7 @@ import { FC } from "react";
 import { AddToCart } from "./add-to-cart";
 import { MediaCarousel } from "~/components/media-carousel";
 import { ProductDetailDataFragment, VariantDataFragment } from "~/graphql/generated/graphql";
-import { getTranslations, localizedRoute } from "~/i18n";
+import { getTranslations, localizedRoute, SupportedLanguages } from "~/i18n";
 import { getLinkToVariant } from "~/utils/paths";
 import { renderRichText } from "~/utils/rich-text";
 
@@ -18,7 +18,7 @@ export interface ProductDetailProps {
 
 export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }) => {
   const media = variant.media ?? product.defaultMedia;
-  const t = getTranslations(lang);
+  const t = getTranslations(lang as SupportedLanguages);
 
   const allVariants = product.variantsCollection?.items;
 
@@ -38,7 +38,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
     });
     const variantForColor = variantSameSize ?? variantsForColor?.[0];
     if (variantForColor) {
-      return localizedRoute(getLinkToVariant(variantForColor, product), lang);
+      return localizedRoute(getLinkToVariant(variantForColor, product), lang as SupportedLanguages);
     }
   };
 
@@ -47,7 +47,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
       (v) => v?.color?.colorCode === variant.color?.colorCode && size === v?.size?.label
     );
     if (variantForSize) {
-      return localizedRoute(getLinkToVariant(variantForSize, product), lang);
+      return localizedRoute(getLinkToVariant(variantForSize, product), lang as SupportedLanguages);
     }
   };
 
@@ -66,11 +66,16 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
       <div className="text-sm breadcrumbs mb-4">
         <ul>
           <li>
-            <Link href={localizedRoute("/", lang)}>Home</Link>
+            <Link href={localizedRoute("/", lang as SupportedLanguages)}>Home</Link>
           </li>
           {product?.category?.slug && (
             <li>
-              <Link href={localizedRoute(`/categories/${product.category.slug}`, lang)}>
+              <Link
+                href={localizedRoute(
+                  `/categories/${product.category.slug}`,
+                  lang as SupportedLanguages
+                )}
+              >
                 {product.category.categoryName}
               </Link>
             </li>

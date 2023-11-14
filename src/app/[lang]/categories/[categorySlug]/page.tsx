@@ -4,7 +4,7 @@ import { ProductCard } from "~/components/cards/product-card";
 import { PageLayout } from "~/components/layouts/page-layout";
 import { getApolloClient } from "~/graphql/apollo-client";
 import { CategoryDetailDocument, CategoryDetailQuery } from "~/graphql/generated/graphql";
-import { getTranslations, localizedRoute } from "~/i18n";
+import { getTranslations, localizedRoute, SupportedLanguages } from "~/i18n";
 
 export interface CategoryDetailProps {
   params: {
@@ -17,7 +17,7 @@ export default async function CategoryDetailPage({
   params: { categorySlug, lang },
 }: CategoryDetailProps) {
   const apolloClient = getApolloClient();
-  const t = getTranslations(lang);
+  const t = getTranslations(lang as SupportedLanguages);
 
   const {
     data: { productCollection, categoryCollection },
@@ -33,7 +33,7 @@ export default async function CategoryDetailPage({
       <div className="text-sm breadcrumbs mb-4">
         <ul>
           <li>
-            <Link href={localizedRoute("/", lang)}>{t("common.home")}</Link>
+            <Link href={localizedRoute("/", lang as SupportedLanguages)}>{t("common.home")}</Link>
           </li>
           <li>
             <strong>{category?.categoryName}</strong>

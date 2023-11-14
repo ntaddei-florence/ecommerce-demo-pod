@@ -2,7 +2,7 @@ import { revalidatePath } from "next/cache";
 import { FC, ReactNode } from "react";
 
 import { addToCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
-import { getTranslations, localizedRoute } from "~/i18n";
+import { getTranslations, localizedRoute, SupportedLanguages } from "~/i18n";
 
 export interface AddToCartButtonProps {
   skuCode: string;
@@ -17,12 +17,12 @@ export const AddToCartButton: FC<AddToCartButtonProps> = async ({
   disabled,
   lang,
 }) => {
-  const t = getTranslations(lang);
+  const t = getTranslations(lang as SupportedLanguages);
   async function addToCart() {
     "use server";
     const clClient = await getCommerceLayerClient();
     await addToCommerceLayerCart(clClient, skuCode);
-    revalidatePath(localizedRoute("/", lang));
+    revalidatePath(localizedRoute("/", lang as SupportedLanguages));
   }
 
   return (

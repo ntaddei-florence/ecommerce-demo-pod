@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { getCommerceLayerClient, getPrice, getStock } from "~/commerce-layer";
 import { AddToCartButton, Price } from "~/components/commerce-layer";
-import { getTranslations } from "~/i18n";
+import { getTranslations, SupportedLanguages } from "~/i18n";
 
 export interface AddToCartProps {
   sku: string;
@@ -14,7 +14,7 @@ export const AddToCart: FC<AddToCartProps> = async ({ sku, className, lang }) =>
   const clClient = await getCommerceLayerClient();
   const { totalQuantity } = await getStock(clClient, sku);
   const price = (await getPrice(clClient, sku))[0];
-  const t = getTranslations(lang);
+  const t = getTranslations(lang as SupportedLanguages);
 
   return (
     <div className={className}>

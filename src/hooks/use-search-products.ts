@@ -5,22 +5,17 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getProductIndex, searchClient } from "~/algolia";
 import { ProductIndexData } from "~/algolia/types";
 
-export interface UseSearchProductsProps {
-  searchString?: string;
-}
-
 const QUERYSTRING_KEY = "q";
 
-export function useSearchProducts(params?: UseSearchProductsProps) {
-  const [searchString, setSearchString] = useState(params?.searchString ?? "");
+export function useSearchProducts() {
+  const queryParams = useSearchParams();
+
+  const query = queryParams.get(QUERYSTRING_KEY);
+  const [searchInput, setSearchInput] = useState(query ?? "");
   const [searchHits, setSearchHits] = useState<ProductIndexData[] | null>(null);
   const [isLoading, setLoading] = useState(false);
 
-  const queryParams = useSearchParams();
-
   const search = useCallback(() => {
-    const query = queryParams.get(QUERYSTRING_KEY);
-
     setLoading(true);
     if (!query) {
       setSearchHits(null);
@@ -38,7 +33,7 @@ export function useSearchProducts(params?: UseSearchProductsProps) {
           setLoading(false);
         });
     }
-  }, [queryParams]);
+  }, [query]);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -55,8 +50,8 @@ export function useSearchProducts(params?: UseSearchProductsProps) {
   );
 
   useEffect(() => {
-    debouncedSetQueryString.current(searchString);
-  }, [searchString]);
+    debouncedSetQueryString.current(searchInput);
+  }, [searchInput]);
 
   useEffect(() => {
     search();
@@ -64,11 +59,12 @@ export function useSearchProducts(params?: UseSearchProductsProps) {
 
   return useMemo(
     () => ({
+      query,
       isLoading,
       searchHits,
-      searchString,
-      setSearchString: (query: string) => setSearchString(query.trimStart()),
+      searchInput,
+      setSearchInput: (query: string) => setSearchInput(query.trimStart()),
     }),
-    [isLoading, searchHits, searchString]
+    [isLoading, searchHits, query, searchInput]
   );
 }

@@ -8,7 +8,7 @@ import {
   getSalesChannelToken,
   removeFromCommerceLayerCart,
 } from "~/commerce-layer";
-import { getTranslations } from "~/i18n";
+import { getTranslations, SupportedLanguages } from "~/i18n";
 
 export interface CartPageProps {
   params: {
@@ -19,7 +19,7 @@ export interface CartPageProps {
 export default async function CartPage({ params: { lang } }: CartPageProps) {
   const clClient = await getCommerceLayerClient();
   const cart = await getCommerceLayerCart(clClient);
-  const t = getTranslations(lang);
+  const t = getTranslations(lang as SupportedLanguages);
 
   async function removeFromCart(data: FormData) {
     "use server";

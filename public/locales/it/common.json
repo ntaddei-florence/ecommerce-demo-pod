@@ -1,5 +1,9 @@
 {
   "home": "Home",
   "logout": "Esci",
-  "login": "Accedi"
+  "login": "Accedi",
+  "currencies": {
+    "EUR": "€",
+    "USD": "$"
+  }
 }

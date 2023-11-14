@@ -1,47 +1,85 @@
 import { dictionaries, Dictionary, SupportedLanguages } from "./config";
-import { NestedPath, TFunction } from "./types";
+import { getBestMatchTemplate } from "./context";
+import { getPlugins } from "./context-plugins";
+import { ContextParams, ContextPlugin, NestedPath, TFunction } from "./types";
+import { isDevelopment } from "~/utils/development";
 
-type SubDictionary = string | { [key: string]: SubDictionary };
+export const getDictionary = (lang: SupportedLanguages) => dictionaries[lang];
 
-function getDictionaryKey(key: NestedPath<Dictionary>, dictionary: Dictionary) {
-  const keyParts = key.split(".");
-  let node: SubDictionary = dictionary;
-  let keyPart: string | undefined;
+export function getTranslationTemplate(
+  key: string,
+  dictionary: any,
+  plugins: ContextPlugin[],
+  params?: ContextParams
+) {
+  const path = key.split(".");
+
+  let node = dictionary;
   do {
-    keyPart = keyParts.shift();
-    if (typeof node === "string") {
-      // reached a leaf node
-      return node;
-    } else if (keyPart !== undefined && node !== undefined) {
-      // we can keep navigating the subdictionary tree
-      node = node[keyPart];
-    } else break; // node is not a string, but we reached the end of key
+    const nextKey = path.shift();
+    if (!nextKey) break;
+    const nextNode = (node as any)[nextKey];
+    if (typeof nextNode === "string") return nextNode;
+    else node = nextNode;
   } while (node);
 
-  return "";
+  if (node === undefined) return "";
+
+  return getBestMatchTemplate(params ?? {}, node as unknown as Record<string, string>, plugins);
 }
 
-export function formatTemplate(template: string, params?: Record<string, string | number>) {
-  if (!params) return template;
-  return Object.keys(params).reduce((acc, cur) => {
-    const value = params[cur];
-    const valueAsString = typeof value === "string" ? value : value.toString();
-    return acc.replace(new RegExp(`{{${cur}}}`), valueAsString);
-  }, template);
-}
+export function format(
+  template: string,
+  params?: ContextParams,
+  removeEmpty = true,
+  warnMissing = true
+) {
+  let formattedTemplate = template;
+  Object.entries(params ?? {}).forEach(([key, value]) => {
+    formattedTemplate = formattedTemplate.replace(
+      new RegExp(`{{${key}}}`, "g"),
+      value?.toString() ?? ""
+    );
+  });
 
-export function getTranslations(lng: string): TFunction {
-  const dict = dictionaries[lng as SupportedLanguages];
-  return (key: NestedPath<Dictionary>, params?: Record<string, string | number>) => {
-    const template = getDictionaryKey(key, dict);
-    return formatTemplate(template, params);
-  };
-}
+  const missingParams = formattedTemplate
+    .match(/\{\{([^}]+)\}\}/g)
+    ?.map((mp) => mp.replace(/\{/g, "").replace(/}/g, ""));
 
-export function localizedRoute(route: string, lang: string) {
-  if (route.startsWith(`/${lang}`)) {
-    return route;
-  } else {
-    return `/${lang}${route === "/" ? "" : route}`;
+  if (missingParams) {
+    if (warnMissing) console.warn(`Missing params on ${template}: ${missingParams.join(", ")}`);
+    if (removeEmpty) {
+      formattedTemplate = format(
+        formattedTemplate,
+        missingParams.reduce(
+          (acc, cur) => {
+            return {
+              ...acc,
+              [cur]: "",
+            };
+          },
+          {} as Record<string, string>
+        )
+      );
+    }
   }
+
+  return formattedTemplate;
+}
+
+export const t: TFunction = (
+  lang: SupportedLanguages,
+  key: NestedPath<Dictionary>,
+  params: ContextParams = {},
+  removeEmpty = true
+) => {
+  const template = getTranslationTemplate(key, getDictionary(lang), getPlugins(lang), params);
+  const formattedTemplate = format(template, params, removeEmpty, isDevelopment());
+
+  return formattedTemplate;
+};
+
+export function getTranslations(lang: SupportedLanguages) {
+  return (key: NestedPath<Dictionary>, params: ContextParams = {}, removeEmpty = true) =>
+    t(lang, key, params, removeEmpty);
 }

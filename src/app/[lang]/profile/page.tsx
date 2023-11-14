@@ -2,7 +2,7 @@ import { getSession, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import Link from "next/link";
 
 import { PageLayout } from "~/components/layouts/page-layout";
-import { localizedRoute } from "~/i18n";
+import { localizedRoute, SupportedLanguages } from "~/i18n";
 
 export default withPageAuthRequired(
   async function Profile({ params }) {
@@ -12,7 +12,7 @@ export default withPageAuthRequired(
         <div className="text-sm breadcrumbs mb-4">
           <ul>
             <li>
-              <Link href={localizedRoute("/", params?.lang as string)}>Home</Link>
+              <Link href={localizedRoute("/", params?.lang as SupportedLanguages)}>Home</Link>
             </li>
             <li>
               <strong>Profile</strong>
