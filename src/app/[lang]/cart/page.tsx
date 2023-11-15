@@ -45,7 +45,9 @@ export default async function CartPage({ params: { lang } }: CartPageProps) {
   return (
     <div className="container mx-auto pt-8 px-4">
       {/* TODO i18n */}
-      <p>Your shopping cart {cartLength ? `contains ${cartLength ?? 0} item(s)` : "is empty"}</p>
+      <p>
+        {cartLength ? t("cart.yourCartContains", { count: cartLength }) : t("cart.yourCartIsEmpty")}
+      </p>
 
       {!!cartLength && (
         <div className="overflow-x-auto pt-6">

@@ -5,5 +5,7 @@
   "remove": "Rimuovi",
   "checkout": "Checkout",
   "viewCart": "View cart",
-  "addToCart": "Add to cart"
+  "addToCart": "Add to cart",
+  "yourCartContains": "Your cart contains {{count}} items",
+  "yourCartIsEmpty": "Your cart is empty"
 }

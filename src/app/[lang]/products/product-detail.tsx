@@ -5,7 +5,7 @@ import { FC } from "react";
 import { AddToCart } from "./add-to-cart";
 import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { CategoryIndexData, ProductIndexData } from "~/algolia/types";
-import { getTranslations, localizedRoute } from "~/i18n";
+import { localizedRoute } from "~/i18n";
 
 export interface ProductDetailProps {
   product: ProductIndexData;
@@ -14,7 +14,7 @@ export interface ProductDetailProps {
 }
 
 export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang }) => {
-  const t = getTranslations(lang);
+  // const t = getTranslations(lang);
 
   // const allVariants = product.variantsCollection?.items;
 
@@ -88,10 +88,10 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
           <h2>{productName}</h2>
           <p>{getLocalizedFieldValue(product.values.description, lang)?.data}</p>
 
-          <div className="flex items-center justify-between w-[50%]">
+          {/*<div className="flex items-center justify-between w-[50%]">
             <strong>{t("products.color")}</strong>
             <div>
-              {/* {availableColors.filter(Boolean).map((color) => (
+               {availableColors.filter(Boolean).map((color) => (
                 <Link
                   href={getLinkToVariantForColor(color!.colorCode!) ?? "#"}
                   key={color?.colorCode}
@@ -107,13 +107,13 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
                     )}
                   />
                 </Link>
-              ))} */}
+              ))} 
             </div>
           </div>
 
           <div className="flex items-center justify-between w-[50%]">
             <strong>{t("products.size")}</strong>
-            {/* <div>
+             <div>
               {availableSizes.filter(Boolean).map((size) => {
                 const isDisabled = !isSizeVariantAvailableForColor(size!.label!);
                 return (
@@ -134,8 +134,8 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
                   </Link>
                 );
               })}
-            </div> */}
-          </div>
+            </div> 
+          </div>*/}
 
           <AddToCart lang={lang} sku={product.sku} className="mt-6" />
         </div>

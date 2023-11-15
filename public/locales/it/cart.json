@@ -5,5 +5,7 @@
   "remove": "Rimuovi",
   "checkout": "Checkout",
   "viewCart": "Vai al carrello",
-  "addToCart": "Aggiungi al carrello"
+  "addToCart": "Aggiungi al carrello",
+  "yourCartContains": "Il tuo carrello contiene {{count}} articoli",
+  "yourCartIsEmpty": "Il tuo carrello è vuoto"
 }
