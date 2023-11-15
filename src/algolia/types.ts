@@ -17,7 +17,7 @@ export interface ProductIndexData {
 export interface CategoryIndexData {
   objectID: string;
   uuid: string;
-  slug: string;
+  code: string;
   image?: string | null;
   values: Record<"name" | "description", LocalizedAkeneoField[]>;
 }

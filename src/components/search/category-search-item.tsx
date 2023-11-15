@@ -7,7 +7,7 @@ import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { CategoryIndexData } from "~/algolia/types";
 import { useClientI18n } from "~/i18n";
 
-export function CategorySearchItem({ objectID, values, image, slug }: CategoryIndexData) {
+export function CategorySearchItem({ objectID, values, image, code }: CategoryIndexData) {
   const { lang, localizedRoute } = useClientI18n();
 
   return (
@@ -31,7 +31,7 @@ export function CategorySearchItem({ objectID, values, image, slug }: CategoryIn
       <div className="flex flex-col gap-4 justify-between p-4">
         <div>
           <Link
-            href={localizedRoute(`/categories/${slug}`)}
+            href={localizedRoute(`/categories/${code}`)}
             className="text-xl font-semibold pb-1 link link-primary"
           >
             {getLocalizedFieldValue(values.name, lang)?.data}

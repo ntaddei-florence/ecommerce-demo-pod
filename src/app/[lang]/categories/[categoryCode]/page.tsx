@@ -9,17 +9,17 @@ import { getTranslations, localizedRoute } from "~/i18n";
 
 export interface CategoryDetailProps {
   params: {
-    categoryId: string;
+    categoryCode: string;
     lang: string;
   };
 }
 
 export default async function CategoryDetailPage({
-  params: { categoryId, lang },
+  params: { categoryCode, lang },
 }: CategoryDetailProps) {
   const t = getTranslations(lang);
 
-  const { hits } = await getCategoryIndex(searchClient).search<CategoryIndexData>(categoryId);
+  const { hits } = await getCategoryIndex(searchClient).search<CategoryIndexData>(categoryCode);
   const category = hits[0];
 
   return (

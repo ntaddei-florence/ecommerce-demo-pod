@@ -7,7 +7,7 @@ import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { ProductIndexData } from "~/algolia/types";
 import { SupportedCurrency, useClientI18n } from "~/i18n";
 
-export function ProductSearchItem({ objectID, values, image, price, sku, slug }: ProductIndexData) {
+export function ProductSearchItem({ objectID, values, image, price, sku }: ProductIndexData) {
   const { lang, localizedRoute, formatPrice } = useClientI18n();
 
   return (
@@ -29,7 +29,7 @@ export function ProductSearchItem({ objectID, values, image, price, sku, slug }:
       <div className="flex flex-col gap-4 justify-between p-4">
         <div>
           <Link
-            href={localizedRoute(`/products/${slug}/${sku}`)}
+            href={localizedRoute(`/products/${sku}`)}
             className="text-xl font-semibold pb-1 link link-primary"
           >
             {getLocalizedFieldValue(values.name, lang)?.data}
