@@ -12,7 +12,7 @@ export function CategorySearchItem({ objectID, values, image, slug }: CategoryIn
 
   return (
     <div
-      className="p-4 border border-light rounded-lg shadow flex flex-col sm:flex-row gap-4 items-center"
+      className="border border-light rounded-lg shadow flex flex-col sm:flex-row gap-4"
       key={objectID}
     >
       <div>
@@ -21,14 +21,14 @@ export function CategorySearchItem({ objectID, values, image, slug }: CategoryIn
           <Image
             src={image}
             loader={({ src }) => src} // TODO: remove me
-            width={400}
-            height={300}
-            objectFit="cover"
+            width={256}
+            height={256}
+            className="aspect-square object-cover"
             alt=""
           />
         )}
       </div>
-      <div className="flex flex-col gap-4 justify-between h-full">
+      <div className="flex flex-col gap-4 justify-between p-4">
         <div>
           <Link
             href={localizedRoute(`/categories/${slug}`)}

@@ -54,7 +54,7 @@ export function Search() {
           </div>
         )}
 
-        {productHits && (
+        {productHits?.length && (
           <div className="flex flex-col gap-3">
             <h2 className="text-2xl font-semibold">{t("search.productsSectionTitle")}</h2>
             {productHits.map((productItem) => (
@@ -63,7 +63,7 @@ export function Search() {
           </div>
         )}
 
-        {categoryHits && (
+        {categoryHits?.length && (
           <div className="flex flex-col gap-3 mt-8">
             <h2 className="text-2xl font-semibold">{t("search.categoriesSectionTitle")}</h2>
             {categoryHits.map((categoryItem) => (
