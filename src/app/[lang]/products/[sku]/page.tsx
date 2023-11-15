@@ -17,7 +17,7 @@ export interface ProductDetailProps {
 
 export default async function ProductDetailPage({
   params: { lang, sku },
-  searchParams: { category: categoryCode },
+  searchParams: { category: categorySlug },
 }: ProductDetailProps) {
   const t = getTranslations(lang);
 
@@ -25,8 +25,8 @@ export default async function ProductDetailPage({
   const product = hits[0];
 
   const { hits: categoryHits } = await filterIndex<CategoryIndexData>(
-    "code",
-    categoryCode,
+    "slug",
+    categorySlug,
     getCategoryIndex(searchClient)
   );
 

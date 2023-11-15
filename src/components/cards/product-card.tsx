@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { BasicCard } from "./basic-card";
+import { ProductImage } from "./product-image";
 import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { CategoryIndexData, ProductIndexData } from "~/algolia/types";
 import { localizedRoute } from "~/i18n";
@@ -17,11 +17,16 @@ export const ProductCard: FC<ProductCardProps> = ({ product, category, lang }) =
   return (
     <Link
       href={localizedRoute(
-        `/products/${product.sku}${category ? `?category=${category.code}` : ""}`,
+        `/products/${product.sku}${category ? `?category=${category.slug}` : ""}`,
         lang
       )}
     >
-      <BasicCard image={product.image} title={productName} />
+      <div className="card w-128 border border-gray-200 rounded-xl">
+        <ProductImage product={product} lang={lang} />
+        <div className="card-body">
+          <h2 className="card-title">{productName}</h2>
+        </div>
+      </div>
     </Link>
   );
 };

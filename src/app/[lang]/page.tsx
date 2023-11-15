@@ -9,10 +9,12 @@ export interface HomePageProps {
 }
 
 export default async function HomePage({ params: { lang } }: HomePageProps) {
-  const { hits: categories } = await getCategoryIndex(searchClient).search<CategoryIndexData>("");
+  const { hits: categories } = await getCategoryIndex(searchClient).search<CategoryIndexData>("", {
+    filters: `parent:master`,
+  });
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 w-full">
       {categories.map((category) =>
         category ? <CategoryCard lang={lang} category={category} key={category.objectID} /> : null
       )}

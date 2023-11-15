@@ -11,24 +11,24 @@ import { getTranslations, localizedRoute } from "~/i18n";
 
 export interface CategoryDetailProps {
   params: {
-    categoryCode: string;
+    slug: string[];
     lang: string;
   };
 }
 
-export default async function CategoryDetailPage({
-  params: { categoryCode, lang },
-}: CategoryDetailProps) {
+export default async function CategoryDetailPage({ params: { slug, lang } }: CategoryDetailProps) {
   const t = getTranslations(lang);
 
+  const categorySlug = slug[0];
+
   const { hits: categoryHits } = await filterIndex<CategoryIndexData>(
-    "code",
-    categoryCode,
+    "slug",
+    categorySlug,
     getCategoryIndex(searchClient)
   );
 
   const { hits: productsHits } = await getProductIndex(searchClient).search<ProductIndexData>(
-    `|${categoryCode}|`,
+    `|${categorySlug}|`,
     {
       restrictSearchableAttributes: ["categories"],
     }

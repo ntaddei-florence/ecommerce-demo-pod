@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 
 import { AddToCart } from "./add-to-cart";
 import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { CategoryIndexData, ProductIndexData } from "~/algolia/types";
+import { ProductImage } from "~/components/cards/product-image";
 import { localizedRoute } from "~/i18n";
 
 export interface ProductDetailProps {
@@ -61,6 +61,13 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
   const categoryName =
     category?.values.name && getLocalizedFieldValue(category.values.name, lang)?.data;
 
+  const productDescription = getLocalizedFieldValue(
+    product.values.description,
+    lang
+  )?.data?.replace(/\\n/g, "<br />");
+
+  console.log("replace", productDescription);
+
   return (
     <>
       <div className="text-sm breadcrumbs mb-4">
@@ -70,7 +77,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
           </li>
           {category && (
             <li>
-              <Link href={localizedRoute(`/categories/${category.code}`, lang)}>
+              <Link href={localizedRoute(`/categories/${category.slug}`, lang)}>
                 {categoryName}
               </Link>
             </li>
@@ -82,11 +89,19 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
       </div>
 
       <div className="flex flex-col sm:flex-row gap-6">
-        {product.image && <Image alt="" src={product.image} width={512} height={512} />}
+        <div>
+          <ProductImage product={product} lang={lang} />
+        </div>
 
         <div className="prose pb-4">
           <h2>{productName}</h2>
-          <p>{getLocalizedFieldValue(product.values.description, lang)?.data}</p>
+          {productDescription && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: productDescription,
+              }}
+            />
+          )}
 
           {/*<div className="flex items-center justify-between w-[50%]">
             <strong>{t("products.color")}</strong>

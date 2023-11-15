@@ -13,7 +13,7 @@ export interface CategoryCardProps {
 
 export const CategoryCard: FC<CategoryCardProps> = ({ category, lang }) => {
   return (
-    <Link href={localizedRoute(`/categories/${category.code}`, lang)}>
+    <Link href={localizedRoute(`/categories/${category.slug}`, lang)}>
       <div
         className="relative h-[50vh] w-full flex items-end justify-start text-left bg-cover bg-center"
         style={{ backgroundImage: `url(${category.image})` }}
