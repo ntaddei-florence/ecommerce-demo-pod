@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 
+import { AddToCart } from "./add-to-cart";
 import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { CategoryIndexData, ProductIndexData } from "~/algolia/types";
 import { getTranslations, localizedRoute } from "~/i18n";
@@ -81,11 +82,6 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
       </div>
 
       <div className="flex flex-col sm:flex-row gap-6">
-        {/* {media && (
-          <div className="max-w-sm">
-            <MediaCarousel media={media} />
-          </div>
-        )} */}
         {product.image && <Image alt="" src={product.image} width={512} height={512} />}
 
         <div className="prose pb-4">
@@ -141,7 +137,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
             </div> */}
           </div>
 
-          {/* {variant.sku && <AddToCart lang={lang} sku={variant.sku} className="mt-6" />} */}
+          <AddToCart lang={lang} sku={product.sku} className="mt-6" />
         </div>
       </div>
     </>
