@@ -1,20 +1,20 @@
 "use client";
 
-import clsx from "clsx";
-import Image from "next/image";
-import { FC, useState } from "react";
+// import clsx from "clsx";
+// import Image from "next/image";
+import { FC } from "react";
 
-import { ProductMediaDataFragment } from "~/graphql/generated/graphql";
+// import { ProductMediaDataFragment } from "~/graphql/generated/graphql";
 
 export interface MediaCarouselProps {
-  media: ProductMediaDataFragment;
+  // media: ProductMediaDataFragment;
 }
 
-export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+export const MediaCarousel: FC<MediaCarouselProps> = ({}) => {
+  // const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   return (
     <>
-      <div className="w-full">
+      {/* <div className="w-full">
         {media.mediaCollection?.items.map((mediaItem, i) =>
           mediaItem?.url ? (
             <Image
@@ -47,7 +47,7 @@ export const MediaCarousel: FC<MediaCarouselProps> = ({ media }) => {
             />
           ) : null
         )}
-      </div>
+      </div> */}
     </>
   );
 };

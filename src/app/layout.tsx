@@ -7,7 +7,6 @@ import { PropsWithChildren } from "react";
 import "./globals.css";
 import { getCommerceLayerCart, getCommerceLayerClient } from "~/commerce-layer";
 import { Navbar } from "~/components/navbar";
-import { ApolloWrapper } from "~/graphql/apollo-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,10 +23,8 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <body className={inter.className}>
         <UserProvider>
-          <ApolloWrapper>
-            <Navbar cart={cart} cookies={cookies().getAll()} />
-            <main className="min-h-screen flex-col items-center justify-center">{children}</main>
-          </ApolloWrapper>
+          <Navbar cart={cart} cookies={cookies().getAll()} />
+          <main className="min-h-screen flex-col items-center justify-center">{children}</main>
         </UserProvider>
       </body>
     </html>

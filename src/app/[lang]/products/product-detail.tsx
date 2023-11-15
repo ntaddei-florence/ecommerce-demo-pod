@@ -1,65 +1,69 @@
-import clsx from "clsx";
-import { uniqBy } from "lodash";
+// import clsx from "clsx";
+// import { uniqBy } from "lodash";
 import Link from "next/link";
 import { FC } from "react";
 
-import { AddToCart } from "./add-to-cart";
-import { MediaCarousel } from "~/components/media-carousel";
-import { ProductDetailDataFragment, VariantDataFragment } from "~/graphql/generated/graphql";
+// import { AddToCart } from "./add-to-cart";
+import { getLocalizedFieldValue } from "~/akeneo/utils";
+import { ProductIndexData } from "~/algolia/types";
+// import { MediaCarousel } from "~/components/media-carousel";
 import { getTranslations, localizedRoute } from "~/i18n";
-import { getLinkToVariant } from "~/utils/paths";
-import { renderRichText } from "~/utils/rich-text";
+
+// import { getLinkToVariant } from "~/utils/paths";
+// import { renderRichText } from "~/utils/rich-text";
 
 export interface ProductDetailProps {
-  product: ProductDetailDataFragment;
-  variant: VariantDataFragment;
+  product: ProductIndexData;
+  // variant: VariantDataFragment;
   lang: string;
 }
 
-export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }) => {
-  const media = variant.media ?? product.defaultMedia;
+export const ProductDetail: FC<ProductDetailProps> = ({ product, lang }) => {
+  // const media = variant.media ?? product.defaultMedia;
   const t = getTranslations(lang);
 
-  const allVariants = product.variantsCollection?.items;
+  // const allVariants = product.variantsCollection?.items;
 
-  const availableColors = uniqBy(
-    (allVariants ?? []).map((v) => v?.color),
-    "colorCode"
-  );
-  const availableSizes = uniqBy(
-    (allVariants ?? []).map((v) => v?.size),
-    "label"
-  );
+  // const availableColors = uniqBy(
+  //   (allVariants ?? []).map((v) => v?.color),
+  //   "colorCode"
+  // );
+  // const availableSizes = uniqBy(
+  //   (allVariants ?? []).map((v) => v?.size),
+  //   "label"
+  // );
 
-  const getLinkToVariantForColor = (colorCode: string) => {
-    const variantsForColor = allVariants?.filter((v) => colorCode === v?.color?.colorCode);
-    const variantSameSize = variantsForColor?.find((v) => {
-      return v?.size?.label === variant?.size?.label;
-    });
-    const variantForColor = variantSameSize ?? variantsForColor?.[0];
-    if (variantForColor) {
-      return localizedRoute(getLinkToVariant(variantForColor, product), lang);
-    }
-  };
+  // const getLinkToVariantForColor = (colorCode: string) => {
+  //   const variantsForColor = allVariants?.filter((v) => colorCode === v?.color?.colorCode);
+  //   const variantSameSize = variantsForColor?.find((v) => {
+  //     return v?.size?.label === variant?.size?.label;
+  //   });
+  //   const variantForColor = variantSameSize ?? variantsForColor?.[0];
+  //   if (variantForColor) {
+  //     return localizedRoute(getLinkToVariant(variantForColor, product), lang);
+  //   }
+  // };
 
-  const getLinkToVariantForSize = (size: string) => {
-    const variantForSize = allVariants?.find(
-      (v) => v?.color?.colorCode === variant.color?.colorCode && size === v?.size?.label
-    );
-    if (variantForSize) {
-      return localizedRoute(getLinkToVariant(variantForSize, product), lang);
-    }
-  };
+  // const getLinkToVariantForSize = (size: string) => {
+  //   const variantForSize = allVariants?.find(
+  //     (v) => v?.color?.colorCode === variant.color?.colorCode && size === v?.size?.label
+  //   );
+  //   if (variantForSize) {
+  //     return localizedRoute(getLinkToVariant(variantForSize, product), lang);
+  //   }
+  // };
 
-  const isSizeVariantAvailableForColor = (size: string) => {
-    return (
-      (
-        allVariants?.filter((v) => {
-          return v?.color?.colorCode === variant.color?.colorCode && size === v?.size?.label;
-        }) ?? []
-      ).length > 0
-    );
-  };
+  // const isSizeVariantAvailableForColor = (size: string) => {
+  //   return (
+  //     (
+  //       allVariants?.filter((v) => {
+  //         return v?.color?.colorCode === variant.color?.colorCode && size === v?.size?.label;
+  //       }) ?? []
+  //     ).length > 0
+  //   );
+  // };
+
+  const productName = getLocalizedFieldValue(product.values.name, lang)?.data;
 
   return (
     <>
@@ -68,33 +72,33 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
           <li>
             <Link href={localizedRoute("/", lang)}>Home</Link>
           </li>
-          {product?.category?.slug && (
+          {/* {product?.category?.slug && (
             <li>
               <Link href={localizedRoute(`/categories/${product.category.slug}`, lang)}>
                 {product.category.categoryName}
               </Link>
             </li>
-          )}
+          )} */}
           <li>
-            <strong>{product?.name}</strong>
+            <strong>{productName}</strong>
           </li>
         </ul>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-6">
-        {media && (
+        {/* {media && (
           <div className="max-w-sm">
             <MediaCarousel media={media} />
           </div>
-        )}
+        )} */}
         <div className="prose pb-4">
-          <h2>{product?.name}</h2>
-          {renderRichText(product?.description?.json)}
+          <h2>{productName}</h2>
+          <p>{getLocalizedFieldValue(product.values.description, lang)?.data}</p>
 
           <div className="flex items-center justify-between w-[50%]">
             <strong>{t("products.color")}</strong>
             <div>
-              {availableColors.filter(Boolean).map((color) => (
+              {/* {availableColors.filter(Boolean).map((color) => (
                 <Link
                   href={getLinkToVariantForColor(color!.colorCode!) ?? "#"}
                   key={color?.colorCode}
@@ -104,19 +108,19 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
                     style={{ backgroundColor: color?.colorCode ?? undefined }}
                     className={clsx(
                       "mx-1 border-2 w-[4ch] h-8 rounded-md",
-                      variant?.color?.colorCode === color?.colorCode
-                        ? "border-accent"
-                        : "border-transparent"
+                       variant?.color?.colorCode === color?.colorCode
+                         ? "border-accent"
+                         : "border-transparent"
                     )}
                   />
                 </Link>
-              ))}
+              ))} */}
             </div>
           </div>
 
           <div className="flex items-center justify-between w-[50%]">
             <strong>{t("products.size")}</strong>
-            <div>
+            {/* <div>
               {availableSizes.filter(Boolean).map((size) => {
                 const isDisabled = !isSizeVariantAvailableForColor(size!.label!);
                 return (
@@ -137,10 +141,10 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, variant, lang }
                   </Link>
                 );
               })}
-            </div>
+            </div> */}
           </div>
 
-          {variant.sku && <AddToCart lang={lang} sku={variant.sku} className="mt-6" />}
+          {/* {variant.sku && <AddToCart lang={lang} sku={variant.sku} className="mt-6" />} */}
         </div>
       </div>
     </>

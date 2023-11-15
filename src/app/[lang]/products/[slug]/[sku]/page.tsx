@@ -1,7 +1,5 @@
 import { ProductDetail } from "../../product-detail";
 import { PageLayout } from "~/components/layouts/page-layout";
-import { getApolloClient } from "~/graphql/apollo-client";
-import { ProductSkuDetailDocument, ProductSkuDetailQuery } from "~/graphql/generated/graphql";
 import { getTranslations } from "~/i18n";
 
 export interface ProductDetailProps {
@@ -12,21 +10,11 @@ export interface ProductDetailProps {
   };
 }
 
-export default async function ProductDetailPage({
-  params: { slug, sku, lang },
-}: ProductDetailProps) {
-  const apolloClient = getApolloClient();
+export default async function ProductDetailPage({ params: { lang } }: ProductDetailProps) {
   const t = getTranslations(lang);
 
-  const {
-    data: { productCollection },
-  } = await apolloClient.query<ProductSkuDetailQuery>({
-    query: ProductSkuDetailDocument,
-    variables: { slug },
-  });
-
-  const product = productCollection?.items[0];
-  const variant = product?.variantsCollection?.items.find((v) => v?.sku === sku);
+  const product = null;
+  const variant = null;
 
   return (
     <PageLayout>
@@ -35,7 +23,7 @@ export default async function ProductDetailPage({
       ) : !product ? (
         <h2>{t("products.productNotFound")}</h2>
       ) : (
-        <ProductDetail lang={lang} product={product} variant={variant} />
+        <ProductDetail lang={lang} product={product} />
       )}
     </PageLayout>
   );

@@ -1,10 +1,8 @@
 import Image from "next/image";
 import { FC, ReactNode } from "react";
 
-import { AssetDataFragment } from "~/graphql/generated/graphql";
-
 export interface BasicCardProps {
-  image?: AssetDataFragment | null;
+  image?: string | null;
   title: ReactNode | string;
   body?: ReactNode | string;
   actions?: ReactNode;
@@ -13,14 +11,9 @@ export interface BasicCardProps {
 export const BasicCard: FC<BasicCardProps> = ({ image, title, body, actions }) => {
   return (
     <div className="card min-w-32 border border-gray-200 rounded-xl">
-      {image?.url && (
+      {image && (
         <figure>
-          <Image
-            src={image?.url}
-            alt={image.title ?? ""}
-            width={image.width ?? 128}
-            height={image.height ?? 128}
-          />
+          <Image src={image} alt="" width={128} height={128} />
         </figure>
       )}
       <div className="card-body">
