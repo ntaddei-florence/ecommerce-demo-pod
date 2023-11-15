@@ -20,7 +20,6 @@ export function CategorySearchItem({ objectID, values, image, code }: CategoryIn
         {image && (
           <Image
             src={image}
-            loader={({ src }) => src} // TODO: remove me
             width={256}
             height={256}
             className="aspect-square object-cover"

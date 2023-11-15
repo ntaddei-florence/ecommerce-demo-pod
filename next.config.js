@@ -4,6 +4,8 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
+    loader: "custom",
+    loaderFile: "./src/utils/image-loader.ts",
     remotePatterns: [
       {
         hostname: "images.ctfassets.net",

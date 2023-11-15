@@ -10,13 +10,11 @@ export interface BasicCardProps {
 
 export const BasicCard: FC<BasicCardProps> = ({ image, title, body, actions }) => {
   return (
-    <div className="card min-w-32 border border-gray-200 rounded-xl">
+    <div className="card w-128 border border-gray-200 rounded-xl">
       {image && (
-        <figure>
-          <Image src={image} alt="" width={128} height={128} />
-        </figure>
+        <Image src={image} className="aspect-square object-cover" alt="" width={512} height={512} />
       )}
-      <div className="card-body">
+      <div className="card-body mt-4">
         <h2 className="card-title">{title}</h2>
         {body}
         {actions && <div className="card-actions justify-end">{actions}</div>}

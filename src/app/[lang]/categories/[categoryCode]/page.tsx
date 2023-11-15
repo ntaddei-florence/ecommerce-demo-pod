@@ -2,8 +2,10 @@ import Link from "next/link";
 import React from "react";
 
 import { getLocalizedFieldValue } from "~/akeneo/utils";
-import { getCategoryIndex, searchClient } from "~/algolia";
-import { CategoryIndexData } from "~/algolia/types";
+import { getCategoryIndex, getProductIndex, searchClient } from "~/algolia";
+import { filterIndex } from "~/algolia/filters";
+import { CategoryIndexData, ProductIndexData } from "~/algolia/types";
+import { ProductCard } from "~/components/cards/product-card";
 import { PageLayout } from "~/components/layouts/page-layout";
 import { getTranslations, localizedRoute } from "~/i18n";
 
@@ -19,8 +21,22 @@ export default async function CategoryDetailPage({
 }: CategoryDetailProps) {
   const t = getTranslations(lang);
 
-  const { hits } = await getCategoryIndex(searchClient).search<CategoryIndexData>(categoryCode);
-  const category = hits[0];
+  const { hits: categoryHits } = await filterIndex<CategoryIndexData>(
+    "code",
+    categoryCode,
+    getCategoryIndex(searchClient)
+  );
+
+  const { hits: productsHits } = await getProductIndex(searchClient).search<ProductIndexData>(
+    `|${categoryCode}|`,
+    {
+      restrictSearchableAttributes: ["categories"],
+    }
+  );
+
+  const category = categoryHits[0];
+  const categoryName =
+    category?.values.name && getLocalizedFieldValue(category.values.name, lang)?.data;
 
   return (
     <PageLayout>
@@ -32,16 +48,26 @@ export default async function CategoryDetailPage({
                 <Link href={localizedRoute("/", lang)}>{t("common.home")}</Link>
               </li>
               <li>
-                <strong>{getLocalizedFieldValue(category.values.name, lang)?.data}</strong>
+                <strong>{categoryName}</strong>
               </li>
             </ul>
           </div>
-          {/* <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-         {productCollection?.items.map((product) =>
-           product ? <ProductCard lang={lang} product={product} key={product.slug} /> : null
-         )}
-         {!productCollection?.items?.length && <h2>{t("categories.noProductsFound")}</h2>}
-       </div> */}
+
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold mb-2">{categoryName}</h2>
+            <h3 className="text-xl">
+              {getLocalizedFieldValue(category.values.description, lang)?.data}
+            </h3>
+          </div>
+
+          <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {productsHits.map((product) =>
+              product ? (
+                <ProductCard key={product.sku} lang={lang} product={product} category={category} />
+              ) : null
+            )}
+            {!productsHits?.length && <h2>{t("categories.noProductsFound")}</h2>}
+          </div>
         </>
       ) : (
         // TODO: i18n

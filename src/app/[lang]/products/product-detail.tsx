@@ -1,25 +1,18 @@
-// import clsx from "clsx";
-// import { uniqBy } from "lodash";
+import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 
-// import { AddToCart } from "./add-to-cart";
 import { getLocalizedFieldValue } from "~/akeneo/utils";
-import { ProductIndexData } from "~/algolia/types";
-// import { MediaCarousel } from "~/components/media-carousel";
+import { CategoryIndexData, ProductIndexData } from "~/algolia/types";
 import { getTranslations, localizedRoute } from "~/i18n";
-
-// import { getLinkToVariant } from "~/utils/paths";
-// import { renderRichText } from "~/utils/rich-text";
 
 export interface ProductDetailProps {
   product: ProductIndexData;
-  // variant: VariantDataFragment;
+  category: CategoryIndexData;
   lang: string;
 }
 
-export const ProductDetail: FC<ProductDetailProps> = ({ product, lang }) => {
-  // const media = variant.media ?? product.defaultMedia;
+export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang }) => {
   const t = getTranslations(lang);
 
   // const allVariants = product.variantsCollection?.items;
@@ -64,6 +57,8 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, lang }) => {
   // };
 
   const productName = getLocalizedFieldValue(product.values.name, lang)?.data;
+  const categoryName =
+    category?.values.name && getLocalizedFieldValue(category.values.name, lang)?.data;
 
   return (
     <>
@@ -72,13 +67,13 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, lang }) => {
           <li>
             <Link href={localizedRoute("/", lang)}>Home</Link>
           </li>
-          {/* {product?.category?.slug && (
+          {category && (
             <li>
-              <Link href={localizedRoute(`/categories/${product.category.slug}`, lang)}>
-                {product.category.categoryName}
+              <Link href={localizedRoute(`/categories/${category.code}`, lang)}>
+                {categoryName}
               </Link>
             </li>
-          )} */}
+          )}
           <li>
             <strong>{productName}</strong>
           </li>
@@ -91,6 +86,8 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, lang }) => {
             <MediaCarousel media={media} />
           </div>
         )} */}
+        {product.image && <Image alt="" src={product.image} width={512} height={512} />}
+
         <div className="prose pb-4">
           <h2>{productName}</h2>
           <p>{getLocalizedFieldValue(product.values.description, lang)?.data}</p>

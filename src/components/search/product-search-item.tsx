@@ -17,14 +17,7 @@ export function ProductSearchItem({ objectID, values, image, price, sku }: Produ
     >
       {/* TODO missing image placeholder */}
       {image && (
-        <Image
-          src={image}
-          loader={({ src }) => src} // TODO: remove me
-          width={256}
-          height={256}
-          className="aspect-square object-cover"
-          alt=""
-        />
+        <Image src={image} width={256} height={256} className="aspect-square object-cover" alt="" />
       )}
       <div className="flex flex-col gap-4 justify-between p-4">
         <div>

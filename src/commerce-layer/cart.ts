@@ -30,12 +30,17 @@ export async function getCommerceLayerCart(client: CommerceLayerClient, c?: Cust
     : null;
 
   const cartIdFromCookie = cookies().get(CART_ID_COOKIE_KEY)?.value;
-  const cartFromCookie = cartIdFromCookie
-    ? await client.orders.retrieve(cartIdFromCookie, {
-        include: ["line_items.item", "line_items.line_item_options.sku_option"],
-      })
-    : null;
 
+  let cartFromCookie: Order | null = null;
+  try {
+    cartFromCookie = cartIdFromCookie
+      ? await client.orders.retrieve(cartIdFromCookie, {
+          include: ["line_items.item", "line_items.line_item_options.sku_option"],
+        })
+      : null;
+  } catch (e) {
+    console.error(e);
+  }
   // if cart has no customer_email and the user has logged
   if (cartFromCookie && existingPendingCart) {
     // if a cart existed for the same customer_email, merge it into the new one
