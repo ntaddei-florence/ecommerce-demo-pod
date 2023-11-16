@@ -60,7 +60,7 @@ export default async function CategoryDetailPage({ params: { slug, lang } }: Cat
             </h3>
           </div>
 
-          <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-16">
             {productsHits.map((product) =>
               product ? (
                 <ProductCard key={product.sku} lang={lang} product={product} category={category} />
