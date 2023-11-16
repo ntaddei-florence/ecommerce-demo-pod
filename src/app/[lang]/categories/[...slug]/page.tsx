@@ -42,7 +42,7 @@ export default async function CategoryDetailPage({ params: { slug, lang } }: Cat
     <PageLayout>
       {category ? (
         <>
-          <div className="text-sm breadcrumbs mb-4">
+          <div className="text-lg breadcrumbs mb-10">
             <ul>
               <li>
                 <Link href={localizedRoute("/", lang)}>{t("common.home")}</Link>
@@ -53,14 +53,14 @@ export default async function CategoryDetailPage({ params: { slug, lang } }: Cat
             </ul>
           </div>
 
-          <div className="mb-4">
+          <div className="mb-10">
             <h2 className="text-2xl font-bold mb-2">{categoryName}</h2>
             <h3 className="text-xl">
               {getLocalizedFieldValue(category.values.description, lang)?.data}
             </h3>
           </div>
 
-          <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-16">
+          <div className="not-prose grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
             {productsHits.map((product) =>
               product ? (
                 <ProductCard key={product.sku} lang={lang} product={product} category={category} />

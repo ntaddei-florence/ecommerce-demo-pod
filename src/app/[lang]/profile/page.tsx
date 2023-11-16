@@ -9,7 +9,7 @@ export default withPageAuthRequired(
     const session = await getSession();
     return (
       <PageLayout>
-        <div className="text-sm breadcrumbs mb-4">
+        <div className="text-lg breadcrumbs mb-4">
           <ul>
             <li>
               <Link href={localizedRoute("/", params?.lang as string)}>Home</Link>

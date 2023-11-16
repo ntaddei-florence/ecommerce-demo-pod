@@ -21,7 +21,7 @@ export const ProductCard: FC<ProductCardProps> = ({ product, category, lang }) =
         lang
       )}
     >
-      <div className="card group w-128 h-full border border-gray-200 rounded-xl overflow-hidden">
+      <div className="card card-compact shadow group w-128 h-full border border-gray-200 rounded-xl overflow-hidden">
         <ProductImage
           className="group-hover:scale-125 transition duration-500 "
           product={product}

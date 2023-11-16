@@ -70,7 +70,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
 
   return (
     <>
-      <div className="text-sm breadcrumbs mb-8">
+      <div className="text-lg breadcrumbs mb-8">
         <ul>
           <li>
             <Link href={localizedRoute("/", lang)}>Home</Link>

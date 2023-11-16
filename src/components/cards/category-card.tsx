@@ -21,8 +21,9 @@ export const CategoryCard: FC<CategoryCardProps> = ({ category, lang }) => {
         />
         <div
           className={clsx(
-            "absolute top-1/2 transform -translate-y-1/2 left-1/2 -translate-x-1/2",
-            "flex flex-col justify-between items-center z-10"
+            "absolute w-full transform top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2",
+            "flex justify-center items-center z-10",
+            "transition-all group-hover:scale-150"
           )}
         >
           <h3
@@ -34,14 +35,22 @@ export const CategoryCard: FC<CategoryCardProps> = ({ category, lang }) => {
           >
             {getLocalizedFieldValue(category.values.name, lang)?.data}
           </h3>
-          <main className={clsx("z-10 text-neutral-100 p-5 text-xl text-center")}>
+        </div>
+
+        <div className="absolute bottom-0 left-0 z-10 w-full">
+          <main
+            className={clsx(
+              "scale-y-0 group-hover:scale-y-100 transition-all origin-bottom",
+              "z-10 p-8 w-full text-2xl text-center font-light text-white blurred leading-normal"
+            )}
+          >
             {getLocalizedFieldValue(category.values.description, lang)?.data}
           </main>
         </div>
         <div
           className={clsx(
             "absolute top-0 right-0 bottom-0 left-0",
-            "bg-gradient-to-b from-transparent to-gray-900"
+            "bg-gray-900 bg-opacity-50" // makes the text more readable
           )}
         />
       </div>

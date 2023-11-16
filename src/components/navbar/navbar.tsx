@@ -27,21 +27,20 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
 
   return (
     <div
-      className={clsx(
-        "navbar sticky top-0 z-30 hover:bg-base-100",
-        "transition ease-in-out duration-300",
-        { "bg-base-100 shadow-lg": isScrolled }
-      )}
+      className={clsx("navbar sticky top-0 z-30", "transition ease-in-out duration-300", {
+        "shadow-lg": isScrolled,
+      })}
     >
-      <div className="flex-1">
+      <div className="absolute w-full h-full top-0 left-0 blurred" />
+      <div className="flex-1 z-10">
         {/* Logo */}
         <Link href={localizedRoute("/")} className="btn btn-ghost normal-case text-xl">
           {/* Site name */}
           My E-Commerce
         </Link>
       </div>
-      <div className="flex-none flex gap-3">
-        <Link href={localizedRoute("/search")}>
+      <div className="flex-none flex gap-3 z-10">
+        <Link href={localizedRoute("/search")} className="btn btn-ghost btn-circle ">
           <MagnifyingGlassIcon className="w-8" />
         </Link>
         <ShoppingCartDropdown cart={cart} />

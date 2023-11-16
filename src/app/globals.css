@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .blurred {
+    background-color: rgba(256, 256, 256, 0.4);
+    backdrop-filter: blur(12px);
+  }
+}
