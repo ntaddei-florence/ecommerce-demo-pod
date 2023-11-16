@@ -34,11 +34,13 @@ export default async function ProductDetailPage({
 
   return (
     <PageLayout>
-      {!product ? (
-        <h2>{t("products.productNotFound")}</h2>
-      ) : (
-        <ProductDetail lang={lang} product={product} category={category} />
-      )}
+      <div className="p-8">
+        {!product ? (
+          <h2>{t("products.productNotFound")}</h2>
+        ) : (
+          <ProductDetail lang={lang} product={product} category={category} />
+        )}
+      </div>
     </PageLayout>
   );
 }
