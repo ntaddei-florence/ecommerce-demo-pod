@@ -1,7 +1,8 @@
+import { Price } from "@commercelayer/sdk";
 import { FC } from "react";
 
 import { getCommerceLayerClient, getPrice, getStock } from "~/commerce-layer";
-import { AddToCartButton, Price } from "~/components/commerce-layer";
+import { AddToCartButton, Price as PriceTag } from "~/components/commerce-layer";
 import { getTranslations } from "~/i18n";
 
 export interface AddToCartProps {
@@ -10,10 +11,18 @@ export interface AddToCartProps {
   lang: string;
 }
 
-export const AddToCart: FC<AddToCartProps> = async ({ sku, className, lang }) => {
+export const AddToCart: FC<AddToCartProps> = async ({ sku: skuCode, className, lang }) => {
   const clClient = await getCommerceLayerClient();
-  const { totalQuantity } = await getStock(clClient, sku);
-  const price = (await getPrice(clClient, sku))[0];
+  const skuList = await clClient.skus.list({ filters: { code_eq: skuCode } });
+  let totalQuantity = 0;
+  let price: Price | undefined = undefined;
+
+  if (skuList.length) {
+    const sku = skuList[0];
+    totalQuantity = (await getStock(clClient, sku))?.totalQuantity ?? 0;
+    price = (await getPrice(clClient, sku))?.[0];
+  }
+
   const t = getTranslations(lang);
 
   return (
@@ -23,8 +32,8 @@ export const AddToCart: FC<AddToCartProps> = async ({ sku, className, lang }) =>
       ) : (
         <div className="badge badge-error">{t("products.notAvailable")}</div>
       )}
-      {price && <Price price={price} />}
-      <AddToCartButton lang={lang} skuCode={sku} disabled={!totalQuantity} />
+      {price && <PriceTag price={price} />}
+      <AddToCartButton lang={lang} skuCode={skuCode} disabled={!totalQuantity} />
     </div>
   );
 };

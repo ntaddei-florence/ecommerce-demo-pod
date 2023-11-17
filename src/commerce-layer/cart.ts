@@ -19,15 +19,17 @@ export async function reconcileCarts(client: CommerceLayerClient, oldCart: Order
 
 export async function getCommerceLayerCart(client: CommerceLayerClient, c?: Customer | null) {
   const customer = c ?? (await getOrCreateCommerceLayerCustomer(client));
-  const existingPendingCart = customer?.email
-    ? (
-        await client.orders.list({
-          filters: { status_in: "draft,pending", customer_email_eq: customer.email },
-          sort: { updated_at: "desc" },
-          include: ["line_items.item", "line_items.line_item_options.sku_option"],
-        })
-      ).first()
-    : null;
+  // TODO: How to retrieve logged user cart by email?
+  // const existingPendingCart = customer?.email
+  //   ? (
+  //       await client.orders.list({
+  //         filters: { status_in: "draft,pending", customer_email_eq: customer.email },
+  //         sort: { updated_at: "desc" },
+  //         include: ["line_items.item", "line_items.line_item_options.sku_option"],
+  //       })
+  //     ).first()
+  //   : null;
+  const existingPendingCart = null;
 
   const cartIdFromCookie = cookies().get(CART_ID_COOKIE_KEY)?.value;
 

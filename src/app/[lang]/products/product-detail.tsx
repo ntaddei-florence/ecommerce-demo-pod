@@ -66,8 +66,6 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
     lang
   )?.data?.replace(/\\n/g, "<br />");
 
-  console.log("replace", productDescription);
-
   return (
     <>
       <div className="text-lg breadcrumbs mb-8">

@@ -21,7 +21,7 @@ export async function getSalesChannelToken(clientId?: string) {
 }
 
 export async function getCommerceLayerClient() {
-  const token = await getIntegrationToken();
+  const token = await getSalesChannelToken();
   return CommerceLayer({
     accessToken: token,
     organization: process.env.NEXT_COMMERCELAYER_SLUG!,

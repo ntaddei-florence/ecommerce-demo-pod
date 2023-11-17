@@ -40,7 +40,7 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
         </Link>
       </div>
       <div className="flex-none flex gap-3 z-10">
-        <Link href={localizedRoute("/search")} className="btn btn-ghost btn-circle ">
+        <Link href={localizedRoute("/search")} className="btn btn-ghost btn-circle">
           <MagnifyingGlassIcon className="w-8" />
         </Link>
         <ShoppingCartDropdown cart={cart} />
