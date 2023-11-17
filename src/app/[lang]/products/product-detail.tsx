@@ -95,6 +95,7 @@ export const ProductDetail: FC<ProductDetailProps> = ({ product, category, lang 
           <h2>{productName}</h2>
           {productDescription && (
             <div
+              className="line-clamp-3"
               dangerouslySetInnerHTML={{
                 __html: productDescription,
               }}

@@ -1,30 +1,27 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
+import { CategoryImage } from "../cards/category-image";
 import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { CategoryIndexData } from "~/algolia/types";
 import { useClientI18n } from "~/i18n";
 
-export function CategorySearchItem({ objectID, values, image, slug }: CategoryIndexData) {
+export function CategorySearchItem(category: CategoryIndexData) {
+  const { objectID, values, image, slug } = category;
   const { lang, localizedRoute } = useClientI18n();
 
   return (
     <div
-      className="border border-light rounded-lg shadow flex flex-col sm:flex-row gap-4"
+      className="border border-light rounded-lg shadow flex flex-col sm:flex-row gap-4 overflow-hidden"
       key={objectID}
     >
       <div>
         {/* TODO missing image placeholder */}
         {image && (
-          <Image
-            src={image}
-            width={256}
-            height={256}
-            className="aspect-square object-cover"
-            alt=""
-          />
+          <div className="w-48 h-48">
+            <CategoryImage className="aspect-square object-cover" category={category} lang={lang} />
+          </div>
         )}
       </div>
       <div className="flex flex-col gap-4 justify-between p-4">

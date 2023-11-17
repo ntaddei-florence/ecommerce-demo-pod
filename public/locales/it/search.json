@@ -3,5 +3,6 @@
   "resultsCount": "{{count}} risultato per \"{{query}}\"",
   "resultsCount_many": "{{count}} risultati per \"{{query}}\"",
   "productsSectionTitle": "Prodotti",
-  "categoriesSectionTitle": "Categorie"
+  "categoriesSectionTitle": "Categorie",
+  "seeMore": "(vedi altro)"
 }

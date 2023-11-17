@@ -34,7 +34,7 @@ export const Navbar: FC<NavbarProps> = ({ cart, cookies }) => {
       <div className="absolute w-full h-full top-0 left-0 blurred" />
       <div className="flex-1 z-10">
         {/* Logo */}
-        <Link href={localizedRoute("/")} className="btn btn-ghost normal-case text-xl">
+        <Link href={localizedRoute("/")} className="btn btn-ghost normal-case rounded-lg text-xl">
           {/* Site name */}
           My E-Commerce
         </Link>

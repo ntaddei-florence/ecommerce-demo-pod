@@ -4,7 +4,7 @@
 
 @layer components {
   .blurred {
-    background-color: rgba(256, 256, 256, 0.4);
+    background-color: rgba(256, 256, 256, 0.65);
     backdrop-filter: blur(12px);
   }
 }

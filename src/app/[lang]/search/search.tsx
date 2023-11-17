@@ -54,19 +54,19 @@ export function Search() {
           </div>
         )}
 
-        {productHits?.length && (
-          <div className="flex flex-col gap-3">
+        {(productHits ?? []).length > 0 && (
+          <div className="flex flex-col gap-6">
             <h2 className="text-2xl font-semibold">{t("search.productsSectionTitle")}</h2>
-            {productHits.map((productItem) => (
+            {productHits?.map((productItem) => (
               <ProductSearchItem {...productItem} key={productItem.objectID} />
             ))}
           </div>
         )}
 
-        {categoryHits?.length && (
-          <div className="flex flex-col gap-3 mt-8">
+        {(categoryHits ?? []).length > 0 && (
+          <div className="flex flex-col gap-6 mt-8">
             <h2 className="text-2xl font-semibold">{t("search.categoriesSectionTitle")}</h2>
-            {categoryHits.map((categoryItem) => (
+            {categoryHits?.map((categoryItem) => (
               <CategorySearchItem {...categoryItem} key={categoryItem.objectID} />
             ))}
           </div>

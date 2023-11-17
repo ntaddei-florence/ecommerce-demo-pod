@@ -41,7 +41,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({ category, lang }) => {
           <main
             className={clsx(
               "scale-y-0 group-hover:scale-y-100 transition-all origin-bottom",
-              "z-10 p-8 w-full text-2xl text-center font-light text-white blurred leading-normal"
+              "z-10 p-8 w-full text-2xl text-center font-light blurred leading-normal"
             )}
           >
             {getLocalizedFieldValue(category.values.description, lang)?.data}
