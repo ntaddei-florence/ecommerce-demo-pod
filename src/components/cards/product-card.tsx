@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { FC } from "react";
 
+import { ProductPriceTag } from "../price-tag";
 import { ProductImage } from "./product-image";
 import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { CategoryIndexData, ProductIndexData } from "~/algolia/types";
-import { localizedRoute, SupportedCurrency } from "~/i18n";
-import { formatPrice } from "~/i18n/prices";
+import { localizedRoute } from "~/i18n";
 
 export interface ProductCardProps {
   product: ProductIndexData;
@@ -15,7 +15,6 @@ export interface ProductCardProps {
 
 export const ProductCard: FC<ProductCardProps> = ({ product, category, lang }) => {
   const productName = getLocalizedFieldValue(product.values.name, lang)?.data;
-  const { amount, compareAmount, currency } = product.price ?? {};
 
   return (
     <Link
@@ -33,16 +32,7 @@ export const ProductCard: FC<ProductCardProps> = ({ product, category, lang }) =
         <div className="card-body z-10 bg-white">
           <h2 className="card-title">{productName}</h2>
           <div className="text-xl mt-auto">
-            {compareAmount && compareAmount !== amount && (
-              <p className="line-through inline mr-2">
-                {formatPrice(compareAmount, currency as SupportedCurrency, lang)}
-              </p>
-            )}
-            {amount && (
-              <p className="font-semibold text-2xl inline">
-                {formatPrice(amount, currency as SupportedCurrency, lang)}
-              </p>
-            )}
+            <ProductPriceTag product={product} lang={lang} />
           </div>
         </div>
       </div>

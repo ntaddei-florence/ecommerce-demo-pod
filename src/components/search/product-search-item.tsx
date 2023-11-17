@@ -3,14 +3,15 @@
 import Link from "next/link";
 
 import { ProductImage } from "../cards/product-image";
+import { ProductPriceTag } from "../price-tag";
 import { getLocalizedFieldValue } from "~/akeneo/utils";
 import { ProductIndexData } from "~/algolia/types";
-import { SupportedCurrency, useClientI18n } from "~/i18n";
+import { useClientI18n } from "~/i18n";
 import { stripHtml } from "~/utils/html";
 
 export function ProductSearchItem(product: ProductIndexData) {
-  const { objectID, values, price, sku } = product;
-  const { lang, localizedRoute, formatPrice } = useClientI18n();
+  const { objectID, values, sku } = product;
+  const { lang, localizedRoute } = useClientI18n();
   const productDescription = stripHtml(
     getLocalizedFieldValue(values.description, lang)?.data?.replace(/\\n/g, " ") ?? ""
   );
@@ -39,16 +40,7 @@ export function ProductSearchItem(product: ProductIndexData) {
         </div>
         <div className="w-full flex justify-between items-center gap-2">
           <div className="flex gap-2 items-center text-lg">
-            {price?.compareAmount && (
-              <p className="line-through">
-                {formatPrice(price.compareAmount, price.currency as SupportedCurrency)}
-              </p>
-            )}
-            {price?.amount && (
-              <p className="font-bold">
-                {formatPrice(price.amount, price.currency as SupportedCurrency)}
-              </p>
-            )}
+            <ProductPriceTag product={product} lang={lang} />
           </div>
         </div>
       </div>
