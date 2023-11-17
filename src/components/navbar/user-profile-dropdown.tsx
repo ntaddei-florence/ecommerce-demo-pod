@@ -34,7 +34,7 @@ export const UserProfileDropdown: FC<UserProfileDropdownProps> = ({ cookies }) =
         </label>
         <ul
           tabIndex={0}
-          className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg border border-gray-100 w-52"
+          className="bg-neutral menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg border border-gray-100 w-52"
         >
           {user ? (
             <>

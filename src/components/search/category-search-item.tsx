@@ -19,7 +19,7 @@ export function CategorySearchItem(category: CategoryIndexData) {
       <div>
         {/* TODO missing image placeholder */}
         {image && (
-          <div className="w-48 h-48">
+          <div className="w-full h-auto sm:w-48 sm:h-48">
             <CategoryImage className="aspect-square object-cover" category={category} lang={lang} />
           </div>
         )}

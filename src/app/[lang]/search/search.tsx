@@ -29,7 +29,7 @@ export function Search() {
     <div className="p-8 flex flex-col gap-8">
       <div className="container max-w-2xl mx-auto">
         <label htmlFor="search-input" className="relative">
-          <MagnifyingGlassIcon className="pointer-events-none w-8 h-8 absolute top-1/2 transform -translate-y-1/2 right-3" />
+          <MagnifyingGlassIcon className="text-gray-400 pointer-events-none w-8 h-8 absolute top-1/2 transform -translate-y-1/2 right-3" />
 
           <input
             type="text"
