@@ -14,7 +14,7 @@ export default async function HomePage({ params: { lang } }: HomePageProps) {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full pb-4">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 w-full p-4">
       {categories.map((category) =>
         category ? <CategoryCard lang={lang} category={category} key={category.objectID} /> : null
       )}
